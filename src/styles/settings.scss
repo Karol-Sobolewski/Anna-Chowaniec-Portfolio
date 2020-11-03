@@ -1,0 +1,52 @@
+$base-padding: 24px;
+$radius: 5px;
+$base-size: 1rem;
+$transition: all 0.5s;
+$font-text: 'Poppins', sans-serif;
+
+/* DO NOT USE THOSE VARIABLES IN THE OTHER SCSS FILES! */
+$black: #000000;
+$blue: #0000ff;
+$darkGray: #363636;
+$darkWhite: #e1e1e1;
+$gray: #434343;
+$green: #008000;
+$lightBlack: #2a2a2a;
+$lightGray: #b2b2b2;
+$lightGreen: #32cd32;
+$lightGreyBlue: #7AA3CC;
+$lightWhite: #f4f5f7;
+$lightWhiteBlue: #e0e3ed;
+$mint: #aaf0d1;
+$pink: #ffc0cb;
+$red: #ff0000;
+$transparent: transparent;
+$white: #ffffff;
+$yellow: #ffff00;
+
+
+/*Background*/
+
+$background-bg: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+
+
+
+/*Button*/
+
+$button-main-bg-hover: $mint;
+$button-main-bg: $lightBlack;
+$button-main-text: $white;
+$button-outline-bg-hover: $lightBlack;
+$button-outline-bg: $white;
+$button-outline-border: $lightBlack;
+$button-outline-text-hover: $white;
+$button-outline-text: $lightBlack;
+
+/*Header*/
+
+$header-bg: $lightGray;
+$header-link: $lightBlack;
+$header-link-active-hover: $lightGreyBlue;
+$header-link-active: $lightGreyBlue;
+$header-link: $lightBlack;
+

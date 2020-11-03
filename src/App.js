@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { AnimatedSwitch } from 'react-router-transition';
+import styles from './App.module.scss';
+import MainLayout from './components/layout/MainLayout/MainLayout';
+import Home from './components/views/Home/Home';
+import Wedding from './components/views/Wedding/Wedding';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.app}>
+      <BrowserRouter>
+        <MainLayout>
+          <AnimatedSwitch
+            atEnter={{ opacity: 0 }}
+            atLeave={{ opacity: 0 }}
+            atActive={{ opacity: 1 }}
+            className={styles.switchWrapper}
+          >
+            <Route exact path="/" component={Home} />
+            <Route exact path="/wedding" component={Wedding} />
+          </AnimatedSwitch>
+        </MainLayout>
+      </BrowserRouter>
     </div>
   );
 }
