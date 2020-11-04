@@ -10,7 +10,7 @@ class Header extends React.Component {
           <Link to="/" className={styles.logo}>
             <img
               type="image/svg+xml"
-              src="/images/logo/logo-black.svg"
+              src="/images/logo/logo.svg"
               className={styles.logoImg}
               aria-label="Logo"
             />
