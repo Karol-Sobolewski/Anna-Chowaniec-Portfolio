@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import styles from './Header.module.scss'; //eslint-disable-line
 const Header = () => {
   const Menu = useSelector((state) => state.Menu);
-
   return (
     <header className={styles.component}>
       <nav>
