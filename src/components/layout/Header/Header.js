@@ -1,33 +1,28 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styles from './Header.module.scss'; //eslint-disable-line
+const Header = () => {
+  const Menu = useSelector((state) => state.Menu);
 
-class Header extends React.Component {
-  render() {
-    return (
-      <header className={styles.component}>
-        <nav>
-          <Link to="/" className={styles.logo}>
-            <img
-              type="image/svg+xml"
-              src="/images/logo/logo.svg"
-              className={styles.logoImg}
-              aria-label="Logo"
-            />
-          </Link>
-          <NavLink to="/wedding" activeClassName="active">
-            Fotografia ślubna
+  return (
+    <header className={styles.component}>
+      <nav>
+        <Link to="/" className={styles.logo}>
+          <img
+            type="image/svg+xml"
+            src="/images/logo/logo.svg"
+            className={styles.logoImg}
+            aria-label="Logo"
+          />
+        </Link>
+        {Menu.items.map((item) => (
+          <NavLink key={item.id} to={item.src} activeClassName="active">
+            {item.title}
           </NavLink>
-          <NavLink to="/children" activeClassName="active">
-            Fotografia dziecięca
-          </NavLink>
-          <NavLink to="/portrait" activeClassName="active">
-            Fotografia portretowa
-          </NavLink>
-        </nav>
-      </header>
-    );
-  }
-}
-
+        ))}
+      </nav>
+    </header>
+  );
+};
 export default Header;
