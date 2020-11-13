@@ -1,16 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import Header from '../Header/Header';//eslint-disable-line
+import styles from './MainLayout.module.scss';
 
-const MainLayout = ({ children }) => (
-  <div>
+const Component = ({ className, children }) => (
+  <div className={clsx(className, styles.root)}>
     <Header />
     <main>{children}</main>
   </div>
 );
 
-MainLayout.propTypes = {
+Component.propTypes = {
   children: PropTypes.node,
+  className: PropTypes.string,
 };
 
-export default MainLayout;
+export {
+  Component as MainLayout,
+  // Container as MainLayout,
+  Component as MainLayoutComponent,
+};

@@ -6,24 +6,46 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "clsx": "^1.1.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
     "node-sass": "^4.11.0",
+    "npm-run-all": "^4.1.5",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-awesome-slider": "^4.1.0",
+    "react-burger-menu": "^2.9.0",
     "react-dom": "^17.0.1",
     "react-image-gallery": "^1.0.8",
-    "react-redux": "^7.0.1",
+    "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",
     "react-router-transition": "^2.0.0",
     "react-scripts": "4.0.0",
-    "redux": "^4.0.1",
+    "react-test-renderer": "^17.0.1",
+    "redux": "^4.0.5",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "run-p start:* ",
+    "start-silent": "run-p start > /dev/null",
+    "start:react": "react-scripts start",
+    "start-and-test": "run-p start-silent test ",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --noStackTrace",
+    "test-all": "react-scripts test --watchAll=false --noStackTrace",
+    "test-related": "react-scripts test --watchAll=false --noStackTrace --findRelatedTests",
     "eject": "react-scripts eject"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "yarn test-related --",
+      "eslint"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -45,7 +67,16 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.1.0",
+    "babel-jest": "^26.6.0",
     "eslint": "7.11.0",
     "eslint-config-airbnb": "18.2.0",
     "eslint-config-prettier": "6.11.0",
@@ -56,7 +87,10 @@
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-react": "7.20.6",
     "eslint-plugin-react-hooks": "4.1.2",
+    "husky": "^4.3.0",
+    "jest-cli": "^23.5.0",
+    "lint-staged": "^10.5.1",
     "prettier": "2.1.1",
-    "redux-devtools-extension": "2.13.8"
+    "redux-devtools-extension": "^2.13.8"
   }
 }
