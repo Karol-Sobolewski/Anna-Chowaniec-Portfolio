@@ -1,0 +1,19 @@
+@import '../../../styles/settings.scss';
+
+
+.root {
+  // align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.content {
+  margin-top: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  // align-items: center;
+}
+

@@ -1,0 +1,10 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  width: 100%;
+  // position: fixed;
+  z-index: 10000;
+  height: 10vh;
+  // position: absolute;
+  bottom: 0;
+}

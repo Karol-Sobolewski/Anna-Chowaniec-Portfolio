@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Header from '../Header/Header';//eslint-disable-line
+import Header from '../Header/Header';
+import { Footer } from '../Footer/Footer';
 import styles from './MainLayout.module.scss';
 
 const Component = ({ className, children }) => (
   <div className={clsx(className, styles.root)}>
     <Header />
-    <main>{children}</main>
+    <div className={styles.content}>{children}</div>
+    <Footer />
   </div>
 );
 

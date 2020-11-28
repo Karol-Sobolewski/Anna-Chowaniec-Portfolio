@@ -39,7 +39,7 @@
     ],
     "quotes": [
       "error",
-      "single",
+      "backtick",
       {
         "allowTemplateLiterals": true
       }

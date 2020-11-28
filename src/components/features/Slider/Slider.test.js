@@ -1,10 +1,10 @@
 import { React } from 'react';
 import { shallow } from 'enzyme';
-import { MainLayoutComponent } from './MainLayout';
+import { SliderComponent } from './Slider';
 
-describe(`Component MainLayout`, () => {
+describe(`Component Slider`, () => {
   it(`should render without crashing`, () => {
-    const component = shallow(<MainLayoutComponent />);
+    const component = shallow(<SliderComponent />);
     expect(component).toBeTruthy();
   });
 });

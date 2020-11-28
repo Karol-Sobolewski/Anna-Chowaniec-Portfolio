@@ -1,42 +1,27 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import AwesomeSlider from 'react-awesome-slider';
-import withAutoplay from 'react-awesome-slider/dist/autoplay';
-// import withCaption from 'react-awesome-slider/dist/captioned';
+import PropTypes from 'prop-types';
 
-import 'react-awesome-slider/dist/styles.css';
-import 'react-awesome-slider/dist/captioned.css';
-import Section from '../../layout/Section/Section';
+import clsx from 'clsx';
+// import withCaption from 'react-awesome-slider/dist/captioned';
+import { Slider } from '../../features/Slider/Slider';
+import { About } from '../../features/About/About';
+
+// import Section from '../../layout/Section/Section';
 import styles from './Home.module.scss';
 
-const AutoplaySlider = withAutoplay(AwesomeSlider);
+const Component = ({ className }) => (
+  <div className={clsx(className, styles.root)}>
+    <Slider />
+    <About />
+  </div>
+);
 
-const Home = () => {
-  const Homepage = useSelector((state) => state.Homepage);
-  return (
-    <Section>
-      <AutoplaySlider
-        play
-        cancelOnInteraction={false}
-        interval={6000}
-        className={styles.slider}
-        cssModule={styles}
-        bullets={false}
-        fillParent
-      >
-        {Homepage.images.map((image) => (
-          <div key={image.id} data-src={image.src}>
-            <div className={styles.caption}>
-              <p>{image.title}</p>
-            </div>
-          </div>
-        ))}
-      </AutoplaySlider>
-      {/* Homepage.images.map(image => (
-        <img key={image.id} src={image.src} title={image.title} />
-      )) */}
-    </Section>
-  );
+Component.propTypes = {
+  className: PropTypes.string,
 };
 
-export default Home;
+export {
+  Component as Home,
+  // Container as MainLayout,
+  Component as HomeComponent,
+};

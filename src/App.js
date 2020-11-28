@@ -2,13 +2,13 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
 // import { useSelector } from 'react-redux';
+import './styles/bootstrap.scss';
 
 import styles from './App.module.scss';
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
+import { Home } from './components/views/Home/Home';
+import { Wedding } from './components/views/Wedding/Wedding';
 import { Children } from './components/views/Children/Children';
-
-import Home from './components/views/Home/Home';
-import Wedding from './components/views/Wedding/Wedding';
 
 function App() {
   // const Menu = useSelector((state) => state.Menu);

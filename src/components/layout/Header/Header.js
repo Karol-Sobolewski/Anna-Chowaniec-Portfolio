@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux';
 import styles from './Header.module.scss'; //eslint-disable-line
 const Header = () => {
   const MenuItems = useSelector((state) => state.Menu);
+  // useEffect(() => {});
   return (
-    <header className={styles.component}>
+    <header className={styles.root}>
       <nav>
         <Link to="/" className={styles.logo}>
           <img

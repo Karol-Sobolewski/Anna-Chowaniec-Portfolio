@@ -1,0 +1,17 @@
+@import '../../../styles/settings.scss';
+
+ .root{
+  height: 50vh
+  }
+
+ .container{
+  height: 100%;
+ }
+.aboutImage{
+  width: 20vh;
+  height: 20vh;
+  border-radius: 50%;
+  img {
+    object-fit: cover;
+  }
+}
