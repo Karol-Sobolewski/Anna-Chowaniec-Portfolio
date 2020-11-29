@@ -1,14 +1,14 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
+import { Burger } from '../../features/Burger/Burger';
 import styles from './Header.module.scss'; //eslint-disable-line
 const Header = () => {
   const MenuItems = useSelector((state) => state.Menu);
   // useEffect(() => {});
   return (
     <header className={styles.root}>
-      <nav>
+      <nav className={styles.mainMenu}>
         <Link to="/" className={styles.logo}>
           <img
             type="image/svg+xml"
@@ -23,6 +23,7 @@ const Header = () => {
           </NavLink>
         ))}
       </nav>
+      <Burger />
     </header>
   );
 };

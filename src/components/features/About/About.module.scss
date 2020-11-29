@@ -1,11 +1,14 @@
 @import '../../../styles/settings.scss';
 
  .root{
-  height: 50vh
+  height: 50vh;
+  margin: 10vh 0 10vh 0;
   }
 
  .container{
   height: 100%;
+  max-width: 1400px;
+  width: 90%;
  }
 .aboutImage{
   width: 20vh;

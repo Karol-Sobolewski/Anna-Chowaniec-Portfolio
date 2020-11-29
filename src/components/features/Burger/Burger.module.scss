@@ -1,0 +1,69 @@
+@import '../../../styles/settings.scss';
+
+
+
+
+@media only screen and (max-width: 1199px) {
+  .root {
+    position: absolute;
+    top: 0;
+    right: -60vw;
+    display: flex;
+    padding-top: 10vh;
+    transition: all 0.5s;
+    width: 60vw;
+    height: 100vh;
+    background-image: linear-gradient(to right, #cfd9df 0%, #e2ebf0 100%);
+    box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.25);
+    &__active {
+      @extend .root;
+      right: 0;
+    }
+  }
+
+  .burgerMenu {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    padding: 0 0 0 2vw;
+    transition: all 0.5s;
+    width: 100%;
+    a {
+      opacity: 0;
+    }
+    &__active {
+      @extend .burgerMenu;
+      transition: all 0.5s;
+      a {
+        margin-right: 0 !important;
+        opacity: 1;
+        padding: 2vh 0;
+        text-align: start;
+        transition: all 0.5s;
+        width: 90%;
+        width: auto;
+      }
+    }
+  }
+
+
+  .burgerButton{
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .root {
+    display: none;
+  }
+  .burgerMenu{
+    display: none;
+  }
+  .burgerButton{
+    display: none !important;
+  }
+}

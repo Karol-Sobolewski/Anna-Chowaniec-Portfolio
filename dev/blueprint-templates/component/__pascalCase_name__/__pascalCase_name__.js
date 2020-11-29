@@ -23,7 +23,6 @@ const Component = ({ className, children }) => {
   );
 };
 
-
 // const mapStateToProps = (state) => ({
 //   someProp: reduxSelector(state);
 // })
@@ -34,7 +33,7 @@ const Component = ({ className, children }) => {
 //   const container = connect(mapStateToProps, mapStateToProps)(Component);
 // })
 
-Component.propTypes ={
+Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
 };
@@ -44,4 +43,3 @@ export {
   // Container as {{pascalCase name}},
   Component as {{pascalCase name}}Component,
 };
-

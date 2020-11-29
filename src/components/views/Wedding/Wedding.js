@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import Gallery from 'react-photo-gallery';
 
 import styles from './Wedding.module.scss';
 // import { connect } from 'react-redux';
