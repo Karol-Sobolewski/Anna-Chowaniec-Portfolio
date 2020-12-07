@@ -1,20 +1,34 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
 
- .root{
+.root {
   height: 50vh;
-  margin: 10vh 0 10vh 0;
-  }
+  margin-top: 5vh;
+}
 
- .container{
+.container {
   height: 100%;
   max-width: 1400px;
   width: 90%;
- }
-.aboutImage{
-  width: 20vh;
-  height: 20vh;
+}
+.aboutImage {
+  width: 25vh;
+  height: 25vh;
+  overflow: hidden;
   border-radius: 50%;
+
   img {
     object-fit: cover;
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s;
+  }
+}
+.aboutImage:hover img {
+  transform: scale(1.5);
+}
+
+@media only screen and (max-width: 1199px) {
+  .root {
+    height: 100vh;
   }
 }

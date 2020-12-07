@@ -16,22 +16,19 @@ const Component = ({ className, children }) => {
     <div className={clsx(className, styles.root)}>
       <Container
         fluid
-        className={`${styles.container} d-flex flex-column justify-content-between`}
+        className={`${styles.container} d-flex flex-column justify-content-center`}
       >
-        <h2>O Mnie</h2>
-        <Row className="row-cols-1 row-cols-md-4 justify-content-between">
+        <Row className="row-cols-1 row-cols-md-4 justify-content-around">
           <Col
-            md={6}
+            md={4}
             className="d-flex align-items-center justify-content-center mb-3 mb-lg-0"
           >
-            <img
-              className={styles.aboutImage}
-              src={About.image.src}
-              alt={About.image.title}
-            />
+            <div className={styles.aboutImage}>
+              <img src={About.image.src} alt={About.image.title} />
+            </div>
           </Col>
           <Col
-            md={6}
+            md={4}
             className="d-flex align-items-center justify-content-center mt-3 mt-lg-0"
           >
             <p>{About.description}</p>

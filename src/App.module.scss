@@ -1,5 +1,4 @@
-@import './styles/global.scss';
-// @import 'bootstrap/dist/css/bootstrap.min.css';
+@import "./styles/global.scss";
 
 .app {
   text-align: center;
@@ -9,11 +8,10 @@
 
     min-height: 100vh;
     > div {
-      position: absolute;
+      // position: absolute;
       top: 0;
       left: 0;
       width: 100%;
     }
   }
 }
-

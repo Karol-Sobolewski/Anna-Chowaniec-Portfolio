@@ -9,6 +9,7 @@ import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { Home } from './components/views/Home/Home';
 import { Wedding } from './components/views/Wedding/Wedding';
 import { Children } from './components/views/Children/Children';
+import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
 
 function App() {
   // const Menu = useSelector((state) => state.Menu);
@@ -17,6 +18,7 @@ function App() {
     <div className={styles.app}>
       <BrowserRouter>
         <MainLayout>
+          <ScrollToTop />
           <AnimatedSwitch
             atEnter={{ opacity: 0 }}
             atLeave={{ opacity: 0 }}

@@ -1,11 +1,25 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
 
 .root {
   width: 100%;
-  // position: fixed;
-  z-index: 10000;
-  height: 10vh;
-  // background: blue;
-  // position: absolute;
-  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // height: 15vh;
+  // bottom: 0;
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+  a {
+    color: $link-color;
+    text-decoration: none;
+    :hover {
+      color: $link-color-hover;
+    }
+    p {
+      font-size: 3vh;
+      margin-bottom: 0;
+    }
+  }
+  .footerIcon {
+    font-size: 4vh;
+  }
 }

@@ -1,28 +1,50 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
+import Gallery from 'react-photo-gallery';
+import Carousel, { Modal, ModalGateway } from 'react-images';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Gallery from 'react-photo-gallery';
 
 import styles from './Wedding.module.scss';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-const Component = ({ className, children }) => (
-  <div className={clsx(className, styles.root)}>
-    <h2>Wedding</h2>
-    <main>{children}</main>
-  </div>
-);
+const Component = ({ className, children }) => {
+  const [currentImage, setCurrentImage] = useState(0);
+  const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
-// const mapStateToProps = (state) => ({
-//   someProp: reduxSelector(state);
-// })
+  const photos = useSelector((state) => state.Wedding.images);
+  const openLightbox = useCallback((event, { photo, index }) => {
+    setCurrentImage(index);
+    setViewerIsOpen(true);
+  }, []);
 
-// const mapDispatchToProps = (dispatch) => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-
-//   const container = connect(mapStateToProps, mapStateToProps)(Component);
-// })
+  const closeLightbox = () => {
+    setCurrentImage(0);
+    setViewerIsOpen(false);
+  };
+  return (
+    <div className={clsx(className, styles.root)}>
+      <div>
+        <Gallery photos={photos} onClick={openLightbox} />
+        <ModalGateway>
+          {viewerIsOpen ? (
+            <Modal onClose={closeLightbox}>
+              <Carousel
+                currentIndex={currentImage}
+                views={photos.map((x) => ({
+                  ...x,
+                  srcset: x.srcSet,
+                  caption: x.title,
+                }))}
+              />
+            </Modal>
+          ) : null}
+        </ModalGateway>
+      </div>
+    </div>
+  );
+};
 
 Component.propTypes = {
   children: PropTypes.node,
