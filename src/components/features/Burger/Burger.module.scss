@@ -2,55 +2,83 @@
 
 @media only screen and (max-width: 1199px) {
   .root {
-    position: absolute;
-    top: 0;
-    right: -60vw;
-    display: flex;
-    padding-top: 10vh;
-    transition: all 0.5s;
-    width: 60vw;
-    max-width: 300px;
-    height: 100vh;
     background-image: linear-gradient(to right, #cfd9df 0%, #e2ebf0 100%);
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    height: 100vh;
+    max-width: 300px;
+    padding-top: 10vh;
+    position: absolute;
+    right: -60vw;
+    top: 0;
+    transition: all 0.5s;
+    width: 60vw;
     &__active {
       @extend .root;
       right: 0;
     }
-  }
-
-  .burgerMenu {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    height: 50vh;
-    padding: 0 0 0 2vw;
-    transition: all 0.5s;
-    width: 100%;
-    a {
-      opacity: 0;
+    .burgerButton {
+      align-items: center;
+      background-image: linear-gradient(45deg, #cfd9df 0%, #abbdc7 100%);
+      border-radius: 10%;
+      display: block;
+      display: flex;
+      justify-content: center;
+      position: fixed;
+      right: 2vh;
+      top: 2vh;
+      transition: $transition;
+      outline: none;
+      span,
+      span:before,
+      span:after {
+        background-color: black !important;
+      }
     }
-    &__active {
-      @extend .burgerMenu;
-      transition: all 0.5s;
-      a {
-        margin-right: 0 !important;
-        opacity: 1;
-        padding: 2vh 0;
-        text-align: center;
-        transition: all 0.5s;
-        width: 90%;
-        width: auto;
+    .burgerButton__active {
+      align-items: center;
+      background-image: none;
+      border-radius: 10%;
+      display: block;
+      display: flex;
+      justify-content: center;
+      position: fixed;
+      right: 2vh;
+      top: 2vh;
+      transition: $transition;
+      span,
+      span:before,
+      span:after {
+        background-color: black !important;
       }
     }
   }
+}
 
-  .burgerButton {
-    position: fixed;
-    top: 0;
-    right: 0;
-    display: block;
-    transition: $transition;
+.burgerMenu {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  padding: 0 0 0 2vw;
+  transition: all 0.5s;
+  width: 100%;
+  font-size: 2em;
+  a {
+    opacity: 0;
+  }
+  &__active {
+    @extend .burgerMenu;
+    transition: all 0.5s;
+    a {
+      margin-right: 0 !important;
+      opacity: 1;
+      padding: 2vh 0;
+      text-align: center;
+      transition: all 0.5s;
+      width: 90%;
+      width: auto;
+    }
   }
 }
 

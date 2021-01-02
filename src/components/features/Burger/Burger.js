@@ -12,8 +12,8 @@ import styles from './Burger.module.scss';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-const Component = ({ className, children }) => {
-  const MenuItems = useSelector((state) => state.Menu);
+const Component = ({ className, children, button }) => {
+  const MenuItems = useSelector((state) => state.menu.data);
   const [active, setActive] = useState(false);
   const toggleTrueFalse = () => setActive(!active);
   const useOutsideAlerter = (ref) => {
@@ -39,20 +39,23 @@ const Component = ({ className, children }) => {
       ref={wrapperRef}
     >
       <HamburgerSqueeze
-        className={styles.burgerButton}
+        className={
+          button && !active ? styles.burgerButton : styles.burgerButton__active
+        }
+        // className={styles.burgerButton}
         id="burgerButton"
         isActive={active}
         onClick={toggleTrueFalse}
       />
       <nav className={active ? styles.burgerMenu__active : styles.burgerMenu}>
-        {MenuItems.items.map((item) => (
+        {MenuItems.map((item) => (
           <NavLink
-            key={item.id}
-            to={item.src}
+            key={item._id}
+            to={item.path}
             activeClassName="active"
             onClick={toggleTrueFalse}
           >
-            {item.title}
+            {item.name}
           </NavLink>
         ))}
       </nav>
@@ -73,6 +76,7 @@ const Component = ({ className, children }) => {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  button: PropTypes.bool,
 };
 
 export {

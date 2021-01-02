@@ -3,24 +3,13 @@
 
 .root {
   align-items: center;
-  // background: linear-gradient(45deg, #cfd9df 0%, #abbdc7 100%);
-  // box-shadow: 0px 25px 20px 0px rgba(0, 0, 0, 0.15);
-  // background: linear-gradient(
-  //   180deg,
-  //   rgba(0, 0, 0, 0.3) 0%,
-  //   rgba(0, 0, 0, 0) 100%
-  // );
-  z-index: 1000;
   display: flex;
   font-family: $font-title;
-  // height: 15vh;
   justify-content: center;
-  // padding: $base-size 0;
   position: fixed;
   top: 0;
   width: 100vw;
-  // z-index: 5;
-
+  z-index: 1000;
   .mainMenu {
     align-items: center;
     display: flex;
@@ -30,21 +19,21 @@
       background-image: linear-gradient(45deg, #cfd9df 0%, #abbdc7 100%);
       content: "";
       height: 100%;
+      left: 0;
       position: absolute;
       transition: all 0.2s ease-in-out;
       width: 100%;
       z-index: -1;
     }
     .link {
-      font-size: $base-size;
       color: $lightWhite;
-      stroke: 5px $white;
-      text-shadow: 2px 2px black;
+      font-size: $base-size * 2;
       font-weight: 700;
       margin-right: $base-size;
+      stroke: 5px $white;
       text-decoration: none;
+      text-shadow: 2px 2px black;
       transition: $transition;
-      font-size: $base-size * 2;
       &:hover {
         color: $header-link-active-hover;
       }
@@ -57,53 +46,26 @@
   .mainMenu__scroll {
     @extend .mainMenu;
     &:after {
-      visibility: hidden;
       opacity: 0;
-      // background-image: linear-gradient(
-      //   180deg,
-      //   rgba(0, 0, 0, 1) 0%,
-      //   rgba(0, 0, 0, 0) 100%
-      // );
-    }
-    .link {
-      color: $lightWhite;
+      visibility: hidden;
     }
   }
 }
 
 .logoImg {
-  // box-shadow: 0px 25px 20px 0px rgba(0, 0, 0, 0.15);
-  // left: 2vw;
-  // position: absolute;
-  // top: 1vh;
-  // background-size: cover;
-  display: inline-block;
+  align-items: center;
+  display: flex;
+  display: flex;
   height: 10vh;
-
-  // fill: white;
-  transition: $transition;
-  // filter:
+  justify-content: center;
+  transition: all 0.5s;
   img {
-    // stroke: 5px $white;
-    // text-shadow: 2px 2px black;
     filter: invert(94%) sepia(1%) saturate(349%) hue-rotate(184deg)
       brightness(105%) contrast(95%) drop-shadow(2px 2px rgba(0, 0, 0, 1));
   }
 }
-
-.rootOnScroll {
-  height: 5vh;
-}
-
-.logoImgOnScroll {
-  img {
-    height: 5vh;
-
-    //left: 2vw;
-    //position: absolute;
-    //top: 1vh;
-    transition: $transition;
-  }
+.logoImg__scroll {
+  @extend .logoImg;
 }
 
 .logoImg:hover {
@@ -121,10 +83,21 @@
 
 @media only screen and (max-width: 1199px) {
   .mainMenu {
-    padding: 0;
-    a:not(:first-child) {
-      display: none;
-    }
+    height: 18vh;
+  }
+  .logoImg {
+    left: 5%;
+    position: absolute;
+    top: 2vh;
+  }
+  .logoImg__scroll {
+    left: 33%;
+    top: 2vh;
+  }
+
+  .link {
+    visibility: hidden;
+    opacity: 0;
   }
 }
 

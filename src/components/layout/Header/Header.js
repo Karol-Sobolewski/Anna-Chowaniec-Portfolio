@@ -1,79 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
-import { useHistory } from 'react-router';
 
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { HamburgerSqueeze } from 'react-animated-burgers';
 import { Burger } from '../../features/Burger/Burger';
+
 import styles from './Header.module.scss'; //eslint-disable-line
 
 const Component = ({ className, children, splash }) => {
   // const MenuItems = useSelector((state) => state.Menu);
   const MenuItems = useSelector((state) => state.menu.data);
-  const [spl, setSpl] = useState(false);
-  const [menuClass, setMenuClass] = useState();
+  const [active, setActive] = useState(false);
+  const [activeRWD, setActiveRWD] = useState(false);
 
-  // useEffect(() => {
-  //   setMenuClass(!splash);
-  // });
+  const toggleMenuButton = () => setActiveRWD(!activeRWD);
 
-  // useEffect(() => {
-  //   const scroll = document.getElementById(`scrollIndicator`);
-  //   const scrollPosition = scroll.getBoundingClientRect().top;
-  //   console.log(`scrollPosition`, scrollPosition);
-  //   window.addEventListener(`scroll`, function () {
-  //     if (scrollPosition && scrollPosition < 0) {
-  //       setMenuClass(true);
-  //       // console.log(menuClass);
-  //       // console.log(scrollPosition);
-  //     } else if (scrollPosition && scrollPosition >= 0) {
-  //       setMenuClass(false);
-  //     } else {
-  //       setMenuClass(true);
-  //     }
-  //   });
-  // });
+  const useOutsideMenu = (ref) => {
+    useEffect(() => {
+      function handleClickOutside(e) {
+        if (ref.current && !ref.current.contains(e.target)) {
+          setActiveRWD(false);
+          setActive(false);
+        }
+      }
+      document.addEventListener(`mousedown`, handleClickOutside);
+      return () => {
+        document.removeEventListener(`mousedown`, handleClickOutside);
+      };
+    }, [ref]);
+  };
 
-  // useEffect(() => {
-  //   window.onscroll = function (e) {
-  //     // called when the window is scrolled.
-  //     if (
-  //       splash &&
-  //       (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1)
-  //     ) {
-  //       setMenuClass(true);
-  //       console.log(menuClass);
-  //     } else if (
-  //       splash &&
-  //       (document.body.scrollTop < 1 || document.documentElement.scrollTop < 1)
-  //     ) {
-  //       setMenuClass(false);
-  //     } else {
-  //       setMenuClass(true);
-  //     }
-  //   };
-
-  // function scrollFunction() {
-  //   if (
-  //     document.body.scrollTop > 50 ||
-  //     document.documentElement.scrollTop > 50
-  //   ) {
-  //     setMenuClass(true);
-  //   } else {
-  //     setMenuClass(false);
-  //   }
-  // }
-  // window.onscroll = function () {
-  //   scrollFunction();
-  // };
-  // scrollFunction();
-  // });
-  const history = useHistory();
-
+  const menuRef = useRef(null);
+  useOutsideMenu(menuRef);
   return (
-    <header className={styles.root}>
+    <header className={styles.root} ref={menuRef}>
+      {/* <HamburgerSqueeze
+        className={styles.burgerButton}
+        id="burgerButton"
+        isActive={activeRWD}
+        onClick={toggleMenuButton}
+      /> */}
       <nav className={!splash ? styles.mainMenu : styles.mainMenu__scroll}>
-        <a href="/" className={styles.logoImg}>
+        <a
+          href="/"
+          className={splash ? styles.logoImg : styles.logoImg__scroll}
+        >
           <img
             type="image/svg+xml"
             src="/images/logo/logo.svg"
@@ -81,18 +53,22 @@ const Component = ({ className, children, splash }) => {
             aria-label="Logo"
           />
         </a>
+        {/* <div className={activeRWD ? styles.mainMenuRWD : null}> */}
         {MenuItems.map((item) => (
           <NavLink
             key={item._id}
             to={item.path}
             activeClassName="active"
+            onClick={() => setActiveRWD(false)}
             className={styles.link}
           >
             {item.name}
           </NavLink>
         ))}
+        {/* </div> */}
       </nav>
-      <Burger />
+
+      <Burger button={splash} />
     </header>
   );
 };

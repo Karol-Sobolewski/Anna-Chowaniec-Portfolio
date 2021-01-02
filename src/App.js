@@ -35,7 +35,6 @@ const App = () => {
       component={() => <GalleryPage galleryName={shortName} />}
     />
   ));
-
   return (
     <div className={styles.app}>
       <BrowserRouter>
