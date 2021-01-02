@@ -7,35 +7,32 @@ import { AnimatedSwitch } from 'react-router-transition';
 import './styles/bootstrap.scss';
 
 import styles from './App.module.scss';
-import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
 import { fetchMenu } from './redux/menuRedux';
 import { fetchPhotos } from './redux/photoRedux';
 import { fetchCategories } from './redux/categoryRedux';
+import { MainLayout } from './components/layout/MainLayout/MainLayout';
+import { HomePage } from './components/views/HomePage/HomePage';
 import { GalleryPage } from './components/common/GalleryPage/GalleryPage';
-import { routes } from './routes';
 
 const removeDiacritics = require(`diacritics`).remove;
 
 const App = () => {
-  // const Menu = useSelector((state) => state.Menu);
-
   const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     dispatch(fetchMenu());
     dispatch(fetchPhotos());
     dispatch(fetchCategories());
   }, []);
-  // const menu = useSelector((state) => state.menu.data);
-  // console.log(menu);
-  const routeComponents = routes.map(({ path, component, _id, render }) => (
+  const menu = useSelector((state) => state.menu.data);
+  const filtered = menu.filter((m) => m.component === `GalleryPage`);
+
+  const routeComponents = filtered.map(({ path, _id, shortName }) => (
     <Route
       exact
       path={`/${removeDiacritics(path).toLowerCase()}`}
       key={_id}
-      render={render}
-      component={component}
+      component={() => <GalleryPage galleryName={shortName} />}
     />
   ));
 
@@ -50,6 +47,7 @@ const App = () => {
             atActive={{ opacity: 1 }}
             className={styles.switchWrapper}
           >
+            <Route exact path="/" component={() => <HomePage />} />
             {routeComponents}
           </AnimatedSwitch>
         </MainLayout>
