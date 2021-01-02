@@ -11,33 +11,50 @@ const Component = ({ className, children }) => {
   const location = useLocation();
   // console.log(`params`, location.pathname);
   const [splash, setSplash] = useState(false);
-  useEffect(() => {
-    function scrollFunction() {
-      if (
-        document.body.scrollTop > 1 ||
-        document.documentElement.scrollTop > 1
-      ) {
-        setSplash(false);
-        console.log(`change class for scroll`);
-      } else {
-        setSplash(true);
-        console.log(`change class for top`);
-      }
+  const [margin, setMargin] = useState(true);
+
+  function scrollFunction() {
+    if (
+      (document.body.scrollTop > 1 || document.documentElement.scrollTop) > 1 &&
+      location.pathname === `/`
+    ) {
+      setSplash(false);
+      console.log(`change class for scroll`);
+    } else if (
+      (document.body.scrollTop <= 1 || document.documentElement.scrollTop) <=
+        1 &&
+      location.pathname === `/`
+    ) {
+      setSplash(true);
+      console.log(`change class for top`);
+    } else {
+      setMargin(false);
     }
+  }
+  useEffect(() => {
     if (location.pathname === `/`) {
       console.log(`scrollNow`); // Working
       window.onscroll = function () {
         scrollFunction(); // Scrolls anyway
       };
+      setSplash(true);
     } else {
       console.log(`shouldNotScroll`); // Working
       setSplash(false);
+    }
+  }, []);
+  useEffect(() => {
+    if (location.pathname !== `/`) {
+      setSplash(false);
+      setMargin(false);
     }
   });
   return (
     <div className={clsx(className, styles.root)}>
       <Header splash={splash} />
-      <div className={styles.content}>{children}</div>
+      <div className={margin ? styles.content__splash : styles.content}>
+        {children}
+      </div>
       <Footer />
     </div>
   );

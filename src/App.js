@@ -29,19 +29,15 @@ const App = () => {
   }, []);
   // const menu = useSelector((state) => state.menu.data);
   // console.log(menu);
-  const routeComponents = routes.map(({ path, component, _id, render }) => {
-    console.log(`comp`, component);
-    return (
-      <Route
-        exact
-        path={`/${removeDiacritics(path).toLowerCase()}`}
-        key={_id}
-        // galleryName={removeDiacritics(path).toLowerCase()}
-        render={render}
-        component={component}
-      />
-    );
-  });
+  const routeComponents = routes.map(({ path, component, _id, render }) => (
+    <Route
+      exact
+      path={`/${removeDiacritics(path).toLowerCase()}`}
+      key={_id}
+      render={render}
+      component={component}
+    />
+  ));
 
   return (
     <div className={styles.app}>

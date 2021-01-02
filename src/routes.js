@@ -9,10 +9,6 @@ const routes = [
     path: ``,
     component: HomePage,
   },
-  // {
-  //   path: `Oferta`,
-  //   component: Offer,
-  // },
   {
     path: `Śluby`,
     render: (props) => <GalleryPage {...props} galleryName="Śluby" />, //eslint-disable-line
@@ -25,6 +21,10 @@ const routes = [
     path: `Oferta`,
     component: GalleryPage,
   },
+  // {
+  //   path: `Oferta`,
+  //   component: Offer,
+  // },
   // {
   //   path: `Kontakt`,
   //   component: Contact,

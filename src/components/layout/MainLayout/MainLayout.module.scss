@@ -17,12 +17,32 @@
 
 @media only screen and (max-width: 1199px) {
   .content {
-    // margin: 25vh 0 10vh 0;
+    margin: 25vh 0 10vh 0;
+  }
+  .content__splash {
+    margin: 0 0 10vh 0;
   }
 }
 
 @media only screen and (min-width: 1200px) {
   .content {
-    // margin: 40vh 0 15vh 0;
+    margin: 40vh 0 15vh 0;
+  }
+  .content__splash {
+    margin: 0 0 15vh 0;
+    &:after {
+      background-image: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      content: "";
+      height: 20vh;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
   }
 }

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
+
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Burger } from '../../features/Burger/Burger';
@@ -9,7 +11,7 @@ const Component = ({ className, children, splash }) => {
   // const MenuItems = useSelector((state) => state.Menu);
   const MenuItems = useSelector((state) => state.menu.data);
   const [spl, setSpl] = useState(false);
-  const [menuClass, setMenuClass] = useState(!splash);
+  const [menuClass, setMenuClass] = useState();
 
   // useEffect(() => {
   //   setMenuClass(!splash);
@@ -66,17 +68,19 @@ const Component = ({ className, children, splash }) => {
   // };
   // scrollFunction();
   // });
+  const history = useHistory();
+
   return (
     <header className={styles.root}>
       <nav className={!splash ? styles.mainMenu : styles.mainMenu__scroll}>
-        <Link to="/" className={styles.logoImg}>
+        <a href="/" className={styles.logoImg}>
           <img
             type="image/svg+xml"
             src="/images/logo/logo.svg"
             className={styles.logoImg}
             aria-label="Logo"
           />
-        </Link>
+        </a>
         {MenuItems.map((item) => (
           <NavLink
             key={item._id}
