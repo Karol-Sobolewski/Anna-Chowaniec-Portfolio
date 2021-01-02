@@ -1,17 +1,18 @@
 @import "./styles/global.scss";
-
+@import "./styles/animations.scss";
 .app {
   text-align: center;
   .switchWrapper {
     position: relative;
-    height: 100%;
+    animation: fadein 0.3s;
 
-    min-height: 100vh;
-    > div {
-      // position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
+    > div:nth-child(1) {
+      position: relative;
+      animation: fadein 0.3s;
+    }
+    > div:nth-child(2) {
+      position: absolute;
+      display: none;
     }
   }
 }

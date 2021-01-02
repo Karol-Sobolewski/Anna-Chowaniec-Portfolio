@@ -1,10 +1,10 @@
 import { React } from 'react';
 import { shallow } from 'enzyme';
-import { ChildrenComponent } from './Children';
+import { GalleryPageComponent } from './GalleryPage';
 
-describe(`Component Children`, () => {
+describe(`Component GalleryPage`, () => {
   it(`should render without crashing`, () => {
-    const component = shallow(<ChildrenComponent />);
+    const component = shallow(<GalleryPageComponent />);
     expect(component).toBeTruthy();
   });
 });

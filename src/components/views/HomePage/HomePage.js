@@ -7,7 +7,7 @@ import { Slider } from '../../features/Slider/Slider';
 import { About } from '../../features/About/About';
 import { Work } from '../../features/Work/Work';
 // import Section from '../../layout/Section/Section';
-import styles from './Home.module.scss';
+import styles from './HomePage.module.scss';
 
 const Component = ({ className }) => (
   <div className={clsx(className, styles.root)}>
@@ -22,7 +22,7 @@ Component.propTypes = {
 };
 
 export {
-  Component as Home,
+  Component as HomePage,
   // Container as MainLayout,
-  Component as HomeComponent,
+  Component as HomePageComponent,
 };

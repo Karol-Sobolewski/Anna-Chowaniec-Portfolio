@@ -4,26 +4,25 @@
   // align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   height: 100%;
+  min-height: 100vh;
 }
 
 .content {
-  margin-bottom: 20vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  // align-items: center;
 }
 
 @media only screen and (max-width: 1199px) {
   .content {
-    margin-top: 25vh;
+    // margin: 25vh 0 10vh 0;
   }
 }
 
 @media only screen and (min-width: 1200px) {
   .content {
-    margin-top: 30vh;
+    // margin: 40vh 0 15vh 0;
   }
 }
