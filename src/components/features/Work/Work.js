@@ -15,16 +15,14 @@ const Component = ({ className, children }) => {
       <Container
         className={`${styles.container} d-flex flex-column justify-content-around align-items-center`}
       >
-        <div className={styles.workPhoto}>
-          <Link to="/slub">
-            <div className={styles.workDescription}>Fotografia Ślubna</div>
-          </Link>
-        </div>
-        <div className={styles.workPhoto}>
-          <Link to="/dzieci">
-            <div className={styles.workDescription}>Fotografia Dziecięca</div>
-          </Link>
-        </div>
+        <Link to="/sluby" className={styles.workPhoto}>
+          <img src="/images/photos/work/slub_14.jpg" alt="wedding" />
+          <div className={styles.workDescription}>Fotografia Ślubna</div>
+        </Link>
+        <Link to="/dzieci" className={styles.workPhoto}>
+          <img src="/images/photos/work/dzieci_17.jpg" alt="children" />
+          <div className={styles.workDescription}>Fotografia Dziecięca</div>
+        </Link>
         <main>{children}</main>
       </Container>
     </div>

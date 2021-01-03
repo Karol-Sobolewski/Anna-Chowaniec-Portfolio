@@ -30,11 +30,11 @@ $yellow: #ffff00;
 $background-bg: linear-gradient(90deg, #fdfbfb 0%, #ebedee 100%);
 
 /*Link*/
-$link-color: $black;
-$link-color-hover: $lightGreyBlue;
+$link-color: #3d4447;
+$link-color-active: #748187;
+$link-shadow: 3px 3px 2px #95a5ad;
 
 /*Button*/
-
 $button-main-bg-hover: $mint;
 $button-main-bg: $lightBlack;
 $button-main-text: $white;
@@ -46,7 +46,9 @@ $button-outline-text: $lightBlack;
 
 /*Header*/
 
+$logo-color: invert(24%) sepia(7%) saturate(680%) hue-rotate(152deg)
+  brightness(93%) contrast(87%) drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
+$logo-color-active: invert(54%) sepia(12%) saturate(331%) hue-rotate(154deg)
+  brightness(89%) contrast(87%) drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
+
 $header-bg: $lightGray;
-$header-link: $lightBlack;
-$header-link-active-hover: $lightGreyBlue;
-$header-link-active: $lightGreyBlue;

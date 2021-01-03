@@ -28,9 +28,9 @@ const Component = ({ className }) => {
         >
           {Homepage.images.map((image) => (
             <div key={image.id} data-src={image.src}>
-              <div className={styles.caption}>
+              {/* <div className={styles.caption}>
                 <p>{image.title}</p>
-              </div>
+              </div> */}
             </div>
           ))}
         </AutoplaySlider>

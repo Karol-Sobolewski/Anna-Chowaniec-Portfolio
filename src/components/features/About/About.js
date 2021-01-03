@@ -31,7 +31,7 @@ const Component = ({ className, children }) => {
             md={4}
             className="d-flex align-items-center justify-content-center mt-3 mt-lg-0"
           >
-            <p>{About.description}</p>
+            <h2>{About.description}</h2>
           </Col>
         </Row>
         <main>{children}</main>

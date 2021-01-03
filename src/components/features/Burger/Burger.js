@@ -54,6 +54,7 @@ const Component = ({ className, children, button }) => {
             to={item.path}
             activeClassName="active"
             onClick={toggleTrueFalse}
+            className={styles.link}
           >
             {item.name}
           </NavLink>

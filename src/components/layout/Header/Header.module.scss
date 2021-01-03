@@ -26,7 +26,7 @@
       z-index: -1;
     }
     .link {
-      color: $lightWhite;
+      color: white;
       font-size: $base-size * 2;
       font-weight: 700;
       margin-right: $base-size;
@@ -35,11 +35,16 @@
       text-shadow: 2px 2px black;
       transition: $transition;
       &:hover {
-        color: $header-link-active-hover;
+        color: $link-color-active;
       }
       &:global(.active) {
-        color: $header-link-active;
+        color: $link-color-active;
       }
+    }
+    .link__scroll {
+      @extend .link;
+      color: $link-color;
+      text-shadow: $link-shadow;
     }
   }
 
@@ -60,18 +65,21 @@
   justify-content: center;
   transition: all 0.5s;
   img {
-    filter: invert(94%) sepia(1%) saturate(349%) hue-rotate(184deg)
-      brightness(105%) contrast(95%) drop-shadow(2px 2px rgba(0, 0, 0, 1));
+    filter: invert(100%) sepia(18%) saturate(2%) hue-rotate(132deg)
+      brightness(110%) contrast(101%) drop-shadow(3px 3px 2px rgba(0, 0, 0, 1));
   }
 }
 .logoImg__scroll {
   @extend .logoImg;
+  img {
+    filter: $logo-color;
+  }
 }
 
-.logoImg:hover {
+.logoImg:hover,
+.logoImg__scroll:hover {
   img {
-    filter: invert(66%) sepia(64%) saturate(244%) hue-rotate(170deg)
-      brightness(85%) contrast(87%) drop-shadow(2px 2px rgba(0, 0, 0, 1));
+    filter: $logo-color-active;
   }
 }
 
@@ -91,7 +99,6 @@
     top: 2vh;
   }
   .logoImg__scroll {
-    left: 33%;
     top: 2vh;
   }
 
@@ -110,5 +117,51 @@
     a:not(:first-child) {
       display: flex;
     }
+  }
+}
+
+/* ExtraExtraLarge Devices, UltraWide Desktops  */
+@media (min-width: 1921px) {
+  .root {
+  }
+}
+
+/* ExtraLarge Devices, Desktops  */
+@media (min-width: 1200px) and (max-width: 1920px) {
+  .root {
+  }
+}
+/* Large Devices, Laptops, Large Tablets iPad Pro */
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+  .logoImg__scroll {
+    left: 40%;
+  }
+}
+
+/* Medium Devices, Tablets iPad */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .logoImg__scroll {
+    left: 35%;
+  }
+}
+
+/* Small Devices, Small tablets Large Phones */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .logoImg__scroll {
+    left: 30%;
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 0px) and (max-width: 479px) {
+  .logoImg__scroll {
+    left: 25%;
+  }
+}
+
+/* Extra Small Devices, Small Phones Landscape*/
+@media only screen and (max-height: 499px) {
+  .logoImg__scroll {
+    left: 45%;
   }
 }

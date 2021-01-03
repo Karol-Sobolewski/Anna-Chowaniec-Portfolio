@@ -8,11 +8,15 @@
   // height: 15vh;
   // bottom: 0;
   background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+  font-family: $font-title;
+  font-weight: 400;
   a {
     color: $link-color;
     text-decoration: none;
+    text-shadow: $link-shadow;
+
     :hover {
-      color: $link-color-hover;
+      color: $link-color-active;
     }
     p {
       font-size: 3vh;

@@ -14,6 +14,7 @@ import { fetchCategories } from './redux/categoryRedux';
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { HomePage } from './components/views/HomePage/HomePage';
 import { GalleryPage } from './components/common/GalleryPage/GalleryPage';
+import { Offer } from './components/views/Offer/Offer';
 
 const removeDiacritics = require(`diacritics`).remove;
 
@@ -48,6 +49,7 @@ const App = () => {
           >
             <Route exact path="/" component={() => <HomePage />} />
             {routeComponents}
+            <Route exact path="/oferta" component={() => <Offer />} />
           </AnimatedSwitch>
         </MainLayout>
       </BrowserRouter>

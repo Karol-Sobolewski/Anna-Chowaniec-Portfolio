@@ -60,7 +60,7 @@ const Component = ({ className, children, splash }) => {
             to={item.path}
             activeClassName="active"
             onClick={() => setActiveRWD(false)}
-            className={styles.link}
+            className={splash ? styles.link : styles.link__scroll}
           >
             {item.name}
           </NavLink>
