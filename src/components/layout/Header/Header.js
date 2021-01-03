@@ -7,6 +7,7 @@ import { HamburgerSqueeze } from 'react-animated-burgers';
 import { Burger } from '../../features/Burger/Burger';
 
 import styles from './Header.module.scss'; //eslint-disable-line
+const removeDiacritics = require(`diacritics`).remove;
 
 const Component = ({ className, children, splash }) => {
   // const MenuItems = useSelector((state) => state.Menu);
@@ -57,7 +58,7 @@ const Component = ({ className, children, splash }) => {
         {MenuItems.map((item) => (
           <NavLink
             key={item._id}
-            to={item.path}
+            to={removeDiacritics(item.shortName).toLowerCase()}
             activeClassName="active"
             onClick={() => setActiveRWD(false)}
             className={splash ? styles.link : styles.link__scroll}

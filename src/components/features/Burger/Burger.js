@@ -12,8 +12,11 @@ import styles from './Burger.module.scss';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
+const removeDiacritics = require(`diacritics`).remove;
+
 const Component = ({ className, children, button }) => {
   const MenuItems = useSelector((state) => state.menu.data);
+
   const [active, setActive] = useState(false);
   const toggleTrueFalse = () => setActive(!active);
   const useOutsideAlerter = (ref) => {
@@ -51,7 +54,7 @@ const Component = ({ className, children, button }) => {
         {MenuItems.map((item) => (
           <NavLink
             key={item._id}
-            to={item.path}
+            to={removeDiacritics(item.shortName).toLowerCase()}
             activeClassName="active"
             onClick={toggleTrueFalse}
             className={styles.link}

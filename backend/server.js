@@ -6,6 +6,7 @@ const mongoose = require(`mongoose`);
 const menusRoutes = require(`./routes/menus.routes`);
 const photosRoutes = require(`./routes/photos.routes`);
 const categoriesRoutes = require(`./routes/categories.routes`);
+const offersRoutes = require(`./routes/offers.routes`);
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, `../build`)));
 app.use(`/api`, menusRoutes);
 app.use(`/api`, photosRoutes);
 app.use(`/api`, categoriesRoutes);
+app.use(`/api`, offersRoutes);
 
 /* REACT WEBSITE */
 app.use(`*`, (req, res) => {

@@ -1,0 +1,84 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  font-family: $font-text;
+  // padding-bottom: 2vh;
+  .offerRow {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    overflow: auto;
+    padding-bottom: 2vh;
+    .offerColumn {
+      align-items: center;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      height: 90%;
+      justify-content: space-between;
+      margin: 2vh 2vw 2vh 2vw;
+      padding: 2vh 2vw 2vh 2vw;
+      text-align: center;
+      overflow: auto;
+    }
+  }
+}
+
+/* ExtraExtraLarge Devices, UltraWide Desktops  */
+@media (min-width: 1921px) {
+  .root {
+  }
+}
+
+/* ExtraLarge Devices, Desktops  */
+@media (min-width: 1200px) and (max-width: 1920px) {
+  .root {
+  }
+}
+/* Large Devices, Laptops, Large Tablets iPad Pro */
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+  .root {
+  }
+}
+
+/* Medium Devices, Tablets iPad */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .root {
+  }
+}
+
+/* Small Devices, Small tablets Large Phones */
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+  .root .offerRow .offerColumn {
+    height: auto;
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 0px) and (max-width: 479px) {
+  .root {
+  }
+}
+
+/* Extra Small Devices, Small Phones Landscape*/
+@media only screen and (max-height: 499px) {
+  .root .offerRow .offerColumn {
+    height: auto;
+  }
+}
+
+/* Media pointer*/
+@media (hover: hover) and (pointer: fine) {
+}
+
+/* Media touchable */
+@media (pointer: coarse) {
+  .root {
+  }
+}

@@ -33,6 +33,8 @@
     "react-dom": "^17.0.1",
     "react-image-gallery": "^1.0.8",
     "react-images": "^1.1.7",
+    "react-modal": "^3.12.1",
+    "react-modal-hook": "^3.0.0",
     "react-navigation-animated-switch": "^0.6.3",
     "react-photo-gallery": "^8.0.0",
     "react-redux": "^7.2.2",

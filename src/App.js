@@ -31,7 +31,7 @@ const App = () => {
   const routeComponents = filtered.map(({ path, _id, shortName }) => (
     <Route
       exact
-      path={`/${removeDiacritics(path).toLowerCase()}`}
+      path={`/${removeDiacritics(shortName).toLowerCase()}`}
       key={_id}
       component={() => <GalleryPage galleryName={shortName} />}
     />

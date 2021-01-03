@@ -35,7 +35,4 @@ Component.propTypes = {
   className: PropTypes.string,
 };
 
-export {
-  Component as {{pascalCase name}},
-  Component as {{pascalCase name}}Component,
-};
+export { Component as {{pascalCase name}}, Component as {{pascalCase name}}Component };

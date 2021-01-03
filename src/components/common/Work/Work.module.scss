@@ -7,6 +7,38 @@
   justify-content: center;
 }
 
+.hideModalButton {
+  align-items: center;
+  background: linear-gradient(-45deg, #cfd9df 0%, #abbdc7 100%);
+  color: $link-color;
+  border-radius: 20%;
+  border: none;
+  display: flex;
+  font-family: $font-title;
+  font-size: 2em;
+  height: 5vh;
+  justify-content: center;
+  outline: none;
+  position: absolute;
+  right: 2vh;
+  top: 2vh;
+  transition: background 1s ease-out;
+  width: 5vh;
+  z-index: 10;
+  &:hover {
+    color: $link-color-active;
+  }
+  p {
+    // color: blue;
+    // margin: 0;
+    // padding: 0;
+    margin-bottom: 0.3em;
+    // position: absolute;
+
+    // margin-bottom: 2em !important;
+  }
+}
+
 .container {
   height: 100%;
   max-width: 1400px;
@@ -14,15 +46,19 @@
 }
 
 .workPhoto {
-  width: 100%;
+  border: none;
   height: 40%;
-  // background-color: blue;
+  outline: none;
   position: relative;
+  width: 100%;
   img {
     border-radius: 25px;
-    width: 100%;
     height: 100%;
     object-fit: cover;
+    width: 100%;
+  }
+  &:hover .workDescription {
+    color: $link-color-active;
   }
 }
 .workDescription {
@@ -45,12 +81,6 @@
   transform: translate(0, -50%);
   transition: $transition;
   width: 50%;
-  &:hover {
-    color: $link-color-active;
-  }
-  &:global(.active) {
-    color: $link-color-active;
-  }
 }
 
 /*Devices over 1200 px*/
