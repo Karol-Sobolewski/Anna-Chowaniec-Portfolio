@@ -11,6 +11,8 @@ import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
 import { fetchMenu } from './redux/menuRedux';
 import { fetchPhotos } from './redux/photoRedux';
 import { fetchCategories } from './redux/categoryRedux';
+import { fetchDescriptions } from './redux/descriptionRedux';
+
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { HomePage } from './components/views/HomePage/HomePage';
 import { GalleryPage } from './components/common/GalleryPage/GalleryPage';
@@ -19,14 +21,24 @@ import { Offer } from './components/views/Offer/Offer';
 const removeDiacritics = require(`diacritics`).remove;
 
 const App = () => {
+  const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
+  const menu = useSelector((state) => state.menu.data);
+  const descriptions = useSelector((state) => state.descriptions.data);
+  const categories = useSelector((state) => state.categories.data);
+  const photos = useSelector((state) => state.photos.data);
   useEffect(() => {
-    dispatch(fetchMenu());
+    dispatch(fetchDescriptions());
     dispatch(fetchPhotos());
     dispatch(fetchCategories());
+    dispatch(fetchMenu());
+    if (menu && descriptions && categories && photos) {
+      setTimeout(() => {
+        setLoaded(true);
+      }, 500);
+    }
   }, []);
-  const menu = useSelector((state) => state.menu.data);
-  const filtered = menu.filter((m) => m.component === `GalleryPage`);
+  const filtered = menu.filter((item) => item.component === `GalleryPage`);
 
   const routeComponents = filtered.map(({ path, _id, shortName }) => (
     <Route
@@ -37,23 +49,27 @@ const App = () => {
     />
   ));
   return (
-    <div className={styles.app}>
-      <BrowserRouter>
-        <MainLayout>
-          <ScrollToTop />
-          <AnimatedSwitch
-            atEnter={{ opacity: 0 }}
-            atLeave={{ opacity: 0 }}
-            atActive={{ opacity: 1 }}
-            className={styles.switchWrapper}
-          >
-            <Route exact path="/" component={() => <HomePage />} />
-            {routeComponents}
-            <Route exact path="/oferta" component={() => <Offer />} />
-          </AnimatedSwitch>
-        </MainLayout>
-      </BrowserRouter>
-    </div>
+    <>
+      {loaded ? (
+        <div className={styles.app}>
+          <BrowserRouter>
+            <MainLayout>
+              <ScrollToTop />
+              <AnimatedSwitch
+                atEnter={{ opacity: 0 }}
+                atLeave={{ opacity: 0 }}
+                atActive={{ opacity: 1 }}
+                className={styles.switchWrapper}
+              >
+                <Route exact path="/" component={() => <HomePage />} />
+                {routeComponents}
+                <Route exact path="/oferta" component={() => <Offer />} />
+              </AnimatedSwitch>
+            </MainLayout>
+          </BrowserRouter>
+        </div>
+      ) : null}
+    </>
   );
 };
 

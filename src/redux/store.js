@@ -6,12 +6,14 @@ import menuReducer from './menuRedux';
 import photoReducer from './photoRedux';
 import categoryReducer from './categoryRedux';
 import offerReducer from './offerRedux';
+import descriptionReducer from './descriptionRedux';
 
 const reducers = {
   menu: menuReducer,
   photos: photoReducer,
   categories: categoryReducer,
   offers: offerReducer,
+  descriptions: descriptionReducer,
 };
 
 // add blank reducers for initial state properties without reducers

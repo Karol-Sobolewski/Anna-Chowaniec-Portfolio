@@ -12,8 +12,9 @@ import styles from './Slider.module.scss';
 
 const Component = ({ className }) => {
   const AutoplaySlider = withAutoplay(AwesomeSlider);
-  const Homepage = useSelector((state) => state.Homepage);
-
+  const allPages = useSelector((state) => state.descriptions.data);
+  const sliderPage = allPages.filter((item) => item.page === `slider`)[0];
+  console.log(sliderPage);
   return (
     <div className={clsx(className, styles.root)}>
       <Container className={styles.container}>
@@ -26,7 +27,7 @@ const Component = ({ className }) => {
           bullets={false}
           fillParent
         >
-          {Homepage.images.map((image) => (
+          {sliderPage.images.map((image) => (
             <div key={image.id} data-src={image.src}>
               {/* <div className={styles.caption}>
                 <p>{image.title}</p>

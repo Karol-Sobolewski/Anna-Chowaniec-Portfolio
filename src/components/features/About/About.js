@@ -10,28 +10,37 @@ import styles from './About.module.scss';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({ className, children }) => {
-  const About = useSelector((state) => state.About);
-  console.log(About);
+  const allPages = useSelector((state) => state.descriptions.data);
+  const aboutPage = allPages.filter((item) => item.page === `about`)[0];
   return (
     <div className={clsx(className, styles.root)}>
       <Container
         fluid
         className={`${styles.container} d-flex flex-column justify-content-center`}
       >
+        <h2>{aboutPage.heading}</h2>
         <Row className="row-cols-1 row-cols-md-4 justify-content-around">
           <Col
             md={4}
             className="d-flex align-items-center justify-content-center mb-3 mb-lg-0"
           >
             <div className={styles.aboutImage}>
-              <img src={About.image.src} alt={About.image.title} />
+              <img
+                src={aboutPage.images[0].src}
+                alt={aboutPage.images[0].title}
+              />
             </div>
           </Col>
           <Col
             md={4}
-            className="d-flex align-items-center justify-content-center mt-3 mt-lg-0"
+            className="d-flex flex-column align-items-center justify-content-center mt-3 mt-lg-0"
           >
-            <h2>{About.description}</h2>
+            <Row>
+              <h3>{aboutPage.description[0].heading}</h3>
+            </Row>
+            <Row>
+              <p>{aboutPage.description[0].text}</p>
+            </Row>
           </Col>
         </Row>
         <main>{children}</main>

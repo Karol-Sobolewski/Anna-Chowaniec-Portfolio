@@ -7,7 +7,7 @@ const menusRoutes = require(`./routes/menus.routes`);
 const photosRoutes = require(`./routes/photos.routes`);
 const categoriesRoutes = require(`./routes/categories.routes`);
 const offersRoutes = require(`./routes/offers.routes`);
-
+const descriptionsRoutes = require(`./routes/descriptions.routes`);
 const app = express();
 
 /* MIDDLEWARE */
@@ -32,6 +32,7 @@ app.use(`/api`, menusRoutes);
 app.use(`/api`, photosRoutes);
 app.use(`/api`, categoriesRoutes);
 app.use(`/api`, offersRoutes);
+app.use(`/api`, descriptionsRoutes);
 
 /* REACT WEBSITE */
 app.use(`*`, (req, res) => {
