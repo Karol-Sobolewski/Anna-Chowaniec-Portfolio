@@ -48,7 +48,7 @@ app.use(`/api`, (req, res) => {
 
 const dbURI =
   process.env.NODE_ENV === `production`
-    ? `mongodb+srv://${process.env.DB_LOGIN}:${process.env.DB_PASS}@cluster0.q4foz.mongodb.net/cookieGoDB?retryWrites=true&w=majority`
+    ? `mongodb+srv://${process.env.DB_LOGIN}:${process.env.DB_PASS}@cluster0.59fuh.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
     : `mongodb://localhost:27017/ChowaniecDB`;
 
 mongoose.connect(dbURI, {
