@@ -9,7 +9,6 @@ import './styles/bootstrap.scss';
 import styles from './App.module.scss';
 import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
 import { fetchMenu } from './redux/menuRedux';
-import { fetchPhotos } from './redux/photoRedux';
 import { fetchCategories } from './redux/categoryRedux';
 import { fetchDescriptions } from './redux/descriptionRedux';
 
@@ -17,6 +16,7 @@ import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { HomePage } from './components/views/HomePage/HomePage';
 import { GalleryPage } from './components/common/GalleryPage/GalleryPage';
 import { Offer } from './components/views/Offer/Offer';
+import { Contact } from './components/views/Contact/Contact';
 
 const removeDiacritics = require(`diacritics`).remove;
 
@@ -26,13 +26,11 @@ const App = () => {
   const menu = useSelector((state) => state.menu.data);
   const descriptions = useSelector((state) => state.descriptions.data);
   const categories = useSelector((state) => state.categories.data);
-  const photos = useSelector((state) => state.photos.data);
   useEffect(() => {
     dispatch(fetchDescriptions());
-    dispatch(fetchPhotos());
     dispatch(fetchCategories());
     dispatch(fetchMenu());
-    if (menu && descriptions && categories && photos) {
+    if (menu && descriptions && categories) {
       setTimeout(() => {
         setLoaded(true);
       }, 500);
@@ -64,6 +62,7 @@ const App = () => {
                 <Route exact path="/" component={() => <HomePage />} />
                 {routeComponents}
                 <Route exact path="/oferta" component={() => <Offer />} />
+                <Route exact path="/kontakt" component={() => <Contact />} />
               </AnimatedSwitch>
             </MainLayout>
           </BrowserRouter>

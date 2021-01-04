@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Gallery from 'react-photo-gallery';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 // import { useDispatch } from 'react-redux';
@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { Container, Row, Col } from 'react-bootstrap';
+import { fetchPhotos } from '../../../redux/photoRedux';
+
 import styles from './GalleryPage.module.scss';
 
 const removeDiacritics = require(`diacritics`).remove;
@@ -16,8 +18,12 @@ const removeDiacritics = require(`diacritics`).remove;
 const Component = ({ className, children, galleryName }) => {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
-  console.log(removeDiacritics(galleryName).toLowerCase());
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // const dispatch = useDispatch();
+    dispatch(fetchPhotos());
+  }, []);
   const allPhotos = useSelector((state) => state.photos.data);
   const photos = allPhotos.filter(
     (photo) =>
