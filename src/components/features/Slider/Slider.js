@@ -14,7 +14,7 @@ const Component = ({ className }) => {
   const AutoplaySlider = withAutoplay(AwesomeSlider);
   const allPages = useSelector((state) => state.descriptions.data);
   const sliderPage = allPages.filter((item) => item.page === `slider`)[0];
-  console.log(sliderPage);
+  console.log(allPages);
   return (
     <div className={clsx(className, styles.root)}>
       <Container className={styles.container}>

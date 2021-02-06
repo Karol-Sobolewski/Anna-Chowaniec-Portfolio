@@ -17,6 +17,8 @@ import { HomePage } from './components/views/HomePage/HomePage';
 import { GalleryPage } from './components/common/GalleryPage/GalleryPage';
 import { Offer } from './components/views/Offer/Offer';
 import { Contact } from './components/views/Contact/Contact';
+import { Dashboard } from './components/views/Dashboard/Dashboard';
+import ProtectedRoute from './auth/protected-route';
 
 const removeDiacritics = require(`diacritics`).remove;
 
@@ -63,6 +65,8 @@ const App = () => {
                 {routeComponents}
                 <Route exact path="/oferta" component={() => <Offer />} />
                 <Route exact path="/kontakt" component={() => <Contact />} />
+                <Route exact path="/panel" component={() => <Dashboard />} />
+                {/* <ProtectedRoute path="/panel" component={Dashboard} /> */}
               </AnimatedSwitch>
             </MainLayout>
           </BrowserRouter>

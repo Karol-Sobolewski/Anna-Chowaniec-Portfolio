@@ -7,10 +7,12 @@ const createActionName = (name) => `app/${reducerName}/${name}`;
 const FETCH_START = createActionName(`FETCH_START`);
 const FETCH_SUCCESS = createActionName(`FETCH_SUCCESS`);
 const FETCH_ERROR = createActionName(`FETCH_ERROR`);
+const ADD_PHOTO = createActionName(`ADD_PHOTO`);
 
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
+export const addNewPhoto = (payload) => ({ payload, type: ADD_PHOTO });
 
 export const fetchPhotos = () => (dispatch) => {
   dispatch(fetchStarted());
@@ -22,6 +24,24 @@ export const fetchPhotos = () => (dispatch) => {
     .catch((err) => {
       dispatch(fetchError(err.message || true));
     });
+};
+
+export const addPhotoRequest = (data) => async (dispatch) => {
+  dispatch(fetchStarted());
+  try {
+    const res = await Axios.post(`${API_URL}/photos`, data, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+      },
+    });
+    console.log(data);
+    console.log(res.data);
+    // dispatch(addPhoto(res.data));
+    // dispatch(endRequest({ name: ADD_PHOTO }));
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+    // dispatch(errorRequest({ name: ADD_PHOTO, error: e.message }));
+  }
 };
 
 export default function reducer(statePart = [], action = {}) {
@@ -52,6 +72,17 @@ export default function reducer(statePart = [], action = {}) {
           active: false,
           error: action.payload,
         },
+      };
+    }
+
+    case ADD_PHOTO: {
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+        },
+        data: [...statePart.data, action.payload],
       };
     }
     default:

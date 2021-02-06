@@ -32,7 +32,8 @@ $background-bg: linear-gradient(90deg, #fdfbfb 0%, #ebedee 100%);
 /*Link*/
 $link-color: #3d4447;
 $link-color-active: #748187;
-$link-shadow: 3px 3px 2px #95a5ad;
+// $link-shadow: 3px 3px 2px #95a5ad;
+$link-shadow: none;
 
 /*Button*/
 $button-main-bg-hover: $mint;
