@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { useAuth0 } from '@auth0/auth0-react';
+// import { useAuth0 } from '@auth0/auth0-react';
 
 import ImageUploader from 'react-images-upload';
 
@@ -13,7 +13,7 @@ import { addPhotoRequest } from '../../../redux/photoRedux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({ className, children }) => {
-  const { user } = useAuth0();
+  // const { user } = useAuth0();
   const dispatch = useDispatch();
   const [photo, setPhoto] = useState({
     file: null,
@@ -39,9 +39,9 @@ const Component = ({ className, children }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (user) {
-      setPhoto({ ...photo, login: true });
-    }
+    // if (user) {
+    //   setPhoto({ ...photo, login: true });
+    // }
     const formData = new FormData();
     for (const key of [`category`, `title`, `login`]) {
       formData.append(key, photo[key]);

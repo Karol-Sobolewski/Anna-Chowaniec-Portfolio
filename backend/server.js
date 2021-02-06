@@ -50,7 +50,6 @@ app.use(`/api`, descriptionsRoutes);
 app.use(`*`, (req, res) => {
   res.sendFile(path.join(__dirname, `../build/index.html`));
   // res.send(req.oidc.isAuthenticated());
-  // console.log(`req.oidc`, req.oidc);
 });
 
 /* API ERROR PAGES */
