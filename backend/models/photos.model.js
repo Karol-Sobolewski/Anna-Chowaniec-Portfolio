@@ -1,10 +1,10 @@
 const mongoose = require(`mongoose`);
 
 const photoSchema = new mongoose.Schema({
-  src: { type: String, required: true },
+  src: { type: String },
   title: { type: String, required: true },
-  width: { type: Number, required: true },
-  height: { type: Number, required: true },
+  width: { type: Number },
+  height: { type: Number },
   category: {
     type: String,
     required: true,

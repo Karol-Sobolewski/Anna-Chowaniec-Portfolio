@@ -15,8 +15,8 @@ router.get(`/photos`, async (req, res) => {
 });
 
 router.post(`/photos`, async (req, res) => {
-  res.send(req.oidc.isAuthenticated());
-  console.log(`re2`, req.oidc);
+  // res.send(req.oidc.isAuthenticated());
+  console.log(`auth`, req.body);
   if (req.body.login) {
     if (!req.files) {
       return res.status(400).json({ message: `no files uploaded` });
@@ -39,13 +39,13 @@ router.post(`/photos`, async (req, res) => {
       req.body.title
     }_${uniqid()}.${fileExtension}`;
 
-    // file.mv(`./public/${filePath}`, (err) => {
-    //   if (err) {
-    //     console.err(err);
-    //     return res.status(500).send(err);
-    //   }
-    //   res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-    // });
+    file.mv(`./public/${filePath}`, (err) => {
+      if (err) {
+        console.err(err);
+        return res.status(500).send(err);
+      }
+      res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+    });
 
     const newPhoto = new Photo({
       title: req.body.title,
@@ -54,7 +54,7 @@ router.post(`/photos`, async (req, res) => {
       width: 1,
       height: 1,
     });
-    // await newPhoto.save();
+    await newPhoto.save();
     // res.json(newPhoto);
   }
 });

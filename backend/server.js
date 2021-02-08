@@ -52,6 +52,11 @@ app.use(`*`, (req, res) => {
   // res.send(req.oidc.isAuthenticated());
 });
 
+app.get(`/login`, function (req, res) {
+  res.redirect(`/panel`);
+  req.oidc.isAuthenticated();
+});
+
 /* API ERROR PAGES */
 app.use(`/api`, (req, res) => {
   res.status(404).send({ data: `Not found...` });

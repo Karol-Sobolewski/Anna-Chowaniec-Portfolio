@@ -65,8 +65,8 @@ const App = () => {
                 {routeComponents}
                 <Route exact path="/oferta" component={() => <Offer />} />
                 <Route exact path="/kontakt" component={() => <Contact />} />
-                <Route exact path="/panel" component={() => <Dashboard />} />
-                {/* <ProtectedRoute path="/panel" component={Dashboard} /> */}
+                {/* <Route exact path="/panel" component={() => <Dashboard />} /> */}
+                <ProtectedRoute path="/panel" component={Dashboard} />
               </AnimatedSwitch>
             </MainLayout>
           </BrowserRouter>

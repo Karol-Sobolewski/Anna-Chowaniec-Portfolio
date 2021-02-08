@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 // import { useDispatch } from 'react-redux';
-// import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -15,8 +15,8 @@ import { Button } from '../../common/Button/Button';
 const Component = ({ className, children }) => {
   console.log(`Dashboard`);
   // const dispatch = useDispatch();
-  // const { loginWithRedirect } = useAuth0();
-  // const { logout } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
+  const { logout } = useAuth0();
   useEffect(() => {
     // dispatch(actionName(`whatToDispatch`));
   }, []);
@@ -30,9 +30,9 @@ const Component = ({ className, children }) => {
             <Button
               type="button"
               name="Login"
-              // onClick={() => loginWithRedirect()}
+              onClick={() => loginWithRedirect()}
             />
-            {/* <Button type="button" name="Logout" onClick={() => logout()} /> */}
+            <Button type="button" name="Logout" onClick={() => logout()} />
           </Col>
         </Row>
         <main>{children}</main>
