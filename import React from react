@@ -1,0 +1,26 @@
+* [33mf98c9ee[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m Add authentication for frontend
+* [33m085ef7a[m Try to add login with Auth0
+* [33m6a1c852[m Try to add login with Auth0
+* [33ma1a3e66[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31mheroku/main[m[33m)[m Try to add photos to heroku
+* [33m8d67607[m Add Contact page
+* [33mc15af28[m Deploy to Heroku
+* [33mbc2a82a[m Transfer slider data to DB
+* [33m516003d[m Add offers modal
+* [33me030006[m Add backgroud photos for Work component & Move Work component to Offer  & Fix styling
+* [33m6c35f6c[m Fix RWD menu
+* [33maf14735[m Change mapping of routes only for Gallery
+* [33m6c450e8[m Fix navigation transition
+* [33m1cd35a6[m Add data to DB && Make new homepage design & Add single page for multiple galleries
+* [33m3865f12[m Add wedding gallery & Prepare work view on homepage & Change layout of main menu according to client's preferences
+* [33mad1c8c5[m Add RWD  menu & Add image gallery for children photography
+* [33me4dd1a2[m Add  adn  [Bug] - #root is not 100% of browser window
+* [33me4d6602[m Add Blueprint templates
+* [33m7d010a1[m Fix styling for Header and Home components
+* [33mdcaa4bf[m Add slider for homepage & Redo menu and routes from initial state
+* [33mb37eca2[m Fix logo dir folder
+* [33m7daff2c[m Remove photos from git repo
+* [33mb6fc9e8[m Add basic menu and logo
+* [33m013a370[m Add routing and basic styles
+* [33m397ce22[m Add eslint
+* [33m1e3d966[m Init project
+* [33m327ca7c[m Initial commit
