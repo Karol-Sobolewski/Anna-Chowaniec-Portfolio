@@ -7,10 +7,15 @@ const createActionName = (name) => `app/${reducerName}/${name}`;
 const FETCH_START = createActionName(`FETCH_START`);
 const FETCH_SUCCESS = createActionName(`FETCH_SUCCESS`);
 const FETCH_ERROR = createActionName(`FETCH_ERROR`);
+const UPDATE_DESCRIPTION = createActionName(`UPDATE_DESCRIPTION`);
 
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
+export const updateDescription = (payload) => ({
+  payload,
+  type: UPDATE_DESCRIPTION,
+});
 
 export const fetchDescriptions = () => (dispatch) => {
   dispatch(fetchStarted());
@@ -22,6 +27,19 @@ export const fetchDescriptions = () => (dispatch) => {
     .catch((err) => {
       dispatch(fetchError(err.message || true));
     });
+};
+
+export const editDescriptionRequest = (descr) => async (dispatch) => {
+  dispatch(fetchStarted());
+  console.log(`put`);
+  try {
+    const res = await Axios.put(`${API_URL}/descriptions/${descr._id}`, descr);
+
+    await new Promise((resolve) => resolve());
+    dispatch(updateDescription(res.data));
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
 };
 
 export default function reducer(statePart = [], action = {}) {
@@ -52,6 +70,34 @@ export default function reducer(statePart = [], action = {}) {
           active: false,
           error: action.payload,
         },
+      };
+    }
+    case UPDATE_DESCRIPTION: {
+      console.log(`state`, statePart);
+      console.log(`action`, action.payload);
+      return {
+        ...statePart,
+        // data: statePart.data.map((data) => {
+        //   if (data._id === action.payload._id) {
+        //     return {
+        //       ...action.payload,
+        //     };
+        //   }
+        //   return data;
+        // }),
+        // data: action.p,
+        // activePost: action.payload,
+        // data: statePart.data.map((data) => {
+        //   console.log(`2`, data);
+
+        //   if (data.id === action.payload.id) {
+        //     return {
+        //       ...action.payload,
+        //     };
+        //   }
+        //   console.log(`3`, data);
+        //   return data;
+        // }),
       };
     }
     default:

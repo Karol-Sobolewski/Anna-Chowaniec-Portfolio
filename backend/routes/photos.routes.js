@@ -2,6 +2,8 @@ const express = require(`express`);
 const router = express.Router();
 const Photo = require(`../models/photos.model`);
 const uniqid = require(`uniqid`);
+require("dotenv").config(); //eslint-disable-line
+const { auth, requiresAuth } = require(`express-openid-connect`);
 
 router.get(`/photos`, async (req, res) => {
   try {
@@ -14,7 +16,7 @@ router.get(`/photos`, async (req, res) => {
   }
 });
 
-router.post(`/photos`, async (req, res) => {
+router.post(`/photos`, requiresAuth(), async (req, res) => {
   // res.send(req.oidc.isAuthenticated());
   console.log(`auth`, req.body);
   if (req.body.login) {

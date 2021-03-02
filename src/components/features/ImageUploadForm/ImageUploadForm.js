@@ -62,6 +62,9 @@ const Component = ({ className, children }) => {
       >
         <input name="title" type="text" placeholder="Nazwa" />
         <select name="category" id="category">
+          <option value="" selected disabled hidden>
+            Wybierz
+          </option>
           <option value="children">Fotografia dziecięca</option>
           <option value="wedding">Fotografia ślubna</option>
         </select>

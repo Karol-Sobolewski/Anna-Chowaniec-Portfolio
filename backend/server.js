@@ -3,6 +3,8 @@ const cors = require(`cors`);
 const path = require(`path`);
 const mongoose = require(`mongoose`);
 const fileUpload = require(`express-fileupload`);
+const jwt = require(`jsonwebtoken`);
+const bodyParser = require(`body-parser`);
 
 const menusRoutes = require(`./routes/menus.routes`);
 const photosRoutes = require(`./routes/photos.routes`);
@@ -10,9 +12,11 @@ const categoriesRoutes = require(`./routes/categories.routes`);
 const offersRoutes = require(`./routes/offers.routes`);
 const descriptionsRoutes = require(`./routes/descriptions.routes`);
 require("dotenv").config(); //eslint-disable-line
-const { auth } = require(`express-openid-connect`);
+const { auth, requiresAuth } = require(`express-openid-connect`);
 
 const app = express();
+
+app.use(bodyParser.json());
 
 app.use(
   auth({
@@ -47,14 +51,20 @@ app.use(`/api`, offersRoutes);
 app.use(`/api`, descriptionsRoutes);
 
 /* REACT WEBSITE */
+// app.get(`/panel`, function (req, res) {
+//   // req.logout();
+//   console.log(`req`);
+//   // res.redirect('/');
+// });
 app.use(`*`, (req, res) => {
+  // console.log(auth);
+  console.log(req.oidc.isAuthenticated());
   res.sendFile(path.join(__dirname, `../build/index.html`));
   // res.send(req.oidc.isAuthenticated());
 });
 
-app.get(`/login`, function (req, res) {
-  res.redirect(`/panel`);
-  req.oidc.isAuthenticated();
+app.use(`/dash`, (req, res) => {
+  console.log(`log`);
 });
 
 /* API ERROR PAGES */

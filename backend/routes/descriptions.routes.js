@@ -16,4 +16,29 @@ router.get(`/descriptions`, async (req, res) => {
   }
 });
 
+router.put(`/descriptions/:id`, async (req, res) => {
+  try {
+    const result = await Description.findById(req.body._id);
+    // console.log(`result`, result);
+    // console.log(`req.body`, req.body);
+    if (result) {
+      /* eslint-disable */
+      for (const prop in req.body) {
+        result[prop] = req.body[prop];
+      }
+      await result.save();
+      res.json(result);
+    }
+    // if (result) {
+    //   for (const prop in req.body) {
+    //     result[prop] = req.body[prop];
+    //   }
+    // await result.save();
+    // res.json(result);
+    else res.status(404).json({ message: `Not found...` });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

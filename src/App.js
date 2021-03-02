@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { BrowserRouter, Route } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
+import { userContext } from './userContext';
 // import { useSelector } from 'react-redux';
 import './styles/bootstrap.scss';
 
@@ -24,6 +24,8 @@ const removeDiacritics = require(`diacritics`).remove;
 
 const App = () => {
   const [loaded, setLoaded] = useState(false);
+  const [auth, setAuth] = useState(true);
+  const providerValue = useMemo(() => ({ auth, setAuth }), [auth, setAuth]);
   const dispatch = useDispatch();
   const menu = useSelector((state) => state.menu.data);
   const descriptions = useSelector((state) => state.descriptions.data);
@@ -61,12 +63,14 @@ const App = () => {
                 atActive={{ opacity: 1 }}
                 className={styles.switchWrapper}
               >
-                <Route exact path="/" component={() => <HomePage />} />
-                {routeComponents}
-                <Route exact path="/oferta" component={() => <Offer />} />
-                <Route exact path="/kontakt" component={() => <Contact />} />
-                {/* <Route exact path="/panel" component={() => <Dashboard />} /> */}
-                <ProtectedRoute path="/panel" component={Dashboard} />
+                <userContext.Provider value={providerValue}>
+                  <Route exact path="/" component={() => <HomePage />} />
+                  {routeComponents}
+                  <Route exact path="/oferta" component={() => <Offer />} />
+                  <Route exact path="/kontakt" component={() => <Contact />} />
+                  <Route exact path="/panel" component={() => <Dashboard />} />
+                </userContext.Provider>
+                {/* <ProtectedRoute path="/dash" component={Dashboard} /> */}
               </AnimatedSwitch>
             </MainLayout>
           </BrowserRouter>
