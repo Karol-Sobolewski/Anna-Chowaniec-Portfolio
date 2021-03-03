@@ -8,12 +8,16 @@ const FETCH_START = createActionName(`FETCH_START`);
 const FETCH_SUCCESS = createActionName(`FETCH_SUCCESS`);
 const FETCH_ERROR = createActionName(`FETCH_ERROR`);
 const ADD_PHOTO = createActionName(`ADD_PHOTO`);
+const UPDATE_PHOTO = createActionName(`UPDATE_PHOTO`);
 
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
 export const addNewPhoto = (payload) => ({ payload, type: ADD_PHOTO });
-
+export const updatePhoto = (payload) => ({
+  payload,
+  type: UPDATE_PHOTO,
+});
 export const fetchPhotos = () => (dispatch) => {
   dispatch(fetchStarted());
 
@@ -36,11 +40,20 @@ export const addPhotoRequest = (data) => async (dispatch) => {
     });
     console.log(data);
     console.log(res.data);
-    // dispatch(addPhoto(res.data));
-    // dispatch(endRequest({ name: ADD_PHOTO }));
   } catch (err) {
     dispatch(fetchError(err.message || true));
-    // dispatch(errorRequest({ name: ADD_PHOTO, error: e.message }));
+  }
+};
+
+export const editPhotoRequest = (photo) => async (dispatch) => {
+  dispatch(fetchStarted());
+  try {
+    const res = await Axios.put(`${API_URL}/photos/${photo._id}`, photo);
+
+    await new Promise((resolve) => resolve());
+    dispatch(updatePhoto(res.data));
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
   }
 };
 
@@ -83,6 +96,22 @@ export default function reducer(statePart = [], action = {}) {
           error: false,
         },
         data: [...statePart.data, action.payload],
+      };
+    }
+
+    case UPDATE_PHOTO: {
+      console.log(`state`, statePart);
+      console.log(`action`, action.payload);
+      return {
+        ...statePart,
+        data: statePart.data.map((data) => {
+          if (data._id === action.payload._id) {
+            return {
+              ...action.payload,
+            };
+          }
+          return data;
+        }),
       };
     }
     default:

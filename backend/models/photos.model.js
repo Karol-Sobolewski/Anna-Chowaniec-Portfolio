@@ -10,6 +10,7 @@ const photoSchema = new mongoose.Schema({
     required: true,
     ref: `Category`,
   },
+  slider: { type: Boolean },
 });
 
 module.exports = mongoose.model(`Photo`, photoSchema);

@@ -1,17 +1,5 @@
 @import "../../../styles/settings.scss";
 
-.root {
-  background: none;
-  background: rgba(66, 66, 66, 0.3);
-  border-radius: 50%;
-  border: none;
-  color: black;
-  height: 50px;
-  outline: none;
-  width: 50px;
-  font-family: $font-text;
-}
-
 /* ExtraExtraLarge Devices, UltraWide Desktops  */
 @media (min-width: 1921px) {
   .root {

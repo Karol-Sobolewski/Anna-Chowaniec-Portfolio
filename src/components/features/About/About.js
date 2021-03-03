@@ -17,7 +17,7 @@ const Component = ({ className, children }) => {
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
   const aboutPage = allPages.filter((item) => item.page === `about`)[0];
-  const { auth, SetAuth } = useContext(userContext);
+  const { auth } = useContext(userContext);
   const [about, setAbout] = useState({
     ...aboutPage,
   });
@@ -35,7 +35,8 @@ const Component = ({ className, children }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(about);
-    // dispatch(editDescriptionRequest);
+    dispatch(editDescriptionRequest(about));
+    setEdit(false);
   };
 
   return (
@@ -61,6 +62,9 @@ const Component = ({ className, children }) => {
             md={4}
             className="d-flex flex-column align-items-center justify-content-center mt-3 mt-lg-0"
           >
+            {auth ? (
+              <Button onClick={() => setEdit(!edit)} edit={edit} auth={auth} />
+            ) : null}
             <form
               action="#"
               method="post"
@@ -77,16 +81,6 @@ const Component = ({ className, children }) => {
                 ) : (
                   <h3>{aboutPage.description[0].heading}</h3>
                 )}
-                {auth && !edit ? (
-                  <button type="button" onClick={() => setEdit(true)}>
-                    <FontAwesomeIcon icon={faPencilAlt} />
-                  </button>
-                ) : null}
-                {auth && edit ? (
-                  <button type="button" onClick={() => setEdit(false)}>
-                    <FontAwesomeIcon icon={faTimes} />
-                  </button>
-                ) : null}
               </Row>
               <Row>
                 {auth && edit ? (
@@ -101,7 +95,7 @@ const Component = ({ className, children }) => {
                   <h3>{aboutPage.description[0].text}</h3>
                 )}
               </Row>
-              {auth && edit ? <button type="submit">Wyślij</button> : null}
+              {auth && edit ? <Button type="submit" name="Wyślij" /> : null}
             </form>
           </Col>
         </Row>

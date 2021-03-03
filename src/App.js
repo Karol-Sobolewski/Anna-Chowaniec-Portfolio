@@ -11,6 +11,7 @@ import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
 import { fetchMenu } from './redux/menuRedux';
 import { fetchCategories } from './redux/categoryRedux';
 import { fetchDescriptions } from './redux/descriptionRedux';
+import { fetchPhotos } from './redux/photoRedux';
 
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { HomePage } from './components/views/HomePage/HomePage';
@@ -32,6 +33,7 @@ const App = () => {
   const categories = useSelector((state) => state.categories.data);
   useEffect(() => {
     dispatch(fetchDescriptions());
+    dispatch(fetchPhotos());
     dispatch(fetchCategories());
     dispatch(fetchMenu());
     if (menu && descriptions && categories) {

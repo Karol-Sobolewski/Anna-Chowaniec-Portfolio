@@ -1,0 +1,122 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  background-color: white;
+  display: flex;
+  left: 5%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: absolute;
+  top: 80vh;
+  width: 90vw;
+  height: 10vh;
+  z-index: 10;
+  .photoPick {
+    display: flex;
+    flex-direction: row;
+    height: 20vh;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    width: 50%;
+    .photoSlide {
+      background: none;
+      border: none;
+      height: 10vh;
+      outline: none;
+      padding: 0 2px 0 2px;
+      position: relative;
+      width: 50%;
+      img {
+        background-color: white;
+        height: 10vh;
+        object-fit: contain;
+        width: 10vh;
+      }
+      .icon {
+        align-items: center;
+        border-radius: 50%;
+        color: green;
+        display: flex;
+        display: none;
+        height: 15px;
+        justify-content: center;
+        position: absolute;
+        right: 10%;
+        top: 20%;
+        width: 15px;
+        :first-child {
+          display: none;
+          height: 20px;
+          left: -20%;
+          position: absolute;
+          top: -20%;
+          width: 20px;
+        }
+      }
+      .icon__chosen {
+        @extend .icon;
+        display: block;
+        background-color: white;
+        :first-child {
+          display: block;
+        }
+      }
+    }
+
+    .photoSlide__chosen {
+      @extend .photoSlide;
+
+      img {
+        // background-color: green;
+      }
+    }
+  }
+}
+
+/* ExtraExtraLarge Devices, UltraWide Desktops  */
+@media (min-width: 1921px) {
+  .root {
+  }
+}
+
+/* ExtraLarge Devices, Desktops  */
+@media (min-width: 1200px) and (max-width: 1920px) {
+  .root {
+  }
+}
+/* Large Devices, Laptops, Large Tablets iPad Pro */
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+  .root {
+  }
+}
+
+/* Medium Devices, Tablets iPad */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .root {
+  }
+}
+
+/* Small Devices, Small tablets Large Phones */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .root {
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 0px) and (max-width: 479px) {
+  .root {
+  }
+}
+
+/* Media pointer*/
+@media (hover: hover) and (pointer: fine) {
+  .root {
+  }
+}
+
+/* Media touchable */
+@media (pointer: coarse) {
+  .root {
+  }
+}

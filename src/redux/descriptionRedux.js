@@ -77,14 +77,14 @@ export default function reducer(statePart = [], action = {}) {
       console.log(`action`, action.payload);
       return {
         ...statePart,
-        // data: statePart.data.map((data) => {
-        //   if (data._id === action.payload._id) {
-        //     return {
-        //       ...action.payload,
-        //     };
-        //   }
-        //   return data;
-        // }),
+        data: statePart.data.map((data) => {
+          if (data._id === action.payload._id) {
+            return {
+              ...action.payload,
+            };
+          }
+          return data;
+        }),
         // data: action.p,
         // activePost: action.payload,
         // data: statePart.data.map((data) => {
