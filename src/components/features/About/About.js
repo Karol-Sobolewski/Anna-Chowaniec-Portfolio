@@ -58,32 +58,34 @@ const Component = ({ className, children }) => {
               />
             </div>
           </Col>
+          {auth ? (
+            <Col>
+              <Button
+                onClick={() => setEdit(!edit)}
+                edit={edit}
+                auth={auth}
+                className={styles.editAboutButton}
+              />
+            </Col>
+          ) : null}
           <Col
             md={4}
             className="d-flex flex-column align-items-center justify-content-center mt-3 mt-lg-0"
           >
-            {auth ? (
-              <Button onClick={() => setEdit(!edit)} edit={edit} auth={auth} />
-            ) : null}
             <form
               action="#"
               method="post"
               onSubmit={(e) => handleSubmit(e)}
               onChange={(e) => handleChange(e)}
+              className={styles.editAbout}
             >
-              <Row className="d-flex align-items-center">
-                {auth && edit ? (
+              {auth && edit ? (
+                <div>
                   <input
                     name="heading"
                     type="text"
                     defaultValue={aboutPage.description[0].heading}
                   />
-                ) : (
-                  <h3>{aboutPage.description[0].heading}</h3>
-                )}
-              </Row>
-              <Row>
-                {auth && edit ? (
                   <textarea
                     name="text"
                     type="text"
@@ -91,11 +93,14 @@ const Component = ({ className, children }) => {
                     cols="50"
                     defaultValue={aboutPage.description[0].text}
                   />
-                ) : (
-                  <h3>{aboutPage.description[0].text}</h3>
-                )}
-              </Row>
-              {auth && edit ? <Button type="submit" name="Wyślij" /> : null}
+                  <Button type="submit" name="Wyślij" />
+                </div>
+              ) : (
+                <div>
+                  <h3>{aboutPage.description[0].heading}</h3>
+                  <p>{aboutPage.description[0].text}</p>
+                </div>
+              )}
             </form>
           </Col>
         </Row>

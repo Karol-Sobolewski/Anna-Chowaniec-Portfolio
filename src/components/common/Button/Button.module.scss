@@ -2,14 +2,18 @@
 
 .root {
   background: none;
-  background: rgba(66, 66, 66, 0.3);
+  background: $button-main-bg;
   border-radius: 50%;
   border: none;
-  color: black;
+  color: $button-main-text;
+  font-family: $font-text;
   height: 50px;
   outline: none;
   width: 50px;
-  font-family: $font-text;
+  transition: $transition;
+  &:hover {
+    background: $button-main-bg-hover;
+  }
 }
 
 /* ExtraExtraLarge Devices, UltraWide Desktops  */

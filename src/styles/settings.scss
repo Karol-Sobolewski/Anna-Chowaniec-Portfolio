@@ -1,7 +1,8 @@
 $base-padding: 24px;
 $radius: 5px;
 $base-size: 1rem;
-$transition: all 0.5s;
+$transition: all 0.3s;
+// $transition: all 0.5s;
 $font-title: "DancingScript", sans-serif;
 $font-text: "Lato", sans-serif;
 
@@ -10,10 +11,10 @@ $black: #000000;
 $blue: #0000ff;
 $darkGray: #363636;
 $darkWhite: #e1e1e1;
-$gray: #434343;
+$gray: #3d4447;
 $green: #008000;
 $lightBlack: #2a2a2a;
-$lightGray: #b2b2b2;
+$lightGray: #748187;
 $lightGreen: #32cd32;
 $lightGreyBlue: #7aa3cc;
 $lightWhite: #f4f5f7;
@@ -30,16 +31,17 @@ $yellow: #ffff00;
 $background-bg: linear-gradient(90deg, #fdfbfb 0%, #ebedee 100%);
 
 /*Link*/
-$link-color: #3d4447;
-$link-color-active: #748187;
+$link-color: $gray;
+$link-color-active: $lightGray;
 // $link-shadow: 3px 3px 2px #95a5ad;
 $link-shadow: none;
 
 /*Button*/
-$button-main-bg-hover: $mint;
-$button-main-bg: $lightBlack;
+$button-main-bg-hover: $lightGray;
+$button-main-bg: $gray;
+$button-main-text-hover: $gray;
 $button-main-text: $white;
-$button-outline-bg-hover: $lightBlack;
+$button-outline-bg-hover: $lightGray;
 $button-outline-bg: $white;
 $button-outline-border: $lightBlack;
 $button-outline-text-hover: $white;

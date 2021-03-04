@@ -45,6 +45,19 @@ export const addPhotoRequest = (data) => async (dispatch) => {
   }
 };
 
+export const fetchSelectedPhoto = (photo) => async (dispatch) => {
+  console.log(`photo`, photo);
+  dispatch(fetchStarted());
+
+  try {
+    const res = await Axios.get(`${API_URL}/photos/${photo._id}`, photo);
+    await new Promise((resolve) => resolve());
+    dispatch(fetchSuccess(res.data));
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
 export const editPhotoRequest = (photo) => async (dispatch) => {
   dispatch(fetchStarted());
   try {

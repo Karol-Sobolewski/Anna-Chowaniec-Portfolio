@@ -5,6 +5,8 @@ import clsx from 'clsx';
 
 import AwesomeSlider from 'react-awesome-slider';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
+import 'react-awesome-slider/dist/styles.css';
+import 'react-awesome-slider/dist/captioned.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -17,7 +19,7 @@ import { Container } from 'react-bootstrap';
 import { Button } from '../../common/Button/Button';
 
 import { userContext } from '../../../userContext';
-import { editPhotoRequest } from '../../../redux/photoRedux';
+import { editPhotoRequest, fetchPhotos } from '../../../redux/photoRedux';
 
 import styles from './Slider.module.scss';
 
@@ -39,13 +41,17 @@ const Component = ({ className }) => {
   const [edit, setEdit] = useState(false);
 
   const handleImageChooser = async (img) => {
-    await setImage({ ...img, slider: !img.slider });
+    // console.log(img.category);
+    const category = JSON.parse(JSON.stringify(img.category));
+    console.log(category);
+    await setImage({ ...img, slider: !img.slider, category });
   };
 
   useEffect(() => {
     console.log(image);
-    const handleSubmit = () => {
-      dispatch(editPhotoRequest(image));
+    const handleSubmit = async () => {
+      await dispatch(editPhotoRequest(image));
+      dispatch(fetchPhotos());
     };
     handleSubmit();
   }, [image]);

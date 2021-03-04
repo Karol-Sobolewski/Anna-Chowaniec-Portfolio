@@ -16,6 +16,17 @@ router.get(`/photos`, async (req, res) => {
   }
 });
 
+router.get(`/photos/:id`, async (req, res) => {
+  try {
+    const result = await Photo.findById(req.params.id).populate(`category`);
+    // console.log(result);
+    if (!result) res.status(404).json({ photo: `Not found` });
+    else res.json(result);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.post(`/photos`, requiresAuth(), async (req, res) => {
   // res.send(req.oidc.isAuthenticated());
   console.log(`auth`, req.body);
@@ -65,7 +76,6 @@ router.put(`/photos/:id`, async (req, res) => {
   try {
     const result = await Photo.findById(req.body._id);
     // console.log(`result`, result);
-    console.log(`result`, result);
     if (result) {
       /* eslint-disable */
       for (const prop in req.body) {

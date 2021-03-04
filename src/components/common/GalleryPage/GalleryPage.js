@@ -22,7 +22,7 @@ const Component = ({ className, children, galleryName }) => {
 
   useEffect(() => {
     // const dispatch = useDispatch();
-    dispatch(fetchPhotos());
+    // dispatch(fetchPhotos());
   }, []);
   const allPhotos = useSelector((state) => state.photos.data);
   const photos = allPhotos.filter(

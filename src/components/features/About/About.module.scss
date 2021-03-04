@@ -4,6 +4,27 @@
   height: 80vh;
   margin-top: 5vh;
   font-family: $font-text;
+  .editAboutButton {
+    // position: absolute;
+    // top: -20%;
+    // left: -10%;
+    margin-top: 20px;
+  }
+  .editAbout {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  input {
+    // margin-top: 25%;
+    width: 100%;
+  }
+  textarea {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 }
 
 .container {
