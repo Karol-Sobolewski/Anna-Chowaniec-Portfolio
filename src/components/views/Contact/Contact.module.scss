@@ -3,8 +3,27 @@
 .root {
   align-items: center;
   display: flex;
-  border: 1px solid blue;
-  margin-top: 5vh;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  width: 50%;
+  .editContact {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0;
+  }
+  .editContactButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  p {
+    // padding: 0;
+    // margin: 0;
+  }
 }
 /* ExtraExtraLarge Devices, UltraWide Desktops  */
 @media (min-width: 1921px) {
@@ -14,9 +33,9 @@
 }
 
 /* ExtraLarge Devices, Desktops  */
-@media (min-width: 1200px) and (max-width: 1920px) {
+@media (max-width: 768px) {
   .root {
-    // margin-top: 10vh;
+    width: 80%;
   }
 }
 /* Large Devices, Laptops, Large Tablets iPad Pro */

@@ -1,6 +1,6 @@
 const express = require(`express`);
-
 const router = express.Router();
+const { auth, requiresAuth } = require(`express-openid-connect`);
 
 const Description = require(`../models/descriptions.model`);
 
@@ -16,7 +16,7 @@ router.get(`/descriptions`, async (req, res) => {
   }
 });
 
-router.put(`/descriptions/:id`, async (req, res) => {
+router.put(`/descriptions/:id`, requiresAuth(), async (req, res) => {
   try {
     const result = await Description.findById(req.body._id);
     if (result) {

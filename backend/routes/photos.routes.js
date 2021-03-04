@@ -16,7 +16,7 @@ router.get(`/photos`, async (req, res) => {
   }
 });
 
-router.get(`/photos/:id`, async (req, res) => {
+router.get(`/photos/:id`, requiresAuth(), async (req, res) => {
   try {
     const result = await Photo.findById(req.params.id).populate(`category`);
     // console.log(result);

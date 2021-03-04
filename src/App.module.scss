@@ -5,14 +5,25 @@
   .switchWrapper {
     position: relative;
     animation: fadein 0.3s;
-
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     > div:nth-child(1) {
       position: relative;
       animation: fadein 0.3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
     }
     > div:nth-child(2) {
       position: absolute;
       display: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
     }
   }
 }

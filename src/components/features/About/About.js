@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+
 import { Container, Row, Col } from 'react-bootstrap';
-import { Button } from '../../common/Button/Button';
 import { userContext } from '../../../userContext';
+import { Button } from '../../common/Button/Button';
 import styles from './About.module.scss';
-// import { connect } from 'react-redux';
+
 import { editDescriptionRequest } from '../../../redux/descriptionRedux';
 
 const Component = ({ className, children }) => {
@@ -32,8 +33,20 @@ const Component = ({ className, children }) => {
     setAbout({ ...about, description });
   };
 
+  // useEffect(
+  //   (e) => {
+  //     console.log(about);
+  //     const handleSubmit = async (e) => {
+  //       e.preventDefault();
+  //       await dispatch(editDescriptionRequest(about));
+  //       setEdit(false);
+  //     };
+  //     handleSubmit();
+  //   },
+  //   [about]
+  // );
+
   const handleSubmit = (e) => {
-    e.preventDefault();
     console.log(about);
     dispatch(editDescriptionRequest(about));
     setEdit(false);
@@ -59,14 +72,12 @@ const Component = ({ className, children }) => {
             </div>
           </Col>
           {auth ? (
-            <Col>
-              <Button
-                onClick={() => setEdit(!edit)}
-                edit={edit}
-                auth={auth}
-                className={styles.editAboutButton}
-              />
-            </Col>
+            <Button
+              onClick={() => setEdit(!edit)}
+              edit={edit}
+              auth={auth}
+              className={styles.editAboutButton}
+            />
           ) : null}
           <Col
             md={4}

@@ -4,11 +4,12 @@
   height: 80vh;
   margin-top: 5vh;
   font-family: $font-text;
+  position: relative;
   .editAboutButton {
-    // position: absolute;
-    // top: -20%;
-    // left: -10%;
-    margin-top: 20px;
+    position: absolute;
+    top: 25%;
+    right: 10%;
+    // margin-top: 20px;
   }
   .editAbout {
     width: 100%;
