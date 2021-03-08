@@ -11,19 +11,22 @@
   font-family: $font-title;
   font-weight: 400;
   a {
-    color: $link-color;
-    text-decoration: none;
     // text-shadow: $link-shadow;
-
+    align-items: center;
+    color: $link-color;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.5em;
     :hover {
       color: $link-color-active;
     }
     p {
-      font-size: 3vh;
+      // font-size: 3vh;
       margin-bottom: 0;
     }
   }
   .footerIcon {
-    font-size: 4vh;
+    font-size: 1.5em;
   }
 }

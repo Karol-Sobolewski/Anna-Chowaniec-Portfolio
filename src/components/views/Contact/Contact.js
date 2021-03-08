@@ -40,9 +40,9 @@ const Component = ({ className, children }) => {
     item[name] = value;
     // const filtered = menu.filter((item) => item.component === `GalleryPage`);
     const matchItem = contact.description.filter((i) => i.id === item.id);
-    console.log(matchItem[0]);
-    console.log(item);
-    console.log(description);
+    // console.log(matchItem[0]);
+    // console.log(item);
+    // console.log(description);
   };
 
   const handleSubmit = (e) => {
@@ -53,7 +53,7 @@ const Component = ({ className, children }) => {
   };
 
   useEffect(() => {
-    console.log(auth);
+    // console.log(auth);
   }, []);
   return (
     <div className={clsx(className, styles.root)}>
