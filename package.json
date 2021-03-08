@@ -53,6 +53,7 @@
     "react-navigation-animated-switch": "^0.6.3",
     "react-photo-gallery": "^8.0.0",
     "react-redux": "^7.2.2",
+    "react-responsive-carousel": "^3.2.13",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-router-transition": "^2.0.0",

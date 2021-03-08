@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Gallery from 'react-photo-gallery';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import Carousel, { Modal, ModalGateway } from 'react-images';
 // import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -14,6 +15,7 @@ import clsx from 'clsx';
 
 import { Container, Row, Col } from 'react-bootstrap';
 import { Button } from '../Button/Button';
+import { Photo } from '../Photo/Photo';
 
 import { userContext } from '../../../userContext';
 import { fetchPhotos } from '../../../redux/photoRedux';
@@ -80,6 +82,13 @@ const Component = ({ className, children, galleryName }) => {
     }
   });
 
+  const imageRenderer = useCallback(
+    ({ index, left, top, key, photo }) => (
+      <Photo key={key} index={index} photo={photo} galleryName={galleryName} />
+    ),
+    []
+  );
+
   return (
     <div className={clsx(className, styles.root)}>
       {auth ? (
@@ -97,22 +106,13 @@ const Component = ({ className, children, galleryName }) => {
       >
         {auth && active ? <ImageUploadForm category={category} /> : null}
       </div>
-
-      <Gallery photos={photos} onClick={openLightbox} />
-      <ModalGateway>
-        {viewerIsOpen ? (
-          <Modal onClose={closeLightbox}>
-            <Carousel
-              currentIndex={currentImage}
-              views={photos.map((x) => ({
-                ...x,
-                srcset: x.srcSet,
-                caption: x.title,
-              }))}
-            />
-          </Modal>
-        ) : null}
-      </ModalGateway>
+      <div className={styles.galleryContainer}>
+        <Gallery
+          photos={photos}
+          onClick={openLightbox}
+          renderImage={imageRenderer}
+        />
+      </div>
     </div>
   );
 };

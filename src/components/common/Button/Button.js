@@ -11,6 +11,7 @@ import {
   faPencilAlt,
   faTimes,
   faPlus,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './Button.module.scss';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
@@ -26,7 +27,6 @@ const Component = ({
   icon,
   ...otherProps
 }) => {
-  console.log(`Button`);
   // const dispatch = useDispatch();
   // const { loginWithRedirect } = useAuth0();
 
@@ -42,6 +42,7 @@ const Component = ({
       {auth && !edit && icon === `plus` ? (
         <FontAwesomeIcon icon={faPlus} />
       ) : null}
+      {auth && icon === `delete` ? <FontAwesomeIcon icon={faTrash} /> : null}
       {auth && edit ? <FontAwesomeIcon icon={faTimes} /> : null}
     </button>
   );

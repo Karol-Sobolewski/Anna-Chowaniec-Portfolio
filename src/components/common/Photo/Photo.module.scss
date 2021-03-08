@@ -1,43 +1,21 @@
 @import "../../../styles/settings.scss";
 
 .root {
-  .addPhoto {
-    align-items: center;
-    background: white;
-    box-shadow: $box-shadow;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    justify-content: center;
-    left: 5vw;
-    max-height: 75vh;
-    max-width: 90vw;
-    opacity: 1;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 2vh 0 2vh 0;
-    padding: auto;
-    position: fixed;
-    top: 25vh;
-    transition: $transition;
-    visibility: visible;
-    width: 350px;
-    z-index: 2;
-  }
-  .addPhoto__hidden {
-    @extend .addPhoto;
-    opacity: 0;
-    visibility: hidden;
-  }
-  .addPhotoButton {
-    position: fixed;
-    top: 25vh;
-    left: 5vw;
-    z-index: 3;
-  }
-  .galleryContainer {
-    :first-child {
-      justify-content: center;
+  .photoBox {
+    cursor: pointer;
+    margin: 2px;
+    position: relative;
+    .editPhotoButton,
+    .deletePhotoButton {
+      position: absolute;
+      z-index: 1;
+      top: 5px;
+    }
+    .editPhotoButton {
+      left: 5px;
+    }
+    .deletePhotoButton {
+      right: 5px;
     }
   }
 }
