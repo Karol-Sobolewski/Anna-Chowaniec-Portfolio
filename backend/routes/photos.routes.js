@@ -27,49 +27,47 @@ router.get(`/photos/:id`, requiresAuth(), async (req, res) => {
   }
 });
 
-router.post(`/photos`, requiresAuth(), async (req, res) => {
+router.post(`/photos`, async (req, res) => {
   // res.send(req.oidc.isAuthenticated());
   console.log(`auth`, req.body);
-  if (req.body.login) {
-    if (!req.files) {
-      return res.status(400).json({ message: `no files uploaded` });
-    }
-    const { file } = req.files;
-    const fileExtension = file.name.split(`.`).pop();
-
-    let category = ``;
-    // console.log(`user post`, user);
-
-    // TODO Add category ID from DB
-
-    if (req.body.category === `wedding`) {
-      category = `5fedfefa3633d477d4f73a6c`;
-    } else if (req.body.category === `children`) {
-      category = `5fedff183633d477d4f73a6d`;
-    }
-
-    const filePath = `images/photos/${req.body.category}/${
-      req.body.title
-    }_${uniqid()}.${fileExtension}`;
-
-    file.mv(`./public/${filePath}`, (err) => {
-      if (err) {
-        console.err(err);
-        return res.status(500).send(err);
-      }
-      res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-    });
-
-    const newPhoto = new Photo({
-      title: req.body.title,
-      category,
-      src: filePath,
-      width: 1,
-      height: 1,
-    });
-    await newPhoto.save();
-    // res.json(newPhoto);
+  if (!req.files) {
+    return res.status(400).json({ message: `no files uploaded` });
   }
+  const { file } = req.files;
+  const fileExtension = file.name.split(`.`).pop();
+
+  const filePath = `images/photos/${req.body.categoryName}/${
+    req.body.title
+  }_${uniqid()}.${fileExtension}`;
+
+  file.mv(`./public/${filePath}`, (err) => {
+    if (err) {
+      console.err(err);
+      return res.status(500).send(err);
+    }
+    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+  });
+
+  const newPhoto = new Photo({
+    title: req.body.title,
+    category: req.body.category,
+    src: filePath,
+    width:
+    /* eslint-disable */
+      req.body.format === `horizontal`
+        ? 4
+        : req.body.format === `vertical`
+        ? 3
+        : 1,
+    height: req.body.format === `horizontal`
+    ? 3
+    : req.body.format === `vertical`
+    ? 4
+    : 1,
+  });
+  /* eslint-enable */
+  await newPhoto.save();
+  // res.json(newPhoto);
 });
 
 router.put(`/photos/:id`, async (req, res) => {

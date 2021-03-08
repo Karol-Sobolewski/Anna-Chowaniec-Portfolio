@@ -108,6 +108,7 @@ const Component = ({ className, children }) => {
         <Button
           onClick={() => setEdit(!edit)}
           edit={edit}
+          icon="pencil"
           auth={auth}
           className={styles.editContactButton}
         />

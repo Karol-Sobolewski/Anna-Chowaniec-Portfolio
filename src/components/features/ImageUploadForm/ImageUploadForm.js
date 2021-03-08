@@ -8,26 +8,30 @@ import { useAuth0 } from '@auth0/auth0-react';
 import ImageUploader from 'react-images-upload';
 
 import { Container, Row, Col } from 'react-bootstrap';
+import { Button } from '../../common/Button/Button';
 import styles from './ImageUploadForm.module.scss';
 import { addPhotoRequest } from '../../../redux/photoRedux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-const Component = ({ className, children }) => {
+const Component = ({ className, children, category }) => {
   const { user } = useAuth0();
   const dispatch = useDispatch();
+  const [format, setFormat] = useState(``);
   const [photo, setPhoto] = useState({
     file: null,
     title: ``,
-    category: ``,
+    category: category._id,
+    categoryName: category.name,
     width: ``,
     height: ``,
     login: false,
+    format,
   });
 
   const handleImage = (files) => {
     if (files) setPhoto({ ...photo, file: files[0] });
     else setPhoto({ ...photo, file: null });
-    console.log(`file`, files[0].height);
+    // console.log(`file`, files[0].height);
   };
 
   const handleChange = (e) => {
@@ -43,7 +47,7 @@ const Component = ({ className, children }) => {
       setPhoto({ ...photo, login: true });
     }
     const formData = new FormData();
-    for (const key of [`category`, `title`, `login`]) {
+    for (const key of [`category`, `title`, `categoryName`, `format`]) {
       formData.append(key, photo[key]);
     }
     formData.append(`file`, photo.file);
@@ -51,7 +55,9 @@ const Component = ({ className, children }) => {
     dispatch(addPhotoRequest(formData));
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(photo);
+  }, []);
   return (
     <div className={clsx(className, styles.root)}>
       <form
@@ -60,14 +66,7 @@ const Component = ({ className, children }) => {
         onSubmit={(e) => handleSubmit(e)}
         onChange={(e) => handleChange(e)}
       >
-        <input name="title" type="text" placeholder="Nazwa" />
-        <select name="category" id="category">
-          <option value="" selected disabled hidden>
-            Wybierz
-          </option>
-          <option value="children">Fotografia dziecięca</option>
-          <option value="wedding">Fotografia ślubna</option>
-        </select>
+        <input name="title" type="text" placeholder="Nazwa zdjęcia" />
         <ImageUploader
           withIcon
           buttonText="Wybierz obraz"
@@ -75,11 +74,17 @@ const Component = ({ className, children }) => {
           maxFileSize={5242880}
           withPreview
           onChange={handleImage}
-          label="Maksymalny rozmiar 5MB, Formaty: jpg, png, gif"
+          label="Maksymalny rozmiar: 5MB, Formaty: jpg, png, gif"
           singleImage
           className={photo.file ? `hide` : `animated fadeInUp`}
         />
-        <button type="submit">Wyślij</button>
+        vertical
+        <input type="radio" id="vertical" name="format" value="vertical" />
+        {/* <label htmlFor="vertical">Vertical</label> */}
+        horizontal
+        <input type="radio" id="horizontal" name="format" value="horizontal" />
+        {/* <label htmlFor="horizontal">Horizontal</label> */}
+        <Button className={styles.addPhotoButton} type="submit" name="Wyślij" />
       </form>
       <main>{children}</main>
     </div>
@@ -89,6 +94,7 @@ const Component = ({ className, children }) => {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  category: PropTypes.object,
 };
 
 export { Component as ImageUploadForm, Component as ImageUploadFormComponent };

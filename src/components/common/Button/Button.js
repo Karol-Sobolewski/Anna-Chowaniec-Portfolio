@@ -7,7 +7,11 @@ import clsx from 'clsx';
 import { Container, Row, Col } from 'react-bootstrap';
 // import { useAuth0 } from '@auth0/auth0-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPencilAlt,
+  faTimes,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import styles from './Button.module.scss';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
@@ -19,6 +23,7 @@ const Component = ({
   editAbout,
   edit,
   auth,
+  icon,
   ...otherProps
 }) => {
   console.log(`Button`);
@@ -31,7 +36,12 @@ const Component = ({
   return (
     <button type={type} className={clsx(className, styles.root)} {...otherProps}> {/* eslint-disable-line */}
       {name}
-      {auth && !edit ? <FontAwesomeIcon icon={faPencilAlt} /> : null}
+      {auth && !edit && icon === `pencil` ? (
+        <FontAwesomeIcon icon={faPencilAlt} />
+      ) : null}
+      {auth && !edit && icon === `plus` ? (
+        <FontAwesomeIcon icon={faPlus} />
+      ) : null}
       {auth && edit ? <FontAwesomeIcon icon={faTimes} /> : null}
     </button>
   );
@@ -46,6 +56,7 @@ Component.propTypes = {
   editAbout: PropTypes.bool,
   edit: PropTypes.bool,
   auth: PropTypes.bool,
+  icon: PropTypes.string,
 };
 
 export { Component as Button, Component as ButtonComponent };
