@@ -56,6 +56,7 @@ const Component = ({ className, children }) => {
             type="button"
             className={styles.workPhoto}
             onClick={() => openModal(item._id)}
+            key={item._id}
           >
             <img src={item.image.src} alt={item.image.alt} />
             <div className={styles.workDescription}>{item.description}</div>

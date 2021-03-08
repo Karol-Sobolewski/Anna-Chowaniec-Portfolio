@@ -66,6 +66,7 @@ const Component = ({ className, children, category }) => {
         onSubmit={(e) => handleSubmit(e)}
         onChange={(e) => handleChange(e)}
       >
+        <p>Tytuł:</p>
         <input name="title" type="text" placeholder="Nazwa zdjęcia" />
         <ImageUploader
           withIcon
@@ -78,11 +79,23 @@ const Component = ({ className, children, category }) => {
           singleImage
           className={photo.file ? `hide` : `animated fadeInUp`}
         />
-        vertical
-        <input type="radio" id="vertical" name="format" value="vertical" />
+        <p>Format:</p>
+        <div className={styles.radioRow}>
+          <label htmlFor="vertical">
+            <input type="radio" id="vertical" name="format" value="vertical" />
+            <img src="/images/utils/vertical.png" alt="vertical" />
+          </label>
+          <label htmlFor="horizontal">
+            <input
+              type="radio"
+              id="horizontal"
+              name="format"
+              value="horizontal"
+            />
+            <img src="/images/utils/horizontal.png" alt="horizontal" />
+          </label>
+        </div>
         {/* <label htmlFor="vertical">Vertical</label> */}
-        horizontal
-        <input type="radio" id="horizontal" name="format" value="horizontal" />
         {/* <label htmlFor="horizontal">Horizontal</label> */}
         <Button className={styles.addPhotoButton} type="submit" name="Wyślij" />
       </form>

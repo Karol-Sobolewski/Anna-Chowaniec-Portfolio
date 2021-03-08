@@ -39,6 +39,8 @@ const Component = ({ className, children, galleryName }) => {
       removeDiacritics(photo.category.name).toLowerCase() ===
       removeDiacritics(galleryName).toLowerCase()
   );
+  const { category } = photos[0];
+
   const openLightbox = useCallback((event, { photo, index }) => {
     setCurrentImage(index);
     setViewerIsOpen(true);
@@ -47,8 +49,7 @@ const Component = ({ className, children, galleryName }) => {
     setCurrentImage(0);
     setViewerIsOpen(false);
   };
-  const { category } = photos[0];
-  console.log(category);
+
   const useOutsideAlerter = (ref) => {
     useEffect(() => {
       function handleClickOutside(e) {

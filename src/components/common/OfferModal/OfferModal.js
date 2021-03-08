@@ -22,7 +22,10 @@ const Component = ({ className, children, offerCategory }) => {
     <div className={clsx(className, styles.root)}>
       <Row className={styles.offerRow}>
         {offers.map((item) => (
-          <Col className={`col-12 col-md-5 col-xl-3 ${styles.offerColumn}`}>
+          <Col
+            key={item.id}
+            className={`col-12 col-md-5 col-xl-3 ${styles.offerColumn}`}
+          >
             <h2>{item.name}</h2>
             {item.descriptions.map((description) => (
               <p>{description.text}</p>

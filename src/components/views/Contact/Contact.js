@@ -64,6 +64,7 @@ const Component = ({ className, children }) => {
           // onSubmit={}
           onChange={(e) => handleChange(e, item)}
           className={styles.editContact}
+          key={item.id}
         >
           <Row className="w-100 py-3 justify-content-center">
             <Col className="col-12 col-md-6">

@@ -93,13 +93,6 @@
       "eslint"
     ]
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "wesbos"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",

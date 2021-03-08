@@ -97,6 +97,7 @@ const Component = ({ className }) => {
                   img.slider ? styles.photoSlide__chosen : styles.photoSlide
                 }
                 onClick={() => handleImageChooser(img)}
+                key={img.id}
               >
                 <div className={img.slider ? styles.icon__chosen : styles.icon}>
                   <FontAwesomeIcon icon={faCheckCircle} />
