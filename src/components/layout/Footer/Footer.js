@@ -50,7 +50,7 @@ const Component = ({ className, children }) => {
                     icon={faPhoneAlt}
                     className={`${styles.footerIcon} pr-1`}
                   />
-                  {item.text}
+                  <p>{item.text}</p>
                 </a>
               ) : null}
               {/* eslint-enable */}

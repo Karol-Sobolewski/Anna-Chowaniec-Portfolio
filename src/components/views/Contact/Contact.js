@@ -60,7 +60,7 @@ const Component = ({ className, children }) => {
       {contactPage.description.map((item) => (
         <form
           action="#"
-          method="post"
+          method="put"
           // onSubmit={}
           onChange={(e) => handleChange(e, item)}
           className={styles.editContact}

@@ -9,6 +9,7 @@ const FETCH_SUCCESS = createActionName(`FETCH_SUCCESS`);
 const FETCH_ERROR = createActionName(`FETCH_ERROR`);
 const ADD_PHOTO = createActionName(`ADD_PHOTO`);
 const UPDATE_PHOTO = createActionName(`UPDATE_PHOTO`);
+const REMOVE_PHOTO = createActionName(`REMOVE_PHOTO `);
 
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
@@ -18,6 +19,11 @@ export const updatePhoto = (payload) => ({
   payload,
   type: UPDATE_PHOTO,
 });
+export const removePhoto = (payload) => ({
+  payload,
+  type: REMOVE_PHOTO,
+});
+
 export const fetchPhotos = () => (dispatch) => {
   dispatch(fetchStarted());
 
@@ -30,6 +36,18 @@ export const fetchPhotos = () => (dispatch) => {
     });
 };
 
+export const fetchSelectedPhoto = (photo) => async (dispatch) => {
+  dispatch(fetchStarted());
+
+  try {
+    const res = await Axios.get(`${API_URL}/photos/${photo._id}`, photo);
+    await new Promise((resolve) => resolve());
+    dispatch(fetchSuccess(res.data));
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
 export const addPhotoRequest = (data) => async (dispatch) => {
   dispatch(fetchStarted());
   try {
@@ -38,21 +56,6 @@ export const addPhotoRequest = (data) => async (dispatch) => {
         'Content-Type': `multipart/form-data`,
       },
     });
-    console.log(data);
-    console.log(res.data);
-  } catch (err) {
-    dispatch(fetchError(err.message || true));
-  }
-};
-
-export const fetchSelectedPhoto = (photo) => async (dispatch) => {
-  console.log(`photo`, photo);
-  dispatch(fetchStarted());
-
-  try {
-    const res = await Axios.get(`${API_URL}/photos/${photo._id}`, photo);
-    await new Promise((resolve) => resolve());
-    dispatch(fetchSuccess(res.data));
   } catch (err) {
     dispatch(fetchError(err.message || true));
   }
@@ -70,6 +73,18 @@ export const editPhotoRequest = (photo) => async (dispatch) => {
   }
 };
 
+export const removePhotoRequest = (photo) => async (dispatch) => {
+  dispatch(fetchStarted());
+  try {
+    const res = await Axios.delete(`${API_URL}/photos/${photo._id}`, photo);
+
+    await new Promise((resolve) => resolve());
+    dispatch(removePhoto(res.data));
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
     case FETCH_START: {
@@ -81,6 +96,7 @@ export default function reducer(statePart = [], action = {}) {
         },
       };
     }
+
     case FETCH_SUCCESS: {
       return {
         ...statePart,
@@ -91,6 +107,7 @@ export default function reducer(statePart = [], action = {}) {
         data: action.payload,
       };
     }
+
     case FETCH_ERROR: {
       return {
         ...statePart,
@@ -127,6 +144,16 @@ export default function reducer(statePart = [], action = {}) {
         }),
       };
     }
+
+    case REMOVE_PHOTO: {
+      console.log(`state`, statePart);
+      console.log(`action`, action.payload);
+      return {
+        ...statePart,
+        data: statePart.data.filter((i) => i._id !== action.payload._id),
+      };
+    }
+
     default:
       return statePart;
   }

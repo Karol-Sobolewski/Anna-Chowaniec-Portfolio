@@ -18,13 +18,14 @@
     justify-content: center;
     text-decoration: none;
     font-size: 1.5em;
-    :hover {
-      color: $link-color-active;
-    }
-    p {
-      // font-size: 3vh;
-      margin-bottom: 0;
-    }
+  }
+  p {
+    margin: 0;
+    padding: 0;
+  }
+  a:hover,
+  p:hover {
+    color: $link-color-active;
   }
   .footerIcon {
     font-size: 1.5em;

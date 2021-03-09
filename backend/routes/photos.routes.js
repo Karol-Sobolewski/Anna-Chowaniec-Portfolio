@@ -29,7 +29,7 @@ router.get(`/photos/:id`, requiresAuth(), async (req, res) => {
 
 router.post(`/photos`, async (req, res) => {
   // res.send(req.oidc.isAuthenticated());
-  console.log(`auth`, req.body);
+  console.log(`req`, req.body);
   if (!req.files) {
     return res.status(400).json({ message: `no files uploaded` });
   }
@@ -74,15 +74,31 @@ router.put(`/photos/:id`, async (req, res) => {
   try {
     const result = await Photo.findById(req.body._id);
     // console.log(`result`, result);
+    /* eslint-disable */
     if (result) {
-      /* eslint-disable */
       for (const prop in req.body) {
         result[prop] = req.body[prop];
       }
       await result.save();
       res.json(result);
     }
+    /* eslint-enable */
     else res.status(404).json({ message: `Not found...` });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.delete(`/photos/:id`, async (req, res) => {
+  console.log(`params`, req.params);
+  console.log(`body`, req.body);
+  try {
+    const result = await Photo.findById(req.params.id);
+    console.log(`result`, result);
+    if (result) {
+      await result.deleteOne();
+      res.json(result);
+    } else res.status(404).json({ message: `Not found...` });
   } catch (err) {
     res.status(500).json(err);
   }

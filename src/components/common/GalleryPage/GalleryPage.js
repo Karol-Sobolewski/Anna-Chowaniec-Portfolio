@@ -10,6 +10,10 @@ import Gallery from 'react-photo-gallery';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import Carousel, { Modal, ModalGateway } from 'react-images';
 // import { useDispatch } from 'react-redux';
+
+import arrayMove from 'array-move';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
@@ -27,30 +31,40 @@ const removeDiacritics = require(`diacritics`).remove;
 
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
+const SortablePhoto = SortableElement((item, index) => {
+  console.log(`item`, item, `index`, index);
+    return (<Photo {...item} />) //eslint-disable-line
+});
+
+const SortableGallery = SortableContainer(({ items }) => (
+  <Gallery
+    photos={items}
+    renderImage={(props) => {
+      console.log(props);
+      return (
+        <SortablePhoto {...props} index={props.index} /> //eslint-disable-line
+      );
+    }}
+  />
+));
+
 const Component = ({ className, children, galleryName }) => {
-  const [currentImage, setCurrentImage] = useState(0);
-  const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
 
   const { auth } = useContext(userContext);
 
   const allPhotos = useSelector((state) => state.photos.data);
-  const photos = allPhotos.filter(
-    (photo) =>
-      removeDiacritics(photo.category.name).toLowerCase() ===
-      removeDiacritics(galleryName).toLowerCase()
+  const photos = allPhotos.filter((photo) =>
+    photo.category.name
+      ? removeDiacritics(photo.category.name).toLowerCase() ===
+        removeDiacritics(galleryName).toLowerCase()
+      : null
   );
   const { category } = photos[0];
 
-  const openLightbox = useCallback((event, { photo, index }) => {
-    setCurrentImage(index);
-    setViewerIsOpen(true);
-  }, []);
-  const closeLightbox = () => {
-    setCurrentImage(0);
-    setViewerIsOpen(false);
-  };
+  const [items, setItems] = useState(photos);
+  // console.log(photos);
 
   const useOutsideAlerter = (ref) => {
     useEffect(() => {
@@ -71,24 +85,27 @@ const Component = ({ className, children, galleryName }) => {
   useOutsideAlerter(wrapperRef);
 
   useEffect(() => {
-    if (active) {
-      document.body.style.position = `fixed`;
-      document.body.style.top = `-${window.scrollY}px`;
-    } else {
-      const scrollY = document.body.style.top;
-      document.body.style.position = ``;
-      document.body.style.top = ``;
-      window.scrollTo(0, parseInt(scrollY || 0) * -1);
-    }
+    console.log(`items`);
+    // setItems(photos);
   });
 
   const imageRenderer = useCallback(
-    ({ index, left, top, key, photo }) => (
-      <Photo key={key} index={index} photo={photo} galleryName={galleryName} />
+    ({ index, key, photo }) => (
+      <Photo
+        key={key}
+        index={index}
+        photo={photo}
+        photos={photos}
+        galleryName={galleryName}
+      />
     ),
     []
   );
 
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setItems(arrayMove(items, oldIndex, newIndex));
+    console.log(`end`);
+  };
   return (
     <div className={clsx(className, styles.root)}>
       {auth ? (
@@ -107,11 +124,14 @@ const Component = ({ className, children, galleryName }) => {
         {auth && active ? <ImageUploadForm category={category} /> : null}
       </div>
       <div className={styles.galleryContainer}>
-        <Gallery
-          photos={photos}
-          onClick={openLightbox}
-          renderImage={imageRenderer}
+        <SortableGallery
+          items={items}
+          onSortEnd={onSortEnd}
+          axis="xy"
+          pressDelay={200}
+          // index={1}
         />
+        {/* <Gallery photos={photos} renderImage={imageRenderer} /> */}
       </div>
     </div>
   );

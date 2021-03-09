@@ -16,7 +16,7 @@ router.get(`/descriptions`, async (req, res) => {
   }
 });
 
-router.put(`/descriptions/:id`, requiresAuth(), async (req, res) => {
+router.put(`/descriptions/:id`, async (req, res) => {
   try {
     const result = await Description.findById(req.body._id);
     if (result) {

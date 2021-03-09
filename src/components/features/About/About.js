@@ -86,7 +86,7 @@ const Component = ({ className, children }) => {
           >
             <form
               action="#"
-              method="post"
+              method="put"
               onSubmit={(e) => handleSubmit(e)}
               onChange={(e) => handleChange(e)}
               className={styles.editAbout}

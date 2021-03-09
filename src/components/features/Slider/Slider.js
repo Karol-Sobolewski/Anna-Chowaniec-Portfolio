@@ -30,12 +30,19 @@ const Component = ({ className }) => {
   // const sliderPage = allPages.filter((item) => item.page === `slider`)[0];
   const dispatch = useDispatch();
   const allPhotos = useSelector((state) => state.photos.data);
-  const sliderPhotos = allPhotos.filter(
-    (item) => item.slider === true && item.width > item.height
-  );
-  const sliderChooserPhotos = allPhotos.filter(
-    (item) => item.width > item.height
-  );
+  console.log(allPhotos);
+  const sliderPhotos = allPhotos.filter((item) => {
+    const width = Math.abs(item.width);
+    const height = Math.abs(item.height);
+    console.log(item.title, width, height);
+    return item.slider === true && width > height;
+  });
+  const sliderChooserPhotos = allPhotos.filter((item) => {
+    const width = Math.abs(item.width);
+    const height = Math.abs(item.height);
+    console.log(item.title, width, height);
+    return width > height;
+  });
 
   const [image, setImage] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -54,7 +61,7 @@ const Component = ({ className }) => {
       dispatch(fetchPhotos());
     };
     handleSubmit();
-  }, [image]);
+  }, [dispatch, image]);
 
   return (
     <div className={clsx(className, styles.root)}>

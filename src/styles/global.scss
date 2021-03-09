@@ -16,7 +16,8 @@ img {
   max-height: 100vh !important;
 }
 
-input {
+input,
+textarea {
   background: $background-bg;
   border-radius: 10px;
   color: $link-color;
