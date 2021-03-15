@@ -6,13 +6,13 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Slider } from '../../features/Slider/Slider';
 import { About } from '../../features/About/About';
 import styles from './HomePage.module.scss';
-import { userContext } from '../../../userContext';
 
 const Component = ({ className }) => {
   // const { user } = useAuth0();
-  const { auth, SetAuth } = useContext(userContext);
   // console.log(`auth`, auth);
-  console.log(`home`);
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  console.log(`user`, user);
   return (
     <div className={clsx(className, styles.root)}>
       <Slider />

@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useAuth0 } from "@auth0/auth0-react"; //eslint-disable-line
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { Container, Row, Col } from 'react-bootstrap';
-
-import { userContext } from '../../../userContext';
 
 import { Button } from '../../common/Button/Button';
 
@@ -19,7 +18,7 @@ import { editDescriptionRequest } from '../../../redux/descriptionRedux';
 const Component = ({ className, children }) => {
   const allPages = useSelector((state) => state.descriptions.data);
   const contactPage = allPages.filter((item) => item.page === `contact`)[0];
-  const { auth } = useContext(userContext);
+  const { isAuthenticated, logout } = useAuth0();
   const dispatch = useDispatch();
 
   const [contact, setContact] = useState({
@@ -68,7 +67,7 @@ const Component = ({ className, children }) => {
         >
           <Row className="w-100 py-3 justify-content-center">
             <Col className="col-12 col-md-6">
-              {auth && edit ? (
+              {isAuthenticated && edit ? (
                 <div>
                   <p>Tytuł</p>
                   <input
@@ -105,16 +104,16 @@ const Component = ({ className, children }) => {
           </Row>
         </form>
       ))}
-      {auth ? (
+      {isAuthenticated ? (
         <Button
           onClick={() => setEdit(!edit)}
           edit={edit}
           icon="pencil"
-          auth={auth}
+          // auth={auth}
           className={styles.editContactButton}
         />
       ) : null}
-      {auth && edit ? (
+      {isAuthenticated && edit ? (
         <Button type="submit" name="Wyślij" onClick={(e) => handleSubmit(e)} />
       ) : null}
       <main>{children}</main>

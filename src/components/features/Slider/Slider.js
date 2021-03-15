@@ -16,9 +16,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { Container } from 'react-bootstrap';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '../../common/Button/Button';
 
-import { userContext } from '../../../userContext';
 import { editPhotoRequest, fetchPhotos } from '../../../redux/photoRedux';
 
 import styles from './Slider.module.scss';
@@ -26,21 +26,23 @@ import styles from './Slider.module.scss';
 const Component = ({ className }) => {
   const AutoplaySlider = withAutoplay(AwesomeSlider);
   const allPages = useSelector((state) => state.descriptions.data);
-  const { auth } = useContext(userContext);
+  const { isAuthenticated } = useAuth0();
   // const sliderPage = allPages.filter((item) => item.page === `slider`)[0];
   const dispatch = useDispatch();
   const allPhotos = useSelector((state) => state.photos.data);
-  console.log(allPhotos);
+  // console.log(allPhotos);
+  const { getAccessTokenSilently } = useAuth0();
+
   const sliderPhotos = allPhotos.filter((item) => {
     const width = Math.abs(item.width);
     const height = Math.abs(item.height);
-    console.log(item.title, width, height);
+    // console.log(item.title, width, height);
     return item.slider === true && width > height;
   });
   const sliderChooserPhotos = allPhotos.filter((item) => {
     const width = Math.abs(item.width);
     const height = Math.abs(item.height);
-    console.log(item.title, width, height);
+    // console.log(item.title, width, height);
     return width > height;
   });
 
@@ -50,18 +52,21 @@ const Component = ({ className }) => {
   const handleImageChooser = async (img) => {
     // console.log(img.category);
     const category = JSON.parse(JSON.stringify(img.category));
-    console.log(category);
+    // console.log(category);
     await setImage({ ...img, slider: !img.slider, category });
   };
 
   useEffect(() => {
-    console.log(image);
+    // console.log(image);
     const handleSubmit = async () => {
-      await dispatch(editPhotoRequest(image));
-      dispatch(fetchPhotos());
+      if (isAuthenticated) {
+        const token = await getAccessTokenSilently();
+        await dispatch(editPhotoRequest(image, token));
+        dispatch(fetchPhotos());
+      }
     };
     handleSubmit();
-  }, [dispatch, image]);
+  }, [dispatch, image, isAuthenticated, getAccessTokenSilently]);
 
   return (
     <div className={clsx(className, styles.root)}>
@@ -84,17 +89,17 @@ const Component = ({ className }) => {
           ))}
         </AutoplaySlider>
       </Container>
-      {auth ? (
+      {isAuthenticated ? (
         <div className={styles.editButton}>
           <Button
             onClick={() => setEdit(!edit)}
             edit={edit}
             icon="pencil"
-            auth={auth}
+            // auth={auth}
           />
         </div>
       ) : null}
-      {auth && edit ? (
+      {isAuthenticated && edit ? (
         <div className={styles.photoPick}>
           <div>
             {sliderChooserPhotos.map((img) => (

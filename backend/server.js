@@ -3,7 +3,12 @@ const cors = require(`cors`);
 const path = require(`path`);
 const mongoose = require(`mongoose`);
 const fileUpload = require(`express-fileupload`);
-const jwt = require(`jsonwebtoken`);
+const morgan = require(`morgan`);
+const helmet = require(`helmet`);
+const jwt = require(`express-jwt`);
+const jwksRsa = require(`jwks-rsa`);
+require("dotenv").config(); //eslint-disable-line
+
 const bodyParser = require(`body-parser`);
 
 const menusRoutes = require(`./routes/menus.routes`);
@@ -11,27 +16,31 @@ const photosRoutes = require(`./routes/photos.routes`);
 const categoriesRoutes = require(`./routes/categories.routes`);
 const offersRoutes = require(`./routes/offers.routes`);
 const descriptionsRoutes = require(`./routes/descriptions.routes`);
-require("dotenv").config(); //eslint-disable-line
-const { auth, requiresAuth } = require(`express-openid-connect`);
+// const { auth, requiresAuth } = require(`express-openid-connect`);
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.use(
-  auth({
-    authRequired: false,
-    auth0Logout: true,
-    issuerBaseURL: process.env.REACT_APP_ISSUER_BASE_URL,
-    baseURL: process.env.REACT_APP_BASE_URL,
-    clientID: process.env.REACT_APP_CLIENT_ID,
-    secret: process.env.REACT_APP_SECRET,
-    idpLogout: true,
-  })
-);
+if (
+  !process.env.REACT_APP_AUTH0_DOMAIN ||
+  !process.env.REACT_APP_AUTH0_AUDIENCE
+) {
+  console.log(
+    `Exiting: Please make sure that auth_config.json is in place and populated with valid domain and audience values`
+  );
+
+  process.exit();
+}
+
+const appPort = process.env.PORT || 3000;
+
+const appOrigin = process.env.APP_ORIGIN || `http://localhost:${appPort}`;
 
 /* MIDDLEWARE */
-app.use(cors());
+app.use(morgan(`dev`));
+app.use(helmet());
+app.use(cors({ origin: appOrigin }));
 app.use(
   fileUpload({
     createParentPath: true,
@@ -50,21 +59,8 @@ app.use(`/api`, categoriesRoutes);
 app.use(`/api`, offersRoutes);
 app.use(`/api`, descriptionsRoutes);
 
-/* REACT WEBSITE */
-// app.get(`/panel`, function (req, res) {
-//   // req.logout();
-//   console.log(`req`);
-//   // res.redirect('/');
-// });
 app.use(`*`, (req, res) => {
-  // console.log(auth);
-  console.log(req.oidc.isAuthenticated());
   res.sendFile(path.join(__dirname, `../build/index.html`));
-  // res.send(req.oidc.isAuthenticated());
-});
-
-app.use(`/dash`, (req, res) => {
-  console.log(`log`);
 });
 
 /* API ERROR PAGES */

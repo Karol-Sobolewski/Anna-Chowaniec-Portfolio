@@ -20,36 +20,23 @@ import { Button } from '../../common/Button/Button';
 const Component = ({ className, children }) => {
   console.log(`Dashboard`);
   // const dispatch = useDispatch();
-  const { isAuthenticated } = useAuth0();
-  const { auth, SetAuth } = useContext(userContext);
-  const { logout } = useAuth0();
+  const { isAuthenticated, isLoading, logout, loginWithRedirect } = useAuth0();
+  // const { auth, SetAuth } = useContext(userContext);
+
+  const [auth, setAuth] = useState(false);
   useEffect(() => {
-    // dispatch(actionName(`whatToDispatch`));
-    console.log(auth);
-  }, []);
-  return (
-    <div className={clsx(className, styles.root)}>
-      {auth ? (
-        <Container>
-          <Row>
-            <Col>
-              <p>Dodaj zdjęcie</p>
-              <ImageUploadForm />
-              <Button
-                type="button"
-                name="Login"
-                // onClick={() => loginWithRedirect()}
-              />
-              <Button type="button" name="Logout" onClick={() => logout()} />
-            </Col>
-          </Row>
-          <main>{children}</main>
-        </Container>
-      ) : (
-        <Redirect to="/" />
-      )}
-    </div>
-  );
+    if (isAuthenticated) {
+      const timeOut = setTimeout(() => setAuth(true), 1);
+      return () => clearTimeout(timeOut);
+    }
+  });
+
+  useEffect(() => {});
+
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
+  return auth ? <Redirect to="/" /> : null;
 };
 
 Component.propTypes = {

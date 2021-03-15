@@ -5,6 +5,9 @@
     cursor: pointer;
     margin: 2px;
     position: relative;
+    img {
+      object-fit: cover;
+    }
     .editPhotoButton,
     .deletePhotoButton {
       position: absolute;

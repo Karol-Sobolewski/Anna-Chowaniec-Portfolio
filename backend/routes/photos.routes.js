@@ -3,7 +3,22 @@ const router = express.Router();
 const Photo = require(`../models/photos.model`);
 const uniqid = require(`uniqid`);
 require("dotenv").config(); //eslint-disable-line
-const { auth, requiresAuth } = require(`express-openid-connect`);
+const fs = require(`fs`);
+const jwt = require(`express-jwt`);
+const jwksRsa = require(`jwks-rsa`);
+
+const checkJwt = jwt({
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/.well-known/jwks.json`,
+  }),
+
+  audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+  issuer: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/`,
+  algorithms: [`RS256`],
+});
 
 router.get(`/photos`, async (req, res) => {
   try {
@@ -16,7 +31,7 @@ router.get(`/photos`, async (req, res) => {
   }
 });
 
-router.get(`/photos/:id`, requiresAuth(), async (req, res) => {
+router.get(`/photos/:id`, async (req, res) => {
   try {
     const result = await Photo.findById(req.params.id).populate(`category`);
     // console.log(result);
@@ -28,8 +43,6 @@ router.get(`/photos/:id`, requiresAuth(), async (req, res) => {
 });
 
 router.post(`/photos`, async (req, res) => {
-  // res.send(req.oidc.isAuthenticated());
-  console.log(`req`, req.body);
   if (!req.files) {
     return res.status(400).json({ message: `no files uploaded` });
   }
@@ -90,13 +103,16 @@ router.put(`/photos/:id`, async (req, res) => {
 });
 
 router.delete(`/photos/:id`, async (req, res) => {
-  console.log(`params`, req.params);
-  console.log(`body`, req.body);
+  // console.log(`body`, req.body);
   try {
     const result = await Photo.findById(req.params.id);
-    console.log(`result`, result);
+
     if (result) {
       await result.deleteOne();
+      fs.unlink(`./public/${result.src}`, (err) => {
+        if (err) throw err;
+        console.log(`file was deleted`);
+      });
       res.json(result);
     } else res.status(404).json({ message: `Not found...` });
   } catch (err) {

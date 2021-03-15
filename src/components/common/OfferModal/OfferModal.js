@@ -10,14 +10,14 @@ import styles from './OfferModal.module.scss';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({ className, children, offerCategory }) => {
-  console.log(`OfferModal`);
+  // console.log(`OfferModal`);
   // const dispatch = useDispatch();
   const allOffers = useSelector((state) => state.offers.data);
   const offers = allOffers.filter(
     (offer) => offer.category._id === offerCategory // eslint-disable-line
   );
 
-  console.log(`offerCategory`, offers);
+  // console.log(`offerCategory`, offers);
   return (
     <div className={clsx(className, styles.root)}>
       <Row className={styles.offerRow}>

@@ -15,6 +15,8 @@ import { addPhotoRequest } from '../../../redux/photoRedux';
 
 const Component = ({ className, children, category }) => {
   const { user } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
+
   const dispatch = useDispatch();
   const [format, setFormat] = useState(``);
   const [photo, setPhoto] = useState({
@@ -41,7 +43,9 @@ const Component = ({ className, children, category }) => {
     setPhoto({ ...photo, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    const token = await getAccessTokenSilently();
+
     e.preventDefault();
     if (user) {
       setPhoto({ ...photo, login: true });
@@ -52,7 +56,7 @@ const Component = ({ className, children, category }) => {
     }
     formData.append(`file`, photo.file);
     console.log(photo);
-    dispatch(addPhotoRequest(formData));
+    dispatch(addPhotoRequest(formData, token));
   };
 
   useEffect(() => {

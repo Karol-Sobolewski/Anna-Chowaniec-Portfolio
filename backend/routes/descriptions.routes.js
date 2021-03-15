@@ -1,6 +1,6 @@
 const express = require(`express`);
 const router = express.Router();
-const { auth, requiresAuth } = require(`express-openid-connect`);
+// const { auth, requiresAuth } = require(`express-openid-connect`);
 
 const Description = require(`../models/descriptions.model`);
 

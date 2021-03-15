@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { Container, Row, Col } from 'react-bootstrap';
-import { userContext } from '../../../userContext';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '../../common/Button/Button';
 import styles from './About.module.scss';
 
@@ -18,12 +18,14 @@ const Component = ({ className, children }) => {
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
   const aboutPage = allPages.filter((item) => item.page === `about`)[0];
-  const { auth } = useContext(userContext);
+  // const { auth } = useContext(userContext);
+  const { isAuthenticated } = useAuth0();
+
   const [about, setAbout] = useState({
     ...aboutPage,
   });
   const [description, setDescription] = useState({
-    ...aboutPage.description[0],
+    // ...aboutPage.description[0],
   });
   const handleChange = (e) => {
     const { target } = e;
@@ -47,7 +49,7 @@ const Component = ({ className, children }) => {
   // );
 
   const handleSubmit = (e) => {
-    console.log(about);
+    // console.log(about);
     dispatch(editDescriptionRequest(about));
     setEdit(false);
   };
@@ -71,12 +73,12 @@ const Component = ({ className, children }) => {
               />
             </div>
           </Col>
-          {auth ? (
+          {isAuthenticated ? (
             <Button
               onClick={() => setEdit(!edit)}
               edit={edit}
               icon="pencil"
-              auth={auth}
+              // auth={auth}
               className={styles.editAboutButton}
             />
           ) : null}
@@ -91,7 +93,7 @@ const Component = ({ className, children }) => {
               onChange={(e) => handleChange(e)}
               className={styles.editAbout}
             >
-              {auth && edit ? (
+              {isAuthenticated && edit ? (
                 <div>
                   <input
                     name="heading"

@@ -48,11 +48,12 @@ export const fetchSelectedPhoto = (photo) => async (dispatch) => {
   }
 };
 
-export const addPhotoRequest = (data) => async (dispatch) => {
+export const addPhotoRequest = (data, token) => async (dispatch) => {
   dispatch(fetchStarted());
   try {
     const res = await Axios.post(`${API_URL}/photos`, data, {
       headers: {
+        Authorization: `Bearer ${token}`,
         'Content-Type': `multipart/form-data`,
       },
     });
@@ -61,22 +62,34 @@ export const addPhotoRequest = (data) => async (dispatch) => {
   }
 };
 
-export const editPhotoRequest = (photo) => async (dispatch) => {
+export const editPhotoRequest = (photo, token) => async (dispatch) => {
   dispatch(fetchStarted());
   try {
-    const res = await Axios.put(`${API_URL}/photos/${photo._id}`, photo);
+    const res = await Axios.put(`${API_URL}/photos/${photo._id}`, photo, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     await new Promise((resolve) => resolve());
     dispatch(updatePhoto(res.data));
+    // dispatch(fetchPhotos());
   } catch (err) {
     dispatch(fetchError(err.message || true));
   }
 };
 
-export const removePhotoRequest = (photo) => async (dispatch) => {
+export const removePhotoRequest = (photo, token) => async (dispatch) => {
   dispatch(fetchStarted());
   try {
-    const res = await Axios.delete(`${API_URL}/photos/${photo._id}`, photo);
+    const res = await Axios.delete(`${API_URL}/photos/${photo._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        data: {
+          photo,
+        },
+      },
+    });
 
     await new Promise((resolve) => resolve());
     dispatch(removePhoto(res.data));

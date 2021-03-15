@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import { useDispatch } from 'react-redux';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -21,8 +22,6 @@ import {
 import styles from './Photo.module.scss';
 import { Button } from '../Button/Button';
 
-import { userContext } from '../../../userContext';
-
 const removeDiacritics = require(`diacritics`).remove;
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
@@ -33,8 +32,7 @@ const Component = ({ index, onClick, photo, photos, className }) => {
   const [image, setImage] = useState(photo);
 
   const dispatch = useDispatch();
-
-  const { auth } = useContext(userContext);
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   // const allPhotos = useSelector((state) => state.photos.data);
   // const photos = allPhotos.filter(
   //   (ph) =>
@@ -43,10 +41,12 @@ const Component = ({ index, onClick, photo, photos, className }) => {
   // );
 
   const openLightbox = useCallback((e) => {
-    console.log(index);
-    // console.log(index);
-    // setCurrentImage(index);
-    // setViewerIsOpen(true);
+    console.log(photo);
+    // console.log(2);
+    console.log(photos);
+    const selected = photos.findIndex((i) => i._id === photo._id);
+    setCurrentImage(selected);
+    setViewerIsOpen(true);
   }, []);
 
   const closeLightbox = () => {
@@ -63,16 +63,18 @@ const Component = ({ index, onClick, photo, photos, className }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(editPhotoRequest(image));
-    console.log(`edit`);
-    // dispatch(fetchPhotos());
+    const token = await getAccessTokenSilently();
+    await dispatch(editPhotoRequest(image, token));
+    // console.log(`edit`);
+    dispatch(fetchPhotos());
   };
 
-  const handleDelete = (item) => {
+  const handleDelete = async (item) => {
     const confirm = window.confirm(`Chcesz usunąć zdjęcie?`);
     if (confirm) {
-      dispatch(removePhotoRequest(item));
-      // dispatch(fetchPhotos());
+      const token = await getAccessTokenSilently();
+      dispatch(removePhotoRequest(item, token));
+      dispatch(fetchPhotos());
       console.log(`delete`);
     }
   };
@@ -90,20 +92,20 @@ const Component = ({ index, onClick, photo, photos, className }) => {
   return (
     <div className={clsx(className, styles.root)}>
       <div className={styles.photoBox}>
-        {auth ? (
+        {isAuthenticated ? (
           <Button
             className={styles.editPhotoButton}
             onClick={() => setEdit(!edit)}
             edit={edit}
             icon="pencil"
-            auth={auth}
+            // auth={auth}
           />
         ) : null}
-        {auth ? (
+        {isAuthenticated ? (
           <Button
             onClick={() => handleDelete(photo)}
             icon="delete"
-            auth={auth}
+            // auth={auth}
             className={styles.deletePhotoButton}
           />
         ) : null}

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { Container, Row, Col } from 'react-bootstrap';
-// import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPencilAlt,
@@ -33,17 +33,22 @@ const Component = ({
   useEffect(() => {
     // dispatch(actionName(`whatToDispatch`));
   }, []);
+
+  const { isAuthenticated } = useAuth0();
+
   return (
     <button type={type} className={clsx(className, styles.root)} {...otherProps}> {/* eslint-disable-line */}
       {name}
-      {auth && !edit && icon === `pencil` ? (
+      {isAuthenticated && !edit && icon === `pencil` ? (
         <FontAwesomeIcon icon={faPencilAlt} />
       ) : null}
-      {auth && !edit && icon === `plus` ? (
+      {isAuthenticated && !edit && icon === `plus` ? (
         <FontAwesomeIcon icon={faPlus} />
       ) : null}
-      {auth && icon === `delete` ? <FontAwesomeIcon icon={faTrash} /> : null}
-      {auth && edit ? <FontAwesomeIcon icon={faTimes} /> : null}
+      {isAuthenticated && icon === `delete` ? (
+        <FontAwesomeIcon icon={faTrash} />
+      ) : null}
+      {isAuthenticated && edit ? <FontAwesomeIcon icon={faTimes} /> : null}
     </button>
   );
 };
