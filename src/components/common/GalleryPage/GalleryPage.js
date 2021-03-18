@@ -32,8 +32,6 @@ import { ImageUploadForm } from '../../features/ImageUploadForm/ImageUploadForm'
 
 const removeDiacritics = require(`diacritics`).remove;
 
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
-
 const SortablePhoto = SortableElement(
   (item, index) => <Photo {...item} /> //eslint-disable-line
 );
