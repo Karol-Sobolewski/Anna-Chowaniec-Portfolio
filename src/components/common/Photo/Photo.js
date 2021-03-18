@@ -64,7 +64,7 @@ const Component = ({ index, onClick, photo, photos, className }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await getAccessTokenSilently();
-    await dispatch(editPhotoRequest(image, token));
+    // await dispatch(editPhotoRequest(image, token));
     // console.log(`edit`);
     dispatch(fetchPhotos());
   };

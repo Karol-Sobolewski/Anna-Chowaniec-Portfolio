@@ -19,13 +19,13 @@ const Component = ({ className, children }) => {
   const [edit, setEdit] = useState(false);
   const aboutPage = allPages.filter((item) => item.page === `about`)[0];
   // const { auth } = useContext(userContext);
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   const [about, setAbout] = useState({
     ...aboutPage,
   });
   const [description, setDescription] = useState({
-    // ...aboutPage.description[0],
+    ...aboutPage.description[0],
   });
   const handleChange = (e) => {
     const { target } = e;
@@ -48,9 +48,11 @@ const Component = ({ className, children }) => {
   //   [about]
   // );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     // console.log(about);
-    dispatch(editDescriptionRequest(about));
+    e.preventDefault();
+    const token = await getAccessTokenSilently();
+    dispatch(editDescriptionRequest(about, token));
     setEdit(false);
   };
 

@@ -22,7 +22,7 @@ const checkJwt = jwt({
 
 router.get(`/photos`, async (req, res) => {
   try {
-    const result = await Photo.find().populate(`category`);
+    const result = await Photo.find().populate(`category`).sort({ order: 1 });
     // console.log(result);
     if (!result) res.status(404).json({ photo: `Not found` });
     else res.json(result);
@@ -42,7 +42,7 @@ router.get(`/photos/:id`, async (req, res) => {
   }
 });
 
-router.post(`/photos`, async (req, res) => {
+router.post(`/photos`, checkJwt, async (req, res) => {
   if (!req.files) {
     return res.status(400).json({ message: `no files uploaded` });
   }
@@ -83,7 +83,7 @@ router.post(`/photos`, async (req, res) => {
   // res.json(newPhoto);
 });
 
-router.put(`/photos/:id`, async (req, res) => {
+router.put(`/photos/:id`, checkJwt, async (req, res) => {
   try {
     const result = await Photo.findById(req.body._id);
     // console.log(`result`, result);
@@ -102,7 +102,28 @@ router.put(`/photos/:id`, async (req, res) => {
   }
 });
 
-router.delete(`/photos/:id`, async (req, res) => {
+router.put(`/photos`, async (req, res) => {
+  const filter = { slider: true };
+  console.log(`req`, req.body);
+  try {
+    const result = await Photo.updateMany(filter, { slider: false });
+    console.log(`result`, result);
+    /* eslint-disable */
+    // if (result) {
+    //   for (const prop in req.body) {
+    //     result[prop] = req.body[prop];
+    //   }
+    //   await result.save();
+    //   res.json(result);
+    // }
+    // /* eslint-enable */
+    // else res.status(404).json({ message: `Not found...` });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.delete(`/photos/:id`, checkJwt, async (req, res) => {
   // console.log(`body`, req.body);
   try {
     const result = await Photo.findById(req.params.id);

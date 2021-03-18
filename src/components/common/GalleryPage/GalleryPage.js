@@ -21,7 +21,11 @@ import clsx from 'clsx';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Button } from '../Button/Button';
 import { Photo } from '../Photo/Photo';
-import { fetchPhotos } from '../../../redux/photoRedux';
+import {
+  fetchPhotos,
+  editPhotoRequest,
+  editManyPhotoRequest,
+} from '../../../redux/photoRedux';
 
 import styles from './GalleryPage.module.scss';
 import { ImageUploadForm } from '../../features/ImageUploadForm/ImageUploadForm';
@@ -34,31 +38,21 @@ const SortablePhoto = SortableElement(
   (item, index) => <Photo {...item} /> //eslint-disable-line
 );
 
-const SortableGallery = SortableContainer(({ items }) => {
-  const { getAccessTokenSilently } = useAuth0();
-  // getAccessTokenSilently({
-  //   audience: `http://localhost:8000/`,
-  //   scope: `read:posts`,
-  // }).then(console.log);
-  // console.log(`getAccessTokenSilently` getAccessTokenSilently());
-  // console.log(`items`, items);
-  return (
-    <Gallery
-      photos={items}
-      renderImage={(props) => (
-          <SortablePhoto {...props} index={props.index} photos={items}/> //eslint-disable-line
-      )}
-    />
-  );
-});
+const SortableGallery = SortableContainer(({ items }) => (
+  <Gallery
+    photos={items}
+    renderImage={(props) => (
+          <SortablePhoto {...props} photos={items}/> //eslint-disable-line
+    )}
+  />
+));
 
 const Component = ({ className, children, galleryName }) => {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const { isAuthenticated } = useAuth0();
-  // const { auth } = useContext(userisAuthenticatedContext);
-
   const allPhotos = useSelector((state) => state.photos.data);
+
   const photos = allPhotos.filter((photo) =>
     photo.category.name
       ? removeDiacritics(photo.category.name).toLowerCase() ===
@@ -68,17 +62,19 @@ const Component = ({ className, children, galleryName }) => {
   const { category } = photos[0];
 
   const [items, setItems] = useState(photos);
-  // console.log(photos);
 
-  // const ph = useMemo(() => (photos), [input])
+  const { getAccessTokenSilently } = useAuth0();
+
+  const editedItems = [];
 
   useEffect(() => {
-    setItems(photos);
-    console.log(`update`);
-    // dispatch(fetchPhotos());
-  }, []);
-
-  console.log(`render`);
+    for (const item of items) {
+      const index = items.findIndex((i) => i._id === item._id);
+      item.order = index;
+      editedItems.push(item);
+    }
+    console.log(`editedItems`, editedItems);
+  }, [items]);
 
   const useOutsideAlerter = (ref) => {
     useEffect(() => {
@@ -98,11 +94,6 @@ const Component = ({ className, children, galleryName }) => {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
 
-  useEffect(() => {
-    console.log(`items`);
-    // setItems(photos);
-  });
-
   const imageRenderer = useCallback(
     ({ index, key, photo }) => (
       <Photo
@@ -116,10 +107,14 @@ const Component = ({ className, children, galleryName }) => {
     []
   );
 
-  const onSortEnd = ({ oldIndex, newIndex }) => {
+  const onSortEnd = async ({ oldIndex, newIndex }) => {
     setItems(arrayMove(items, oldIndex, newIndex));
-    console.log(items);
+    console.log(`old`, items);
+    const token = await getAccessTokenSilently();
+
+    // await dispatch(editPhotoRequest(image token));
   };
+
   return (
     <div className={clsx(className, styles.root)}>
       {isAuthenticated ? (
@@ -140,14 +135,16 @@ const Component = ({ className, children, galleryName }) => {
         ) : null}
       </div>
       <div className={styles.galleryContainer}>
-        <SortableGallery
-          items={items}
-          onSortEnd={onSortEnd}
-          axis="xy"
-          pressDelay={200}
-          // index={1}
-        />
-        {/* <Gallery photos={photos} renderImage={imageRenderer} /> */}
+        {isAuthenticated ? (
+          <SortableGallery
+            items={items}
+            onSortEnd={onSortEnd}
+            axis="xy"
+            pressDelay={200}
+          />
+        ) : (
+          <Gallery photos={photos} renderImage={imageRenderer} />
+        )}
       </div>
     </div>
   );

@@ -84,13 +84,13 @@ const App = () => {
     />
   ));
 
-  if (error) {
-    return <div>Oops... {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>Oops... {error.message}</div>;
+  // }
 
-  if (isLoading) {
-    return <p>loading</p>;
-  }
+  // if (isLoading) {
+  //   return <p>loading</p>;
+  // }
 
   return (
     <>
@@ -99,18 +99,18 @@ const App = () => {
           <BrowserRouter history={history}>
             <MainLayout>
               <ScrollToTop />
-              <AnimatedSwitch
+              {/* <AnimatedSwitch
                 atEnter={{ opacity: 0 }}
                 atLeave={{ opacity: 0 }}
                 atActive={{ opacity: 1 }}
                 className={styles.switchWrapper}
-              >
-                <Route exact path="/" component={() => <HomePage />} />
-                {routeComponents}
-                <Route exact path="/oferta" component={() => <Offer />} />
-                <Route exact path="/kontakt" component={() => <Contact />} />
-                <ProtectedRoute path="/login" component={Dashboard} />
-              </AnimatedSwitch>
+              > */}
+              <Route exact path="/" component={() => <HomePage />} />
+              {routeComponents}
+              <Route exact path="/oferta" component={() => <Offer />} />
+              <Route exact path="/kontakt" component={() => <Contact />} />
+              <ProtectedRoute path="/login" component={Dashboard} />
+              {/* </AnimatedSwitch> */}
             </MainLayout>
           </BrowserRouter>
         </div>

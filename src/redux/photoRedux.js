@@ -79,6 +79,24 @@ export const editPhotoRequest = (photo, token) => async (dispatch) => {
   }
 };
 
+export const editManyPhotoRequest = (photos, token) => async (dispatch) => {
+  dispatch(fetchStarted());
+  try {
+    const res = await Axios.put(`${API_URL}/photos`, photos, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(`res`, res);
+
+    await new Promise((resolve) => resolve());
+    // dispatch(updatePhoto(res.data));
+    // dispatch(fetchPhotos());
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
 export const removePhotoRequest = (photo, token) => async (dispatch) => {
   dispatch(fetchStarted());
   try {

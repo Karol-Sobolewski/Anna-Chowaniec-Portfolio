@@ -29,11 +29,15 @@ export const fetchDescriptions = () => (dispatch) => {
     });
 };
 
-export const editDescriptionRequest = (descr) => async (dispatch) => {
+export const editDescriptionRequest = (descr, token) => async (dispatch) => {
   dispatch(fetchStarted());
   console.log(`put`);
   try {
-    const res = await Axios.put(`${API_URL}/descriptions/${descr._id}`, descr);
+    const res = await Axios.put(`${API_URL}/descriptions/${descr._id}`, descr, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     await new Promise((resolve) => resolve());
     dispatch(updateDescription(res.data));

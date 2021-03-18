@@ -71,12 +71,13 @@ const Component = ({ className, children, splash }) => {
           </NavLink>
         ))}
         {isAuthenticated ? (
-          <Link
+          <button
+            type="button"
             className={splash ? styles.link : styles.link__scroll}
             onClick={() => logout()}
           >
             Wyloguj
-          </Link>
+          </button>
         ) : null}
       </nav>
       <Burger button={splash} />

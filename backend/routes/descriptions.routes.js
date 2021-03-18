@@ -1,8 +1,24 @@
 const express = require(`express`);
 const router = express.Router();
 // const { auth, requiresAuth } = require(`express-openid-connect`);
-
 const Description = require(`../models/descriptions.model`);
+require("dotenv").config(); //eslint-disable-line
+const fs = require(`fs`);
+const jwt = require(`express-jwt`);
+const jwksRsa = require(`jwks-rsa`);
+
+const checkJwt = jwt({
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/.well-known/jwks.json`,
+  }),
+
+  audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+  issuer: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/`,
+  algorithms: [`RS256`],
+});
 
 router.get(`/descriptions`, async (req, res) => {
   try {
@@ -16,7 +32,7 @@ router.get(`/descriptions`, async (req, res) => {
   }
 });
 
-router.put(`/descriptions/:id`, async (req, res) => {
+router.put(`/descriptions/:id`, checkJwt, async (req, res) => {
   try {
     const result = await Description.findById(req.body._id);
     if (result) {

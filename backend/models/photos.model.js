@@ -10,7 +10,16 @@ const photoSchema = new mongoose.Schema({
     required: true,
     ref: `Category`,
   },
+  order: { type: Number, required: true },
   slider: { type: Boolean },
+  // items: [
+  //   {
+  //     src: { type: String },
+  //     title: { type: String },
+  //     width: { type: Number },
+  //     height: { type: Number },
+  //   },
+  // ],
 });
 
 module.exports = mongoose.model(`Photo`, photoSchema);

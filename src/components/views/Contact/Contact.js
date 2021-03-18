@@ -18,7 +18,7 @@ import { editDescriptionRequest } from '../../../redux/descriptionRedux';
 const Component = ({ className, children }) => {
   const allPages = useSelector((state) => state.descriptions.data);
   const contactPage = allPages.filter((item) => item.page === `contact`)[0];
-  const { isAuthenticated, logout } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
 
   const [contact, setContact] = useState({
@@ -44,9 +44,10 @@ const Component = ({ className, children }) => {
     // console.log(description);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(editDescriptionRequest(contact));
+    const token = await getAccessTokenSilently();
+    dispatch(editDescriptionRequest(contact, token));
     console.log(contact);
     setEdit(false);
   };
