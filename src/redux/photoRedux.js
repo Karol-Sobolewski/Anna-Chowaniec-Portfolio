@@ -9,7 +9,8 @@ const FETCH_SUCCESS = createActionName(`FETCH_SUCCESS`);
 const FETCH_ERROR = createActionName(`FETCH_ERROR`);
 const ADD_PHOTO = createActionName(`ADD_PHOTO`);
 const UPDATE_PHOTO = createActionName(`UPDATE_PHOTO`);
-const REMOVE_PHOTO = createActionName(`REMOVE_PHOTO `);
+const REMOVE_PHOTO = createActionName(`REMOVE_PHOTO`);
+const FETCH_SELECTED_PHOTO = createActionName(`FETCH_SELECTED_PHOTO`);
 
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
@@ -24,6 +25,11 @@ export const removePhoto = (payload) => ({
   type: REMOVE_PHOTO,
 });
 
+export const fetchSelectedPhoto = (payload) => ({
+  payload,
+  type: FETCH_SELECTED_PHOTO,
+});
+
 export const fetchPhotos = () => (dispatch) => {
   dispatch(fetchStarted());
 
@@ -36,7 +42,7 @@ export const fetchPhotos = () => (dispatch) => {
     });
 };
 
-export const fetchSelectedPhoto = (photo) => async (dispatch) => {
+export const fetchSelectedPhotoRequest = (photo) => async (dispatch) => {
   dispatch(fetchStarted());
 
   try {
@@ -73,24 +79,6 @@ export const editPhotoRequest = (photo, token) => async (dispatch) => {
 
     await new Promise((resolve) => resolve());
     dispatch(updatePhoto(res.data));
-    // dispatch(fetchPhotos());
-  } catch (err) {
-    dispatch(fetchError(err.message || true));
-  }
-};
-
-export const editManyPhotoRequest = (photos, token) => async (dispatch) => {
-  dispatch(fetchStarted());
-  try {
-    const res = await Axios.put(`${API_URL}/photos`, photos, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(`res`, res);
-
-    await new Promise((resolve) => resolve());
-    // dispatch(updatePhoto(res.data));
     // dispatch(fetchPhotos());
   } catch (err) {
     dispatch(fetchError(err.message || true));
@@ -161,6 +149,22 @@ export default function reducer(statePart = [], action = {}) {
     }
 
     case UPDATE_PHOTO: {
+      console.log(`state`, statePart);
+      console.log(`action`, action.payload);
+      return {
+        ...statePart,
+        data: statePart.data.map((data) => {
+          if (data._id === action.payload._id) {
+            return {
+              ...action.payload,
+            };
+          }
+          return data;
+        }),
+      };
+    }
+
+    case FETCH_SELECTED_PHOTO: {
       console.log(`state`, statePart);
       console.log(`action`, action.payload);
       return {

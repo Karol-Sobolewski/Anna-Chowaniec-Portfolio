@@ -34,7 +34,9 @@ router.get(`/photos`, async (req, res) => {
 router.get(`/photos/:id`, async (req, res) => {
   try {
     const result = await Photo.findById(req.params.id).populate(`category`);
-    // console.log(result);
+    console.log(result);
+    console.log(`body`, req.body);
+    console.log(`params`, req.params);
     if (!result) res.status(404).json({ photo: `Not found` });
     else res.json(result);
   } catch (err) {
@@ -60,11 +62,12 @@ router.post(`/photos`, checkJwt, async (req, res) => {
     }
     res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
   });
-
+  console.log(`body`, req.body);
   const newPhoto = new Photo({
     title: req.body.title,
     category: req.body.category,
     src: filePath,
+    order: req.body.order,
     width:
     /* eslint-disable */
       req.body.format === `horizontal`

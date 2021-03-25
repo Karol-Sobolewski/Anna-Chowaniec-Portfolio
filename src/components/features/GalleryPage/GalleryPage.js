@@ -19,16 +19,12 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { Container, Row, Col } from 'react-bootstrap';
-import { Button } from '../Button/Button';
-import { Photo } from '../Photo/Photo';
-import {
-  fetchPhotos,
-  editPhotoRequest,
-  editManyPhotoRequest,
-} from '../../../redux/photoRedux';
+import { Button } from '../../common/Button/Button';
+import { Photo } from '../../common/Photo/Photo';
+import { fetchPhotos, editPhotoRequest } from '../../../redux/photoRedux';
 
 import styles from './GalleryPage.module.scss';
-import { ImageUploadForm } from '../../features/ImageUploadForm/ImageUploadForm';
+import { ImageUploadForm } from '../ImageUploadForm/ImageUploadForm';
 
 const removeDiacritics = require(`diacritics`).remove;
 
@@ -45,21 +41,21 @@ const SortableGallery = SortableContainer(({ items }) => (
   />
 ));
 
-const Component = ({ className, children, galleryName }) => {
+const Component = ({ className, children, photos, category }) => {
+  // const allPhotos = useSelector((state) => state.photos.data);
+
+  // const photos = allPhotos.filter((photo) =>
+  //   photo.category.name
+  //     ? removeDiacritics(photo.category.name).toLowerCase() ===
+  //       removeDiacritics(galleryName).toLowerCase()
+  //     : null
+  // );
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const { isAuthenticated } = useAuth0();
-  const allPhotos = useSelector((state) => state.photos.data);
-
-  const photos = allPhotos.filter((photo) =>
-    photo.category.name
-      ? removeDiacritics(photo.category.name).toLowerCase() ===
-        removeDiacritics(galleryName).toLowerCase()
-      : null
-  );
-  const { category } = photos[0];
 
   const [items, setItems] = useState(photos);
+  // const [category, setCategory] = useState(photos);
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -71,8 +67,23 @@ const Component = ({ className, children, galleryName }) => {
       item.order = index;
       editedItems.push(item);
     }
-    console.log(`editedItems`, editedItems);
+    const updatePhotos = async (editedItem) => {
+      const token = await getAccessTokenSilently();
+      dispatch(editPhotoRequest(editedItem, token));
+    };
+    if (JSON.stringify(editedItems) !== JSON.stringify(photos)) {
+      editedItems.forEach((editedItem) => {
+        console.log(`editedItem`);
+        updatePhotos(editedItem);
+      });
+    }
+    // console.log();
+    // setCategory(items[0].category);
   }, [items]);
+
+  useEffect(() => {
+    // setItems(photos);
+  }, [photos]);
 
   const useOutsideAlerter = (ref) => {
     useEffect(() => {
@@ -99,7 +110,7 @@ const Component = ({ className, children, galleryName }) => {
         index={index}
         photo={photo}
         photos={photos}
-        galleryName={galleryName}
+        //! galleryName={galleryName}
       />
     ),
     []
@@ -107,8 +118,7 @@ const Component = ({ className, children, galleryName }) => {
 
   const onSortEnd = async ({ oldIndex, newIndex }) => {
     setItems(arrayMove(items, oldIndex, newIndex));
-    console.log(`old`, items);
-    const token = await getAccessTokenSilently();
+    console.log(`items`, items);
 
     // await dispatch(editPhotoRequest(image token));
   };
@@ -151,7 +161,8 @@ const Component = ({ className, children, galleryName }) => {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  galleryName: PropTypes.string,
+  photos: PropTypes.array,
+  category: PropTypes.string,
 };
 
 export { Component as GalleryPage, Component as GalleryPageComponent };

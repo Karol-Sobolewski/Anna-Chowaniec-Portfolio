@@ -18,6 +18,7 @@ import {
   editPhotoRequest,
   fetchPhotos,
   removePhotoRequest,
+  fetchSelectedPhotoRequest,
 } from '../../../redux/photoRedux';
 import styles from './Photo.module.scss';
 import { Button } from '../Button/Button';
@@ -29,7 +30,10 @@ const Component = ({ index, onClick, photo, photos, className }) => {
   const [currentImage, setCurrentImage] = useState(``);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [images, setImages] = useState(photos);
   const [image, setImage] = useState(photo);
+
+  // console.log(`edit`, photo);
 
   const dispatch = useDispatch();
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -64,8 +68,10 @@ const Component = ({ index, onClick, photo, photos, className }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await getAccessTokenSilently();
-    // await dispatch(editPhotoRequest(image, token));
+    await dispatch(editPhotoRequest(image, token));
+    console.log(`image`, image);
     // console.log(`edit`);
+    // dispatch(fetchSelectedPhotoRequest(image, token));
     dispatch(fetchPhotos());
   };
 
@@ -88,7 +94,7 @@ const Component = ({ index, onClick, photo, photos, className }) => {
   useEffect(() => {
     // dispatch(fetchPhotos());
     // console.log(`photo`);
-  }, []);
+  }, [photo]);
   return (
     <div className={clsx(className, styles.root)}>
       <div className={styles.photoBox}>

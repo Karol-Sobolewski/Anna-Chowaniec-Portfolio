@@ -10,7 +10,7 @@ const photoSchema = new mongoose.Schema({
     required: true,
     ref: `Category`,
   },
-  order: { type: Number, required: true },
+  order: { type: Number },
   slider: { type: Boolean },
   // items: [
   //   {

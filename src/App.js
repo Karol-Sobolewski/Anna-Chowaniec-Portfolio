@@ -14,7 +14,8 @@ import { fetchPhotos } from './redux/photoRedux';
 
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { HomePage } from './components/views/HomePage/HomePage';
-import { GalleryPage } from './components/common/GalleryPage/GalleryPage';
+// import { GalleryPage } from './components/features/GalleryPage/GalleryPage';
+import { Photos } from './components/features/Photos/Photos';
 import { Offer } from './components/views/Offer/Offer';
 import { Contact } from './components/views/Contact/Contact';
 import { Dashboard } from './components/views/Dashboard/Dashboard';
@@ -80,7 +81,7 @@ const App = () => {
       exact
       path={`/${removeDiacritics(shortName).toLowerCase()}`}
       key={_id}
-      component={() => <GalleryPage galleryName={shortName} />}
+      component={() => <Photos galleryName={shortName} />}
     />
   ));
 

@@ -10,7 +10,7 @@ import ImageUploader from 'react-images-upload';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Button } from '../../common/Button/Button';
 import styles from './ImageUploadForm.module.scss';
-import { addPhotoRequest } from '../../../redux/photoRedux';
+import { addPhotoRequest, fetchPhotos } from '../../../redux/photoRedux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({ className, children, category }) => {
@@ -26,8 +26,8 @@ const Component = ({ className, children, category }) => {
     categoryName: category.name,
     width: ``,
     height: ``,
-    login: false,
     format,
+    order: 0,
   });
 
   const handleImage = (files) => {
@@ -51,17 +51,24 @@ const Component = ({ className, children, category }) => {
       setPhoto({ ...photo, login: true });
     }
     const formData = new FormData();
-    for (const key of [`category`, `title`, `categoryName`, `format`]) {
+    for (const key of [
+      `category`,
+      `title`,
+      `categoryName`,
+      `format`,
+      `order`,
+    ]) {
       formData.append(key, photo[key]);
     }
     formData.append(`file`, photo.file);
     console.log(photo);
     dispatch(addPhotoRequest(formData, token));
+    dispatch(fetchPhotos());
   };
 
   useEffect(() => {
-    console.log(photo);
-  }, []);
+    console.log(format);
+  }, [format]);
   return (
     <div className={clsx(className, styles.root)}>
       <form
