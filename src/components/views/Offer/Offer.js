@@ -22,7 +22,7 @@ const Component = ({ className, children }) => {
     dispatch(fetchOffers());
   }, []);
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const workCategories = useSelector((state) => state.categories.data);
+  const offerCategories = useSelector((state) => state.categories.data);
 
   const customStyles = {
     overlay: { zIndex: 1000, backgroundColor: `rgba(0, 0, 0, 0.2)` },
@@ -60,15 +60,15 @@ const Component = ({ className, children }) => {
     <div className={clsx(className, styles.root)}>
       <Container>
         <Row className={styles.offerRow}>
-          {workCategories.map((item) => (
+          {offerCategories.map((item) => (
             <Col className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center">
               <button
                 type="button"
-                className={styles.workPhoto}
+                className={styles.offerPhoto}
                 onClick={() => openModal(item._id)}
                 key={item._id}
               >
-                <div className={styles.workDescription}>
+                <div className={styles.offerDescription}>
                   <h3>{item.description}</h3>
                   <img src={item.image.src} alt={item.image.alt} />
                 </div>

@@ -21,7 +21,7 @@
     width: 90%;
   }
 
-  .workPhoto {
+  .offerPhoto {
     align-items: center;
     background-color: white;
     background: none;
@@ -32,11 +32,11 @@
     justify-content: center;
     outline: none;
     width: 100%;
-    &:hover .workDescription {
+    &:hover .offerDescription {
       color: $link-color-active;
     }
   }
-  .workDescription {
+  .offerDescription {
     // width: 90%;
     text-align: left;
     height: 50%;

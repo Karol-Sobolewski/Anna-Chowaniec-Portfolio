@@ -29,11 +29,11 @@ const Component = ({ className, children }) => {
   return (
     <footer className={clsx(className, styles.root)}>
       <Container>
-        <Row className="">
+        <Row className="d-flex align-items-center justify-content-center">
           {footerPage.description.slice(0, 2).map((item) => (
             <Col
               md={4}
-              className="col-6 d-flex align-items-center justify-content-center p-3"
+              className="col-12 col-md-6 col-lg-4 d-flex align-items-center justify-content-center p-3"
             >
               {/* eslint-disable */}
               {item.type === `mail` ? (
@@ -58,10 +58,13 @@ const Component = ({ className, children }) => {
           ))}
           <Col
             md={4}
-            className="col-12 d-flex align-items-center justify-content-center p-3"
+            className="col-12 col-md-6 col-lg-4 d-flex align-items-center justify-content-center p-3"
           >
             {footerPageLinks.map((item) => (
-              <a href={item.value} className="pr-2">
+              <a
+                href={item.value}
+                className="pr-2 d-flex align-items-center justify-content-center"
+              >
                 {/* eslint-disable */}
                 <FontAwesomeIcon
                   icon={
