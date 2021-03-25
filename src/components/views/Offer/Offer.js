@@ -58,37 +58,34 @@ const Component = ({ className, children }) => {
   });
   return (
     <div className={clsx(className, styles.root)}>
-      <Container>
-        <Row className={styles.offerRow}>
-          {offerCategories.map((item) => (
-            <Col className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center">
-              <button
-                type="button"
-                className={styles.offerPhoto}
-                onClick={() => openModal(item._id)}
-                key={item._id}
-              >
-                <div className={styles.offerDescription}>
-                  <h3>{item.description}</h3>
-                  <img src={item.image.src} alt={item.image.alt} />
-                </div>
-              </button>
-            </Col>
-          ))}
-          {isAuthenticated ? (
-            <Col className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center">
-              <Button
-                onClick={() => setActive(!active)}
-                edit={active}
-                icon="plus"
-                className={styles.addOfferButton}
-              />
-            </Col>
-          ) : null}
-        </Row>
-
-        <main>{children}</main>
-      </Container>
+      <Row className={styles.offerRow}>
+        {offerCategories.map((item) => (
+          <Col className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center">
+            <button
+              type="button"
+              className={styles.offerPhoto}
+              onClick={() => openModal(item._id)}
+              key={item._id}
+            >
+              <div className={styles.offerDescription}>
+                <h4>{item.description}</h4>
+                <img src={item.image.src} alt={item.image.alt} />
+              </div>
+            </button>
+          </Col>
+        ))}
+        {isAuthenticated ? (
+          <Col className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center">
+            <Button
+              onClick={() => setActive(!active)}
+              edit={active}
+              icon="plus"
+              className={styles.addOfferButton}
+            />
+          </Col>
+        ) : null}
+      </Row>
+      <main>{children}</main>
     </div>
   );
 };
