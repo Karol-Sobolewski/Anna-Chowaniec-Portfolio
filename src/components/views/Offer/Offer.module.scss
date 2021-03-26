@@ -51,9 +51,9 @@
 }
 .hideModalButton {
   align-items: center;
-  background: linear-gradient(-45deg, #cfd9df 0%, #abbdc7 100%);
+  background: none;
   color: $link-color;
-  border-radius: 20%;
+  border-radius: 5px;
   border: none;
   display: flex;
   font-family: $font-title;

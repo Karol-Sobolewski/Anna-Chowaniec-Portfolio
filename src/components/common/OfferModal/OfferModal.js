@@ -26,11 +26,13 @@ const Component = ({ className, children, offerCategory }) => {
             key={item.id}
             className={`col-12 col-md-5 col-xl-3 ${styles.offerColumn}`}
           >
-            <h2>{item.name}</h2>
-            {item.descriptions.map((description) => (
-              <p>{description.text}</p>
-            ))}
-            <h3>{item.price} ZŁ</h3>
+            <h2 className={styles.offerTitle}>{item.name}</h2>
+            <ul className={styles.offerDescription}>
+              {item.descriptions.map((description) => (
+                <li>{description.text}</li>
+              ))}
+            </ul>
+            <h3 className={styles.offerPrice}>{item.price} ZŁ</h3>
           </Col>
         ))}
       </Row>
