@@ -24,15 +24,17 @@ const Component = ({ className, children, offerCategory }) => {
         {offers.map((item) => (
           <Col
             key={item.id}
-            className={`col-12 col-md-5 col-xl-3 ${styles.offerColumn}`}
+            className={`col-12 col-md-5 mt-3 col-xl-3 ${styles.offerColumn}`}
           >
-            <h2 className={styles.offerTitle}>{item.name}</h2>
+            <div className={styles.offerTitle}>
+              <h3> {item.name}</h3>
+            </div>
             <ul className={styles.offerDescription}>
               {item.descriptions.map((description) => (
                 <li>{description.text}</li>
               ))}
             </ul>
-            <h3 className={styles.offerPrice}>{item.price} ZŁ</h3>
+            <h4 className={styles.offerPrice}>{item.price} ZŁ</h4>
           </Col>
         ))}
       </Row>

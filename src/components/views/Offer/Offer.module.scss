@@ -11,6 +11,12 @@
     // right: 0;
     // margin-top: 2vh;
   }
+  .addOfferButton__active {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+  }
   .offerRow {
     align-items: center;
     display: flex;
@@ -21,7 +27,7 @@
     }
   }
 
-  .offerPhoto {
+  .offerBox {
     align-items: center;
     background-color: white;
     background: none;
@@ -32,20 +38,22 @@
     justify-content: center;
     outline: none;
     width: 100%;
+    border-radius: 5px;
 
     &:hover .offerDescription {
       color: $link-color-active;
     }
-  }
-  .offerDescription {
-    height: 50%;
-    margin: 20px;
-    text-align: left;
-    img {
-      height: 100%;
-      margin-top: 1vh;
-      object-fit: cover;
-      width: 100%;
+    .offerDescription {
+      height: 50%;
+      margin: 20px;
+      text-align: left;
+      img {
+        height: 100%;
+        margin-top: 1vh;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 5px;
+      }
     }
   }
 }

@@ -23,7 +23,7 @@
       display: flex;
       flex-direction: column;
       height: 90%;
-      justify-content: center;
+      justify-content: space-between;
       margin: 0;
       overflow: auto;
       padding: 0;
@@ -34,20 +34,24 @@
         width: 100%;
         margin: 0;
         padding: 1vh 0 1vh 0;
+        // height: 50px;
         color: $link-color;
-        position: absolute;
-        top: 0;
+        // position: absolute;
+        // top: 0;
       }
       .offerPrice {
-        position: absolute;
-        bottom: 1vh;
+        // position: absolute;
+        // bottom: 1vh;
+        margin-bottom: 1vh;
       }
       .offerDescription {
         align-items: center;
         display: flex;
         flex-direction: column;
         height: 80%;
-        justify-content: flex-start;
+        // margin-top: 5vh;
+        overflow: auto;
+        // justify-content: flex-start;
         list-style-type: none;
         li {
           margin: 1vh 0 1vh 0;

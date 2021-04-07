@@ -91,12 +91,7 @@ const Component = ({ className }) => {
       </Container>
       {isAuthenticated ? (
         <div className={styles.editButton}>
-          <Button
-            onClick={() => setEdit(!edit)}
-            edit={edit}
-            icon="pencil"
-            // auth={auth}
-          />
+          <Button onClick={() => setEdit(!edit)} edit={edit} icon="pencil" />
         </div>
       ) : null}
       {isAuthenticated && edit ? (

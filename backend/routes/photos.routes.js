@@ -45,10 +45,10 @@ router.get(`/photos/:id`, async (req, res) => {
 });
 
 router.post(`/photos`, checkJwt, async (req, res) => {
-  if (!req.files) {
+  const { file } = req.files;
+  if (!file) {
     return res.status(400).json({ message: `no files uploaded` });
   }
-  const { file } = req.files;
   const fileExtension = file.name.split(`.`).pop();
 
   const filePath = `images/photos/${req.body.categoryName}/${

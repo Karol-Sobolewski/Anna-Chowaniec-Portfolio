@@ -24,6 +24,24 @@ export const fetchCategories = () => (dispatch) => {
     });
 };
 
+export const addCategoryRequest = (data, token) => async (dispatch) => {
+  dispatch(fetchStarted());
+  console.log(`cat data`, data);
+  try {
+    const res = await Axios.post(`${API_URL}/categories`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': `application/json`,
+        data: {
+          data,
+        },
+      },
+    });
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
     case FETCH_START: {

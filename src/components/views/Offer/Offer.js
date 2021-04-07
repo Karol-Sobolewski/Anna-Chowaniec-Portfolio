@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useModal } from 'react-modal-hook';
 import ReactModal from 'react-modal';
@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import { OfferModal } from '../../common/OfferModal/OfferModal';
+import { AddOfferForm } from '../../features/AddOfferForm/AddOfferForm';
 import { Button } from '../../common/Button/Button';
 import { fetchOffers } from '../../../redux/offerRedux';
 import styles from './Offer.module.scss';
@@ -36,26 +37,31 @@ const Component = ({ className, children }) => {
   };
 
   const [modalData, setModalData] = useState(null);
-  const [showModal, hideModal] = useModal(
-    () => (
+  const [showModal, hideModal] = useModal(() => {
+    const closeModal = () => {
+      document.body.style.overflow = `unset`;
+      hideModal();
+    };
+
+    return (
       <ReactModal isOpen style={customStyles}>
-        {/* <p>Hello, {modalData}</p> */}
         <OfferModal offerCategory={modalData} />
         <button
           type="button"
           className={styles.hideModalButton}
-          onClick={hideModal}
+          onClick={closeModal}
         >
           <p>x</p>
         </button>
       </ReactModal>
-    ),
-    [modalData]
-  );
+    );
+  }, [modalData]);
   const openModal = useCallback((data) => {
     setModalData(data);
     showModal();
+    document.body.style.overflow = `hidden`;
   });
+
   return (
     <div className={clsx(className, styles.root)}>
       <Row className={styles.offerRow}>
@@ -63,7 +69,7 @@ const Component = ({ className, children }) => {
           <Col className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center">
             <button
               type="button"
-              className={styles.offerPhoto}
+              className={styles.offerBox}
               onClick={() => openModal(item._id)}
               key={item._id}
             >
@@ -80,8 +86,11 @@ const Component = ({ className, children }) => {
               onClick={() => setActive(!active)}
               edit={active}
               icon="plus"
-              className={styles.addOfferButton}
+              className={
+                active ? styles.addOfferButton__active : styles.addOfferButton
+              }
             />
+            {isAuthenticated && active ? <AddOfferForm /> : null}
           </Col>
         ) : null}
       </Row>

@@ -24,6 +24,24 @@ export const fetchMenu = () => (dispatch) => {
     });
 };
 
+export const addMenuRequest = (data, token) => async (dispatch) => {
+  dispatch(fetchStarted());
+  console.log(`menu data`, data);
+  try {
+    const res = await Axios.post(`${API_URL}/menus`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': `application/json`,
+        data: {
+          data,
+        },
+      },
+    });
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
     case FETCH_START: {

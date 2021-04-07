@@ -14,7 +14,6 @@ import { addPhotoRequest, fetchPhotos } from '../../../redux/photoRedux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({ className, children, category }) => {
-  const { user } = useAuth0();
   const { getAccessTokenSilently } = useAuth0();
 
   const dispatch = useDispatch();
@@ -47,9 +46,6 @@ const Component = ({ className, children, category }) => {
     const token = await getAccessTokenSilently();
 
     e.preventDefault();
-    if (user) {
-      setPhoto({ ...photo, login: true });
-    }
     const formData = new FormData();
     for (const key of [
       `category`,
@@ -61,9 +57,10 @@ const Component = ({ className, children, category }) => {
       formData.append(key, photo[key]);
     }
     formData.append(`file`, photo.file);
-    console.log(photo);
+    console.log(`photo`, photo);
+    console.log(`category`, category);
     dispatch(addPhotoRequest(formData, token));
-    dispatch(fetchPhotos());
+    // dispatch(fetchPhotos());
   };
 
   useEffect(() => {
