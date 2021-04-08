@@ -81,54 +81,6 @@ const Component = ({ className, children, offer }) => {
           <img src={offer.image.src} alt={offer.image.alt} />
         </div>
       </button>
-      {/* <Row className={styles.offerRow}>
-        {offerCategories.map((item) => (
-          <Col className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center">
-            {isAuthenticated ? (
-              <div className={styles.editButtons}>
-                <Button
-                  className={styles.editCategoryButton}
-                  onClick={() => setEdit(!edit)}
-                  edit={edit}
-                  icon="pencil"
-                  // auth={auth}
-                />
-                <Button
-                  // onClick={() => handleDelete(photo)}
-                  icon="delete"
-                  // auth={auth}
-                  className={styles.deletePhotoButton}
-                />
-              </div>
-            ) : null}
-            <button
-              type="button"
-              className={styles.offerBox}
-              onClick={() => openModal(item._id)}
-              key={item._id}
-            >
-              <div className={styles.offerDescription}>
-                <h4>{item.description}</h4>
-                <img src={item.image.src} alt={item.image.alt} />
-              </div>
-            </button>
-          </Col>
-        ))}
-        {isAuthenticated ? (
-          <Col className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center">
-            <Button
-              onClick={() => setActive(!active)}
-              edit={active}
-              icon="plus"
-              className={
-                active ? styles.addOfferButton__active : styles.addOfferButton
-              }
-            />
-            {isAuthenticated && active ? <AddCategoryForm /> : null}
-          </Col>
-        ) : null}
-      </Row>
-      <main>{children}</main> */}
     </div>
   );
 };
