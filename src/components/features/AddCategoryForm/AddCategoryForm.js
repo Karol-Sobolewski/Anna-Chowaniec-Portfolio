@@ -7,7 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import { Container, Row, Col } from 'react-bootstrap';
 import ImageUploader from 'react-images-upload';
-import styles from './AddOfferForm.module.scss';
+import styles from './AddCategoryForm.module.scss';
 import { Button } from '../../common/Button/Button';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 import { addCategoryRequest } from '../../../redux/categoryRedux';
@@ -21,7 +21,7 @@ const Component = ({ className }) => {
     description: ``,
     component: `GalleryPage`,
     shortName: ``,
-    order: 3, // TODO Last order of GalleryPage
+    order: 3, // TODO get last order of GalleryPage
     photo: {
       alt: ``,
       file: null,
@@ -125,4 +125,4 @@ Component.propTypes = {
   className: PropTypes.string,
 };
 
-export { Component as AddOfferForm, Component as AddOfferFormComponent };
+export { Component as AddCategoryForm, Component as AddCategoryFormComponent };

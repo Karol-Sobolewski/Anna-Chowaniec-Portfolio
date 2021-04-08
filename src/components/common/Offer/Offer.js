@@ -7,23 +7,24 @@ import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
-import { OfferModal } from '../../common/OfferModal/OfferModal';
-import { AddOfferForm } from '../../features/AddOfferForm/AddOfferForm';
-import { Button } from '../../common/Button/Button';
+import { OfferModal } from '../OfferModal/OfferModal';
+import { AddCategoryForm } from '../../features/AddCategoryForm/AddCategoryForm';
+import { Button } from '../Button/Button';
 import { fetchOffers } from '../../../redux/offerRedux';
 import styles from './Offer.module.scss';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-const Component = ({ className, children }) => {
-  console.log(`Offer`);
+const Component = ({ className, children, offer }) => {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
+  const [edit, setEdit] = useState(false);
+
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const offerCategories = useSelector((state) => state.categories.data);
 
   useEffect(() => {
     dispatch(fetchOffers());
   }, []);
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const offerCategories = useSelector((state) => state.categories.data);
 
   const customStyles = {
     overlay: { zIndex: 1000, backgroundColor: `rgba(0, 0, 0, 0.2)` },
@@ -64,9 +65,54 @@ const Component = ({ className, children }) => {
 
   return (
     <div className={clsx(className, styles.root)}>
-      <Row className={styles.offerRow}>
+      {isAuthenticated ? (
+        <div className={styles.editButtons}>
+          <Button
+            className={styles.editCategoryButton}
+            onClick={() => setEdit(!edit)}
+            edit={edit}
+            icon="pencil"
+            // auth={auth}
+          />
+          <Button
+            // onClick={() => handleDelete(photo)}
+            icon="delete"
+            // auth={auth}
+            className={styles.deletePhotoButton}
+          />
+        </div>
+      ) : null}
+      <button
+        type="button"
+        className={styles.offerBox}
+        onClick={() => openModal(offer._id)}
+        key={offer._id}
+      >
+        <div className={styles.offerDescription}>
+          <h4>{offer.description}</h4>
+          <img src={offer.image.src} alt={offer.image.alt} />
+        </div>
+      </button>
+      {/* <Row className={styles.offerRow}>
         {offerCategories.map((item) => (
           <Col className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center">
+            {isAuthenticated ? (
+              <div className={styles.editButtons}>
+                <Button
+                  className={styles.editCategoryButton}
+                  onClick={() => setEdit(!edit)}
+                  edit={edit}
+                  icon="pencil"
+                  // auth={auth}
+                />
+                <Button
+                  // onClick={() => handleDelete(photo)}
+                  icon="delete"
+                  // auth={auth}
+                  className={styles.deletePhotoButton}
+                />
+              </div>
+            ) : null}
             <button
               type="button"
               className={styles.offerBox}
@@ -90,11 +136,11 @@ const Component = ({ className, children }) => {
                 active ? styles.addOfferButton__active : styles.addOfferButton
               }
             />
-            {isAuthenticated && active ? <AddOfferForm /> : null}
+            {isAuthenticated && active ? <AddCategoryForm /> : null}
           </Col>
         ) : null}
       </Row>
-      <main>{children}</main>
+      <main>{children}</main> */}
     </div>
   );
 };
@@ -102,6 +148,7 @@ const Component = ({ className, children }) => {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  offer: PropTypes.object,
 };
 
 export { Component as Offer, Component as OfferComponent };

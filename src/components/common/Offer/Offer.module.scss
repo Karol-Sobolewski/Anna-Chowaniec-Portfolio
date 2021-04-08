@@ -1,0 +1,136 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  .editButtons {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: -30px;
+    width: 100%;
+    z-index: 1000;
+  }
+  .offerBox {
+    align-items: center;
+    background-color: white;
+    border: none;
+    box-shadow: $box-shadow-small;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-radius: 5px;
+
+    &:hover .offerDescription {
+      color: $link-color-active;
+    }
+
+    .offerDescription {
+      height: 50%;
+      margin: 20px;
+      text-align: left;
+      position: relative;
+      img {
+        height: 100%;
+        margin-top: 1vh;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 5px;
+      }
+    }
+  }
+}
+.hideModalButton {
+  align-items: center;
+  background: none;
+  border-radius: 5px;
+  border: none;
+  color: $link-color;
+  display: flex;
+  font-family: $font-title;
+  font-size: 2em;
+  height: 5vh;
+  justify-content: center;
+  outline: none;
+  position: absolute;
+  right: 2vh;
+  top: 2vh;
+  transition: background 1s ease-out;
+  width: 5vh;
+  z-index: 10;
+  &:hover {
+    color: $link-color-active;
+  }
+  p {
+    margin-bottom: 0.3em;
+  }
+}
+
+/* ExtraExtraLarge Devices, UltraWide Desktops  */
+@media (min-width: 1921px) {
+  .root {
+    .offerRow {
+      width: 80%;
+    }
+  }
+}
+
+/* ExtraLarge Devices, Desktops  */
+@media (min-width: 1200px) and (max-width: 1920px) {
+  .root {
+    .offerRow {
+      width: 60%;
+    }
+  }
+}
+/* Large Devices, Laptops, Large Tablets iPad Pro */
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+  .root {
+    .offerRow {
+      width: 80%;
+    }
+  }
+}
+
+/* Medium Devices, Tablets iPad */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .root {
+    .offerRow {
+      width: 80%;
+    }
+  }
+}
+
+/* Small Devices, Small tablets Large Phones */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .root {
+    .offerRow {
+      width: 80%;
+    }
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 0px) and (max-width: 479px) {
+  .root {
+    .offerRow {
+      width: 80%;
+    }
+  }
+}
+
+/* Media pointer*/
+@media (hover: hover) and (pointer: fine) {
+  .root {
+  }
+}
+
+/* Media touchable */
+@media (pointer: coarse) {
+  .root {
+  }
+}

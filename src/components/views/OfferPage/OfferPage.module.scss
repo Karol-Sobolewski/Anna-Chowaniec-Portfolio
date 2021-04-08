@@ -6,86 +6,17 @@
   justify-content: center;
   position: relative;
   .addOfferButton {
-    // position: absolute;
-    // top: 0;
-    // right: 0;
-    // margin-top: 2vh;
   }
   .addOfferButton__active {
     position: absolute;
-    top: 0;
     right: 0;
+    top: 0;
     z-index: 10;
   }
   .offerRow {
     align-items: center;
     display: flex;
     justify-content: space-around;
-    div {
-      // height: 500px;
-      // width: 500px;
-    }
-  }
-
-  .offerBox {
-    align-items: center;
-    background-color: white;
-    background: none;
-    background: none;
-    border: none;
-    box-shadow: $box-shadow-small;
-    display: flex;
-    justify-content: center;
-    outline: none;
-    width: 100%;
-    border-radius: 5px;
-
-    &:hover .offerDescription {
-      color: $link-color-active;
-    }
-    .offerDescription {
-      height: 50%;
-      margin: 20px;
-      text-align: left;
-      img {
-        height: 100%;
-        margin-top: 1vh;
-        object-fit: cover;
-        width: 100%;
-        border-radius: 5px;
-      }
-    }
-  }
-}
-.hideModalButton {
-  align-items: center;
-  background: none;
-  color: $link-color;
-  border-radius: 5px;
-  border: none;
-  display: flex;
-  font-family: $font-title;
-  font-size: 2em;
-  height: 5vh;
-  justify-content: center;
-  outline: none;
-  position: absolute;
-  right: 2vh;
-  top: 2vh;
-  transition: background 1s ease-out;
-  width: 5vh;
-  z-index: 10;
-  &:hover {
-    color: $link-color-active;
-  }
-  p {
-    // color: blue;
-    // margin: 0;
-    // padding: 0;
-    margin-bottom: 0.3em;
-    // position: absolute;
-
-    // margin-bottom: 2em !important;
   }
 }
 

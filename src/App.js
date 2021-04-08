@@ -16,7 +16,7 @@ import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { HomePage } from './components/views/HomePage/HomePage';
 // import { GalleryPage } from './components/features/GalleryPage/GalleryPage';
 import { Photos } from './components/features/Photos/Photos';
-import { Offer } from './components/views/Offer/Offer';
+import { OfferPage } from './components/views/OfferPage/OfferPage';
 import { Contact } from './components/views/Contact/Contact';
 import { Dashboard } from './components/views/Dashboard/Dashboard';
 import ProtectedRoute from './auth/protected-route';
@@ -108,7 +108,7 @@ const App = () => {
               > */}
               <Route exact path="/" component={() => <HomePage />} />
               {routeComponents}
-              <Route exact path="/oferta" component={() => <Offer />} />
+              <Route exact path="/oferta" component={() => <OfferPage />} />
               <Route exact path="/kontakt" component={() => <Contact />} />
               <ProtectedRoute path="/login" component={Dashboard} />
               {/* </AnimatedSwitch> */}
