@@ -1,30 +1,18 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useCallback } from 'react';
 import { useModal } from 'react-modal-hook';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import { OfferModal } from '../OfferModal/OfferModal';
-import { AddCategoryForm } from '../../features/AddCategoryForm/AddCategoryForm';
 import { Button } from '../Button/Button';
-import { fetchOffers } from '../../../redux/offerRedux';
 import styles from './Offer.module.scss';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({ className, children, offer }) => {
-  const dispatch = useDispatch();
-  const [active, setActive] = useState(false);
   const [edit, setEdit] = useState(false);
 
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const offerCategories = useSelector((state) => state.categories.data);
-
-  useEffect(() => {
-    dispatch(fetchOffers());
-  }, []);
+  const { isAuthenticated } = useAuth0();
 
   const customStyles = {
     overlay: { zIndex: 1000, backgroundColor: `rgba(0, 0, 0, 0.2)` },
@@ -57,7 +45,7 @@ const Component = ({ className, children, offer }) => {
       </ReactModal>
     );
   }, [modalData]);
-  const openModal = useCallback((data) => {
+  const openModal = useCallback((data) => { //eslint-disable-line
     setModalData(data);
     showModal();
     document.body.style.overflow = `hidden`;
