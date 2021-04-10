@@ -4,11 +4,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTwitter,
-  faFacebook,
-  faInstagram,
-} from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faPhoneAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 import { Container, Row, Col } from 'react-bootstrap';
@@ -21,11 +17,11 @@ const Component = ({ className, children }) => {
   const allPages = useSelector((state) => state.descriptions.data);
 
   const footerPage = allPages.filter((item) => item.page === `contact`)[0];
-  // console.log(footerPage);
+
   const footerPageLinks = footerPage.description.filter(
     (item) => item.type === `web`
   );
-  console.log(footerPageLinks);
+
   return (
     <footer className={clsx(className, styles.root)}>
       <Container>
