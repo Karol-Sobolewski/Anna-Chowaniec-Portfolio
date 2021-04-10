@@ -1,36 +1,25 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useContext,
-  useRef,
-} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Carousel, { Modal, ModalGateway } from 'react-images';
-import ImageGallery from 'react-image-gallery';
-import { Container, Row, Col } from 'react-bootstrap';
 import {
   editPhotoRequest,
   fetchPhotos,
   removePhotoRequest,
-  fetchSelectedPhotoRequest,
 } from '../../../redux/photoRedux';
 import styles from './Photo.module.scss';
 import { Button } from '../Button/Button';
 
-const removeDiacritics = require(`diacritics`).remove;
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-const Component = ({ index, onClick, photo, photos, className }) => {
+const Component = ({ photo, photos, className }) => {
   const [currentImage, setCurrentImage] = useState(``);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [images, setImages] = useState(photos);
   const [image, setImage] = useState(photo);
 
   // console.log(`edit`, photo);
@@ -44,14 +33,12 @@ const Component = ({ index, onClick, photo, photos, className }) => {
   //     removeDiacritics(galleryName).toLowerCase()
   // );
 
-  const openLightbox = useCallback((e) => {
-    console.log(photo);
+  const openLightbox = useCallback(() => {
     // console.log(2);
-    console.log(photos);
     const selected = photos.findIndex((i) => i._id === photo._id);
     setCurrentImage(selected);
     setViewerIsOpen(true);
-  }, []);
+  }, [photo._id, photos]);
 
   const closeLightbox = () => {
     setCurrentImage(0);
@@ -85,7 +72,7 @@ const Component = ({ index, onClick, photo, photos, className }) => {
     }
   };
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     // onClick(e, { photo, index });
     openLightbox();
   };
