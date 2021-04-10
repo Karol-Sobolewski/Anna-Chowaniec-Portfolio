@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { AnimatedSwitch } from 'react-router-transition';
-import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
 import './styles/bootstrap.scss';
-import { getConfig } from './config';
 import styles from './App.module.scss';
 import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
 import { fetchMenu } from './redux/menuRedux';
@@ -39,7 +37,7 @@ const App = () => {
 
   // const { apiOrigin = `http://localhost:8000`, audience } = getConfig();
   // const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
-  const { isLoading, error } = useAuth0();
+  useAuth0();
 
   // console.log(`isAuthenticated`, isAuthenticated);
   const [loaded, setLoaded] = useState(false);
@@ -53,7 +51,7 @@ const App = () => {
     dispatch(fetchDescriptions());
     dispatch(fetchCategories());
     dispatch(fetchMenu());
-  }, []);
+  }, [dispatch]);
 
   // useEffect(() => {
   //   if (!isLoading && menu.length !== 0) {
@@ -76,7 +74,7 @@ const App = () => {
 
   const filtered = menu.filter((item) => item.component === `GalleryPage`);
 
-  const routeComponents = filtered.map(({ path, _id, shortName }) => (
+  const routeComponents = filtered.map(({ _id, shortName }) => (
     <Route
       exact
       path={`/${removeDiacritics(shortName).toLowerCase()}`}
