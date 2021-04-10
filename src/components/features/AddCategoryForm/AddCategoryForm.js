@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useAuth0 } from '@auth0/auth0-react';
 
-import { Container, Row, Col } from 'react-bootstrap';
 import ImageUploader from 'react-images-upload';
 import styles from './AddCategoryForm.module.scss';
 import { Button } from '../../common/Button/Button';
