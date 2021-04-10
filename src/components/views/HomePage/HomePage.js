@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
@@ -10,9 +10,8 @@ import styles from './HomePage.module.scss';
 const Component = ({ className }) => {
   // const { user } = useAuth0();
   // console.log(`auth`, auth);
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  useAuth0();
 
-  console.log(`user`, user);
   return (
     <div className={clsx(className, styles.root)}>
       <Slider />
