@@ -33,22 +33,21 @@ const Component = ({ className, children }) => {
   }
   useEffect(() => {
     if (location.pathname === `/`) {
-      console.log(`scrollNow`); // Working
       window.onscroll = function () {
         scrollFunction(); // Scrolls anyway
       };
       setSplash(true);
     } else {
-      console.log(`shouldNotScroll`); // Working
       setSplash(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (location.pathname !== `/`) {
       setSplash(false);
       setMargin(false);
     }
-  });
+  }, [location.pathname]);
   return (
     <div className={clsx(className, styles.root)}>
       <Header splash={splash} />
