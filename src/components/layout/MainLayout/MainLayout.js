@@ -19,14 +19,12 @@ const Component = ({ className, children }) => {
       location.pathname === `/`
     ) {
       setSplash(false);
-      console.log(`change class for scroll`);
     } else if (
       (document.body.scrollTop <= 1 || document.documentElement.scrollTop) <=
         1 &&
       location.pathname === `/`
     ) {
       setSplash(true);
-      console.log(`change class for top`);
     } else {
       setMargin(false);
     }
