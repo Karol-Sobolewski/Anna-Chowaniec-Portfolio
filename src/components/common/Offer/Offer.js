@@ -33,7 +33,7 @@ const Component = ({ className, offer }) => {
     };
 
     return (
-      <ReactModal isOpen style={customStyles}>
+      <ReactModal isOpen style={customStyles} ariaHideApp={false}>
         <OfferModal offerCategory={modalData} />
         <button
           type="button"
