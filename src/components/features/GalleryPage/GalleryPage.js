@@ -150,7 +150,7 @@ const Component = ({ className, photos, category }) => {
 Component.propTypes = {
   className: PropTypes.string,
   photos: PropTypes.array,
-  category: PropTypes.string,
+  category: PropTypes.object,
 };
 
 export { Component as GalleryPage, Component as GalleryPageComponent };
