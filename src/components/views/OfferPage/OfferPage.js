@@ -28,7 +28,10 @@ const Component = ({ className, children }) => {
     <div className={clsx(className, styles.root)}>
       <Row className={styles.offerRow}>
         {offerCategories.map((offer) => (
-          <Col className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center">
+          <Col
+            key={offer._id}
+            className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center"
+          >
             <Offer offer={offer} key={offer._id} />
           </Col>
         ))}
