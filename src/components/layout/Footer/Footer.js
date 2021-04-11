@@ -4,11 +4,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTwitter,
-  faFacebook,
-  faInstagram,
-} from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faPhoneAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 import { Container, Row, Col } from 'react-bootstrap';
@@ -21,17 +17,18 @@ const Component = ({ className, children }) => {
   const allPages = useSelector((state) => state.descriptions.data);
 
   const footerPage = allPages.filter((item) => item.page === `contact`)[0];
-  // console.log(footerPage);
+
   const footerPageLinks = footerPage.description.filter(
     (item) => item.type === `web`
   );
-  console.log(footerPageLinks);
+
   return (
     <footer className={clsx(className, styles.root)}>
       <Container>
         <Row className="d-flex align-items-center justify-content-center">
           {footerPage.description.slice(0, 2).map((item) => (
             <Col
+              key={footerPage.description.indexOf(item)}
               md={4}
               className="col-12 col-md-6 col-lg-4 d-flex align-items-center justify-content-center p-3"
             >
@@ -62,6 +59,7 @@ const Component = ({ className, children }) => {
           >
             {footerPageLinks.map((item) => (
               <a
+                key={footerPageLinks.indexOf(item)}
                 href={item.value}
                 className="pr-2 d-flex align-items-center justify-content-center"
               >

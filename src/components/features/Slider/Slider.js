@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -9,11 +9,7 @@ import 'react-awesome-slider/dist/styles.css';
 import 'react-awesome-slider/dist/captioned.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCheckCircle,
-  faPencilAlt,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { Container } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -25,7 +21,6 @@ import styles from './Slider.module.scss';
 
 const Component = ({ className }) => {
   const AutoplaySlider = withAutoplay(AwesomeSlider);
-  const allPages = useSelector((state) => state.descriptions.data);
   const { isAuthenticated } = useAuth0();
   // const sliderPage = allPages.filter((item) => item.page === `slider`)[0];
   const dispatch = useDispatch();
@@ -81,7 +76,7 @@ const Component = ({ className }) => {
           fillParent
         >
           {sliderPhotos.map((img) => (
-            <div key={img.id} data-src={img.src}>
+            <div key={img._id} data-src={img.src}>
               {/* <div className={styles.caption}>
                 <p>{im.title}</p>
               </div> */}

@@ -6,7 +6,6 @@ import { HamburgerSqueeze } from 'react-animated-burgers';
 
 import clsx from 'clsx';
 
-import { Container, Row, Col } from 'react-bootstrap';
 import styles from './Burger.module.scss';
 
 // import { connect } from 'react-redux';
@@ -14,7 +13,7 @@ import styles from './Burger.module.scss';
 
 const removeDiacritics = require(`diacritics`).remove;
 
-const Component = ({ className, children, button }) => {
+const Component = ({ className, button }) => {
   const MenuItems = useSelector((state) => state.menu.data);
 
   const [active, setActive] = useState(false);
@@ -78,7 +77,6 @@ const Component = ({ className, children, button }) => {
 // })
 
 Component.propTypes = {
-  children: PropTypes.node,
   className: PropTypes.string,
   button: PropTypes.bool,
 };

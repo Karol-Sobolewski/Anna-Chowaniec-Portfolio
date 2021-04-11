@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { HamburgerSqueeze } from 'react-animated-burgers';
 
 import { Burger } from '../../features/Burger/Burger';
 
@@ -10,14 +9,12 @@ import styles from './Header.module.scss';
 import { useAuth0 } from "@auth0/auth0-react"; //eslint-disable-line
 const removeDiacritics = require(`diacritics`).remove;
 
-const Component = ({ className, children, splash }) => {
+const Component = ({ splash }) => {
   // const MenuItems = useSelector((state) => state.Menu);
   const { isAuthenticated, logout } = useAuth0();
   const MenuItems = useSelector((state) => state.menu.data);
-  const [active, setActive] = useState(false);
-  const [activeRWD, setActiveRWD] = useState(false);
-
-  const toggleMenuButton = () => setActiveRWD(!activeRWD);
+  const [, setActive] = useState(false);
+  const [, setActiveRWD] = useState(false);
 
   const useOutsideMenu = (ref) => {
     useEffect(() => {
@@ -85,8 +82,6 @@ const Component = ({ className, children, splash }) => {
   );
 };
 Component.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
   splash: PropTypes.bool,
 };
 

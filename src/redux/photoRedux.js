@@ -57,7 +57,7 @@ export const fetchSelectedPhotoRequest = (photo) => async (dispatch) => {
 export const addPhotoRequest = (data, token) => async (dispatch) => {
   dispatch(fetchStarted());
   try {
-    const res = await Axios.post(`${API_URL}/photos`, data, {
+    await Axios.post(`${API_URL}/photos`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': `multipart/form-data`,
@@ -149,8 +149,6 @@ export default function reducer(statePart = [], action = {}) {
     }
 
     case UPDATE_PHOTO: {
-      console.log(`state`, statePart);
-      console.log(`action`, action.payload);
       return {
         ...statePart,
         data: statePart.data.map((data) => {
@@ -165,8 +163,6 @@ export default function reducer(statePart = [], action = {}) {
     }
 
     case FETCH_SELECTED_PHOTO: {
-      console.log(`state`, statePart);
-      console.log(`action`, action.payload);
       return {
         ...statePart,
         data: statePart.data.map((data) => {
@@ -181,8 +177,6 @@ export default function reducer(statePart = [], action = {}) {
     }
 
     case REMOVE_PHOTO: {
-      console.log(`state`, statePart);
-      console.log(`action`, action.payload);
       return {
         ...statePart,
         data: statePart.data.filter((i) => i._id !== action.payload._id),

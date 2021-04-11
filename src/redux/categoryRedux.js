@@ -26,9 +26,8 @@ export const fetchCategories = () => (dispatch) => {
 
 export const addCategoryRequest = (data, token) => async (dispatch) => {
   dispatch(fetchStarted());
-  console.log(`cat data`, data);
   try {
-    const res = await Axios.post(`${API_URL}/categories`, data, {
+    await Axios.post(`${API_URL}/categories`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': `application/json`,

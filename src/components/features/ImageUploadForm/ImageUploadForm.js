@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -7,17 +7,16 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import ImageUploader from 'react-images-upload';
 
-import { Container, Row, Col } from 'react-bootstrap';
 import { Button } from '../../common/Button/Button';
 import styles from './ImageUploadForm.module.scss';
-import { addPhotoRequest, fetchPhotos } from '../../../redux/photoRedux';
+import { addPhotoRequest } from '../../../redux/photoRedux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({ className, children, category }) => {
   const { getAccessTokenSilently } = useAuth0();
 
   const dispatch = useDispatch();
-  const [format, setFormat] = useState(``);
+  const [format] = useState(``);
   const [photo, setPhoto] = useState({
     file: null,
     title: ``,
@@ -57,15 +56,10 @@ const Component = ({ className, children, category }) => {
       formData.append(key, photo[key]);
     }
     formData.append(`file`, photo.file);
-    console.log(`photo`, photo);
-    console.log(`category`, category);
     dispatch(addPhotoRequest(formData, token));
     // dispatch(fetchPhotos());
   };
 
-  useEffect(() => {
-    console.log(format);
-  }, [format]);
   return (
     <div className={clsx(className, styles.root)}>
       <form

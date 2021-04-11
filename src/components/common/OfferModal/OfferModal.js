@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import styles from './OfferModal.module.scss';
 
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
@@ -23,7 +23,7 @@ const Component = ({ className, children, offerCategory }) => {
       <Row className={styles.offerRow}>
         {offers.map((item) => (
           <Col
-            key={item.id}
+            key={item._id}
             className={`col-12 col-md-5 mt-3 col-xl-3 ${styles.offerColumn}`}
           >
             <div className={styles.offerTitle}>
@@ -31,7 +31,9 @@ const Component = ({ className, children, offerCategory }) => {
             </div>
             <ul className={styles.offerDescription}>
               {item.descriptions.map((description) => (
-                <li>{description.text}</li>
+                <li key={item.descriptions.indexOf(description)}>
+                  {description.text}
+                </li>
               ))}
             </ul>
             <h4 className={styles.offerPrice}>{item.price} ZŁ</h4>

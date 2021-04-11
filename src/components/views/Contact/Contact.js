@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAuth0 } from "@auth0/auth0-react"; //eslint-disable-line
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 import { Button } from '../../common/Button/Button';
 
@@ -21,11 +21,8 @@ const Component = ({ className, children }) => {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
 
-  const [contact, setContact] = useState({
+  const [contact] = useState({
     ...contactPage,
-  });
-  const [description, setDescription] = useState({
-    ...contactPage.description,
   });
 
   const [edit, setEdit] = useState(false);
@@ -38,7 +35,6 @@ const Component = ({ className, children }) => {
     // const descriptionIndex =
     item[name] = value;
     // const filtered = menu.filter((item) => item.component === `GalleryPage`);
-    const matchItem = contact.description.filter((i) => i.id === item.id);
     // console.log(matchItem[0]);
     // console.log(item);
     // console.log(description);
@@ -48,7 +44,6 @@ const Component = ({ className, children }) => {
     e.preventDefault();
     const token = await getAccessTokenSilently();
     dispatch(editDescriptionRequest(contact, token));
-    console.log(contact);
     setEdit(false);
   };
 
@@ -64,7 +59,7 @@ const Component = ({ className, children }) => {
           // onSubmit={}
           onChange={(e) => handleChange(e, item)}
           className={styles.editContact}
-          key={item.id}
+          key={contactPage.description.indexOf(item)}
         >
           <Row className="w-100 py-3 justify-content-center">
             <Col className="col-12 col-md-6">

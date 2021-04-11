@@ -9,7 +9,7 @@ import { Button } from '../Button/Button';
 import styles from './Offer.module.scss';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-const Component = ({ className, children, offer }) => {
+const Component = ({ className, offer }) => {
   const [edit, setEdit] = useState(false);
 
   const { isAuthenticated } = useAuth0();
@@ -33,7 +33,7 @@ const Component = ({ className, children, offer }) => {
     };
 
     return (
-      <ReactModal isOpen style={customStyles}>
+      <ReactModal isOpen style={customStyles} ariaHideApp={false}>
         <OfferModal offerCategory={modalData} />
         <button
           type="button"
@@ -86,7 +86,6 @@ const Component = ({ className, children, offer }) => {
 };
 
 Component.propTypes = {
-  children: PropTypes.node,
   className: PropTypes.string,
   offer: PropTypes.object,
 };
