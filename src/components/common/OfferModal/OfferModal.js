@@ -23,7 +23,7 @@ const Component = ({ className, children, offerCategory }) => {
       <Row className={styles.offerRow}>
         {offers.map((item) => (
           <Col
-            key={item.id}
+            key={item._id}
             className={`col-12 col-md-5 mt-3 col-xl-3 ${styles.offerColumn}`}
           >
             <div className={styles.offerTitle}>
