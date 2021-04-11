@@ -76,7 +76,7 @@ const Component = ({ className }) => {
           fillParent
         >
           {sliderPhotos.map((img) => (
-            <div key={img.id} data-src={img.src}>
+            <div key={img._id} data-src={img.src}>
               {/* <div className={styles.caption}>
                 <p>{im.title}</p>
               </div> */}
