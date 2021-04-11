@@ -102,7 +102,7 @@ const Component = ({ photo, photos, className }) => {
             className={styles.deletePhotoButton}
           />
         ) : null}
-        <img {...photo} onClick={handleClick} /> {/*eslint-disable-line*/}
+        <img src={photo.src} alt={photo.title} height={photo.height} width={photo.width} onClick={handleClick} /> {/*eslint-disable-line*/}
         {edit ? (
           <form
             action="#"
@@ -144,13 +144,9 @@ const Component = ({ photo, photos, className }) => {
 };
 
 Component.propTypes = {
-  children: PropTypes.node,
   className: PropTypes.string,
   photo: PropTypes.object,
   photos: PropTypes.array,
-  index: PropTypes.any,
-  galleryName: PropTypes.string,
-  onClick: PropTypes.func,
 };
 
 export { Component as Photo, Component as PhotoComponent };
