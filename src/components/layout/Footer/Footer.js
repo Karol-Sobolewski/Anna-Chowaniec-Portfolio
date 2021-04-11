@@ -28,6 +28,7 @@ const Component = ({ className, children }) => {
         <Row className="d-flex align-items-center justify-content-center">
           {footerPage.description.slice(0, 2).map((item) => (
             <Col
+              key={footerPage.description.indexOf(item)}
               md={4}
               className="col-12 col-md-6 col-lg-4 d-flex align-items-center justify-content-center p-3"
             >
@@ -58,6 +59,7 @@ const Component = ({ className, children }) => {
           >
             {footerPageLinks.map((item) => (
               <a
+                key={footerPageLinks.indexOf(item)}
                 href={item.value}
                 className="pr-2 d-flex align-items-center justify-content-center"
               >
