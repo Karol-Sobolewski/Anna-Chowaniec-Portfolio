@@ -1,12 +1,9 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useModal } from 'react-modal-hook';
-import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
-import { OfferModal } from '../../common/OfferModal/OfferModal';
 import { AddCategoryForm } from '../../features/AddCategoryForm/AddCategoryForm';
 
 import { Button } from '../../common/Button/Button';
@@ -19,14 +16,13 @@ import styles from './OfferPage.module.scss';
 const Component = ({ className, children }) => {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
-  const [edit, setEdit] = useState(false);
 
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const offerCategories = useSelector((state) => state.categories.data);
 
   useEffect(() => {
     dispatch(fetchOffers());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={clsx(className, styles.root)}>
