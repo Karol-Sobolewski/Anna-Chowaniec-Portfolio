@@ -26,9 +26,8 @@ export const fetchMenu = () => (dispatch) => {
 
 export const addMenuRequest = (data, token) => async (dispatch) => {
   dispatch(fetchStarted());
-  console.log(`menu data`, data);
   try {
-    const res = await Axios.post(`${API_URL}/menus`, data, {
+    await Axios.post(`${API_URL}/menus`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': `application/json`,
