@@ -1,14 +1,7 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useContext,
-  useRef,
-} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import Gallery from 'react-photo-gallery';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import Carousel, { Modal, ModalGateway } from 'react-images';
 // import { useDispatch } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -18,18 +11,15 @@ import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import { Container, Row, Col } from 'react-bootstrap';
 import { Button } from '../../common/Button/Button';
 import { Photo } from '../../common/Photo/Photo';
-import { fetchPhotos, editPhotoRequest } from '../../../redux/photoRedux';
+import { editPhotoRequest } from '../../../redux/photoRedux';
 
 import styles from './GalleryPage.module.scss';
 import { ImageUploadForm } from '../ImageUploadForm/ImageUploadForm';
 
-const removeDiacritics = require(`diacritics`).remove;
-
 const SortablePhoto = SortableElement(
-  (item, index) => <Photo {...item} /> //eslint-disable-line
+  (item) => <Photo {...item} /> //eslint-disable-line
 );
 
 const SortableGallery = SortableContainer(({ items }) => (
@@ -41,7 +31,7 @@ const SortableGallery = SortableContainer(({ items }) => (
   />
 ));
 
-const Component = ({ className, children, photos, category }) => {
+const Component = ({ className, photos, category }) => {
   // const allPhotos = useSelector((state) => state.photos.data);
 
   // const photos = allPhotos.filter((photo) =>
@@ -73,12 +63,12 @@ const Component = ({ className, children, photos, category }) => {
     };
     if (JSON.stringify(editedItems) !== JSON.stringify(photos)) {
       editedItems.forEach((editedItem) => {
-        console.log(`editedItem`);
         updatePhotos(editedItem);
       });
     }
     // console.log();
     // setCategory(items[0].category);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   useEffect(() => {
@@ -113,12 +103,11 @@ const Component = ({ className, children, photos, category }) => {
         //! galleryName={galleryName}
       />
     ),
-    []
+    [photos]
   );
 
   const onSortEnd = async ({ oldIndex, newIndex }) => {
     setItems(arrayMove(items, oldIndex, newIndex));
-    console.log(`items`, items);
 
     // await dispatch(editPhotoRequest(image token));
   };
@@ -159,7 +148,6 @@ const Component = ({ className, children, photos, category }) => {
 };
 
 Component.propTypes = {
-  children: PropTypes.node,
   className: PropTypes.string,
   photos: PropTypes.array,
   category: PropTypes.string,
