@@ -31,7 +31,9 @@ const Component = ({ className, children, offerCategory }) => {
             </div>
             <ul className={styles.offerDescription}>
               {item.descriptions.map((description) => (
-                <li>{description.text}</li>
+                <li key={item.descriptions.indexOf(description)}>
+                  {description.text}
+                </li>
               ))}
             </ul>
             <h4 className={styles.offerPrice}>{item.price} ZŁ</h4>
