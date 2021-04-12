@@ -4,7 +4,6 @@ const router = express.Router();
 
 const Menu = require(`../models/menu.model`);
 require("dotenv").config(); //eslint-disable-line
-const fs = require(`fs`);
 const jwt = require(`express-jwt`);
 const jwksRsa = require(`jwks-rsa`);
 const checkJwt = jwt({

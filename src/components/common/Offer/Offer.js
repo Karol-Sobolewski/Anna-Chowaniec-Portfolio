@@ -113,24 +113,22 @@ const Component = ({ className, offer }) => {
         />
       ) : null}
       {edit ? (
-        <div className="d-flex justify-content-center">
-          <div className={styles.editOfferForm}>
-            <form action="#" method="put" onChange={(e) => handleChange(e)}>
-              <input
-                name="description"
-                type="text"
-                placeholder="Tytuł"
-                defaultValue={offer.description}
-              />
-              <img src={offer.image.src} alt={offer.image.alt} />
-              <Button
-                type="submit"
-                name="Wyślij"
-                className={styles.submitButton}
-                onClick={(e) => handleSubmit(e)}
-              />
-            </form>
-          </div>
+        <div className={styles.editOfferForm}>
+          <form action="#" method="put" onChange={(e) => handleChange(e)}>
+            <input
+              name="description"
+              type="text"
+              placeholder="Tytuł"
+              defaultValue={offer.description}
+            />
+            <img src={offer.image.src} alt={offer.image.alt} />
+            <Button
+              type="submit"
+              name="Wyślij"
+              className={styles.submitButton}
+              onClick={(e) => handleSubmit(e)}
+            />
+          </form>
           <SliderSelector photos={photos} onChangeValue={handleChangePhoto} />
         </div>
       ) : (

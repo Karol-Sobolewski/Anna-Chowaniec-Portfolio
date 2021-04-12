@@ -5,7 +5,6 @@ const router = express.Router();
 const Category = require(`../models/categories.model`);
 const uniqid = require(`uniqid`);
 require("dotenv").config(); //eslint-disable-line
-const fs = require(`fs`);
 const jwt = require(`express-jwt`);
 const jwksRsa = require(`jwks-rsa`);
 
