@@ -53,10 +53,8 @@ export const editCategoryRequest = (data, token) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     await new Promise((resolve) => resolve());
     dispatch(updateCategory(res.data));
-    // dispatch(fetchPhotos());
   } catch (err) {
     dispatch(fetchError(err.message || true));
   }

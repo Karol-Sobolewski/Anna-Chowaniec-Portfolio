@@ -10,21 +10,33 @@ import { Button } from '../Button/Button';
 import styles from './Offer.module.scss';
 import { SliderSelector } from '../SliderSelector/SliderSelector';
 import { editCategoryRequest } from '../../../redux/categoryRedux';
+import { editMenuRequest } from '../../../redux/menuRedux';
 
 const removeDiacritics = require(`diacritics`).remove;
 
 const Component = ({ className, offer }) => {
   const dispatch = useDispatch();
-
   const allPhotos = useSelector((state) => state.photos.data);
-  const photos = allPhotos.filter((photo) =>
-    photo.category.name
-      ? removeDiacritics(photo.category.name).toLowerCase() ===
+  const allMenus = useSelector((state) => state.menu.data);
+
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const [edit, setEdit] = useState(false);
+  const [modalData, setModalData] = useState(null);
+
+  const photos = allPhotos.filter((item) =>
+    item.category.name
+      ? removeDiacritics(item.category.name).toLowerCase() ===
         removeDiacritics(offer.name).toLowerCase()
       : null
   );
-  const [edit, setEdit] = useState(false);
-  const [modalData, setModalData] = useState(null);
+
+  const menu = allMenus.filter((item) =>
+    item.shortName
+      ? removeDiacritics(item.shortName).toLowerCase() ===
+        removeDiacritics(offer.name).toLowerCase()
+      : null
+  )[0];
+
   const [category, setCategory] = useState({
     _id: offer._id,
     description: offer.description,
@@ -34,7 +46,10 @@ const Component = ({ className, offer }) => {
     },
   });
 
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const [editedMenu, setMenu] = useState({
+    _id: menu._id,
+    name: menu.name,
+  });
 
   const customStyles = {
     overlay: { zIndex: 1000, backgroundColor: `rgba(0, 0, 0, 0.2)` },
@@ -77,12 +92,15 @@ const Component = ({ className, offer }) => {
     const { value } = target;
     const { name } = target;
     setCategory({ ...category, [name]: value });
+    setMenu({ ...editedMenu, name: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await getAccessTokenSilently();
     await dispatch(editCategoryRequest(category, token));
+    console.log(editedMenu);
+    await dispatch(editMenuRequest(editedMenu, token));
   };
 
   const handleChangePhoto = (img) => {
