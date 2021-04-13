@@ -30,7 +30,6 @@ router.get(`/menus`, async (req, res) => {
 });
 
 router.post(`/menus`, checkJwt, async (req, res) => {
-  console.log(`req body`, req.body);
   try {
     const newMenu = new Menu({
       name: req.body.description,
@@ -47,8 +46,6 @@ router.post(`/menus`, checkJwt, async (req, res) => {
 router.put(`/menus/:id`, checkJwt, async (req, res) => {
   try {
     const result = await Menu.findById(req.body._id);
-    console.log(`req.body`, req.body);
-    console.log(`result`, result);
     /* eslint-disable */
     if (result) {
       for (const prop in req.body) {

@@ -62,13 +62,11 @@ const Component = ({ className }) => {
         photo: { ...category.photo, file: files[0] },
       });
     else setCategory({ ...category, photo: { ...category.photo, file: null } });
-    console.log(category);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await getAccessTokenSilently();
-    console.log(category);
 
     const categoryFormData = new FormData();
     for (const key of [`description`, `name`]) {

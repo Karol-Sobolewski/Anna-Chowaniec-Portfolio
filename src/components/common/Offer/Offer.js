@@ -99,7 +99,6 @@ const Component = ({ className, offer }) => {
     e.preventDefault();
     const token = await getAccessTokenSilently();
     await dispatch(editCategoryRequest(category, token));
-    console.log(editedMenu);
     await dispatch(editMenuRequest(editedMenu, token));
   };
 

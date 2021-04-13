@@ -33,7 +33,7 @@ const Component = React.memo( //eslint-disable-line
 
 Component.propTypes = {
   className: PropTypes.string,
-  photos: PropTypes.object,
+  photos: PropTypes.array,
   onChangeValue: PropTypes.func,
 };
 

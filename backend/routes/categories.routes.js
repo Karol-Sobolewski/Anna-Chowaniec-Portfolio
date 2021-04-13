@@ -34,10 +34,6 @@ router.get(`/categories`, async (req, res) => {
 });
 
 router.post(`/categories`, checkJwt, async (req, res) => {
-  console.log(`req body`, req.body);
-  // console.log(`req`, req);
-  console.log(`req files`, req.files);
-
   const { file } = req.files;
   if (!file) {
     return res.status(400).json({ message: `no files uploaded` });
