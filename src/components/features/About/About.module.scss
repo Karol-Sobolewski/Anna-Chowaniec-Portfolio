@@ -33,6 +33,7 @@
   width: 90%;
 }
 .aboutImage {
+  position: relative;
   width: 25vh;
   height: 25vh;
   overflow: hidden;
@@ -47,6 +48,13 @@
 }
 .aboutImage:hover img {
   transform: scale(1.5);
+}
+
+.editImgButton {
+  position: absolute;
+  z-index: 100;
+  right: 20%;
+  top: 5%;
 }
 
 @media only screen and (max-width: 1199px) {

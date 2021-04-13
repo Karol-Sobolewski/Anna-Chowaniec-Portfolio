@@ -66,6 +66,9 @@ const Component = ({ className, children }) => {
             md={4}
             className="d-flex align-items-center justify-content-center mb-3 mb-lg-0"
           >
+            {isAuthenticated && edit ? (
+              <Button icon="plus" className={styles.editImgButton} />
+            ) : null}
             <div className={styles.aboutImage}>
               <img
                 src={aboutPage.images[0].src}
