@@ -31,7 +31,6 @@ export const fetchDescriptions = () => (dispatch) => {
 
 export const editDescriptionRequest = (descr, token) => async (dispatch) => {
   dispatch(fetchStarted());
-  console.log(`put`);
   try {
     const res = await Axios.put(`${API_URL}/descriptions/${descr._id}`, descr, {
       headers: {
@@ -77,8 +76,6 @@ export default function reducer(statePart = [], action = {}) {
       };
     }
     case UPDATE_DESCRIPTION: {
-      console.log(`state`, statePart);
-      console.log(`action`, action.payload);
       return {
         ...statePart,
         data: statePart.data.map((data) => {

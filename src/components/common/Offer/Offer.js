@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useModal } from 'react-modal-hook';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
@@ -7,12 +8,48 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { OfferModal } from '../OfferModal/OfferModal';
 import { Button } from '../Button/Button';
 import styles from './Offer.module.scss';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { SliderSelector } from '../SliderSelector/SliderSelector';
+import { editCategoryRequest } from '../../../redux/categoryRedux';
+import { editMenuRequest } from '../../../redux/menuRedux';
+
+const removeDiacritics = require(`diacritics`).remove;
 
 const Component = ({ className, offer }) => {
-  const [edit, setEdit] = useState(false);
+  const dispatch = useDispatch();
+  const allPhotos = useSelector((state) => state.photos.data);
+  const allMenus = useSelector((state) => state.menu.data);
 
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const [edit, setEdit] = useState(false);
+  const [modalData, setModalData] = useState(null);
+
+  const photos = allPhotos.filter((item) =>
+    item.category.name
+      ? removeDiacritics(item.category.name).toLowerCase() ===
+        removeDiacritics(offer.name).toLowerCase()
+      : null
+  );
+
+  const menu = allMenus.filter((item) =>
+    item.shortName
+      ? removeDiacritics(item.shortName).toLowerCase() ===
+        removeDiacritics(offer.name).toLowerCase()
+      : null
+  )[0];
+
+  const [category, setCategory] = useState({
+    _id: offer._id,
+    description: offer.description,
+    image: {
+      src: offer.image.src,
+      alt: offer.image.alt,
+    },
+  });
+
+  const [editedMenu, setMenu] = useState({
+    _id: menu._id,
+    name: menu.name,
+  });
 
   const customStyles = {
     overlay: { zIndex: 1000, backgroundColor: `rgba(0, 0, 0, 0.2)` },
@@ -25,7 +62,6 @@ const Component = ({ className, offer }) => {
     },
   };
 
-  const [modalData, setModalData] = useState(null);
   const [showModal, hideModal] = useModal(() => {
     const closeModal = () => {
       document.body.style.overflow = `unset`;
@@ -51,36 +87,82 @@ const Component = ({ className, offer }) => {
     document.body.style.overflow = `hidden`;
   });
 
+  const handleChange = async (e) => {
+    const { target } = e;
+    const { value } = target;
+    const { name } = target;
+    setCategory({ ...category, [name]: value });
+    setMenu({ ...editedMenu, name: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = await getAccessTokenSilently();
+    await dispatch(editCategoryRequest(category, token));
+    await dispatch(editMenuRequest(editedMenu, token));
+  };
+
+  const handleChangePhoto = (img) => {
+    setCategory({
+      ...category,
+      image: {
+        src: img.src,
+        alt: img.title,
+      },
+    });
+  };
+
   return (
     <div className={clsx(className, styles.root)}>
       {isAuthenticated ? (
-        <div className={styles.editButtons}>
-          <Button
-            className={styles.editCategoryButton}
-            onClick={() => setEdit(!edit)}
-            edit={edit}
-            icon="pencil"
-            // auth={auth}
-          />
-          <Button
-            // onClick={() => handleDelete(photo)}
-            icon="delete"
-            // auth={auth}
-            className={styles.deletePhotoButton}
-          />
-        </div>
+        <Button
+          className={styles.editCategoryButton}
+          onClick={() => setEdit(!edit)}
+          edit={edit}
+          icon="pencil"
+        />
       ) : null}
-      <button
-        type="button"
-        className={styles.offerBox}
-        onClick={() => openModal(offer._id)}
-        key={offer._id}
-      >
-        <div className={styles.offerDescription}>
-          <h4>{offer.description}</h4>
-          <img src={offer.image.src} alt={offer.image.alt} />
+      {isAuthenticated ? (
+        <Button
+          // onClick={() => handleDelete(photo)}
+          icon="delete"
+          className={styles.deletePhotoButton}
+        />
+      ) : null}
+      {edit ? (
+        <div className={styles.editOfferForm}>
+          <form action="#" method="put" onChange={(e) => handleChange(e)}>
+            <input
+              name="description"
+              type="text"
+              placeholder="Tytuł"
+              defaultValue={offer.description}
+            />
+            <img src={offer.image.src} alt={offer.image.alt} />
+            <Button
+              type="submit"
+              name="Wyślij"
+              className={styles.submitButton}
+              onClick={(e) => handleSubmit(e)}
+            />
+          </form>
+          <SliderSelector photos={photos} onChangeValue={handleChangePhoto} />
         </div>
-      </button>
+      ) : (
+        <button
+          type="button"
+          className={styles.offerBox}
+          onClick={() => openModal(offer._id)}
+          key={offer._id}
+        >
+          <div className={styles.offerDescription}>
+            <div>
+              <h4>{offer.description}</h4>
+              <img src={offer.image.src} alt={offer.image.alt} />
+            </div>
+          </div>
+        </button>
+      )}
     </div>
   );
 };

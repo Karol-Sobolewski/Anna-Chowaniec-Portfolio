@@ -56,7 +56,6 @@ const Component = ({ photo, photos, className }) => {
     e.preventDefault();
     const token = await getAccessTokenSilently();
     await dispatch(editPhotoRequest(image, token));
-    console.log(`image`, image);
     // console.log(`edit`);
     // dispatch(fetchSelectedPhotoRequest(image, token));
     dispatch(fetchPhotos());
@@ -68,7 +67,6 @@ const Component = ({ photo, photos, className }) => {
       const token = await getAccessTokenSilently();
       dispatch(removePhotoRequest(item, token));
       dispatch(fetchPhotos());
-      console.log(`delete`);
     }
   };
 

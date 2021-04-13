@@ -4,7 +4,6 @@ const router = express.Router();
 
 const Menu = require(`../models/menu.model`);
 require("dotenv").config(); //eslint-disable-line
-const fs = require(`fs`);
 const jwt = require(`express-jwt`);
 const jwksRsa = require(`jwks-rsa`);
 const checkJwt = jwt({
@@ -31,7 +30,6 @@ router.get(`/menus`, async (req, res) => {
 });
 
 router.post(`/menus`, checkJwt, async (req, res) => {
-  console.log(`req body`, req.body);
   try {
     const newMenu = new Menu({
       name: req.body.description,
@@ -40,6 +38,24 @@ router.post(`/menus`, checkJwt, async (req, res) => {
       order: req.body.order,
     });
     await newMenu.save();
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.put(`/menus/:id`, checkJwt, async (req, res) => {
+  try {
+    const result = await Menu.findById(req.body._id);
+    /* eslint-disable */
+    if (result) {
+      for (const prop in req.body) {
+        result[prop] = req.body[prop];
+      }
+      await result.save();
+      res.json(result);
+    }
+    /* eslint-enable */
+    else res.status(404).json({ message: `Not found...` });
   } catch (err) {
     res.status(500).json(err);
   }

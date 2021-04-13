@@ -5,7 +5,6 @@ const router = express.Router();
 const Category = require(`../models/categories.model`);
 const uniqid = require(`uniqid`);
 require("dotenv").config(); //eslint-disable-line
-const fs = require(`fs`);
 const jwt = require(`express-jwt`);
 const jwksRsa = require(`jwks-rsa`);
 
@@ -35,10 +34,6 @@ router.get(`/categories`, async (req, res) => {
 });
 
 router.post(`/categories`, checkJwt, async (req, res) => {
-  console.log(`req body`, req.body);
-  // console.log(`req`, req);
-  console.log(`req files`, req.files);
-
   const { file } = req.files;
   if (!file) {
     return res.status(400).json({ message: `no files uploaded` });
@@ -67,5 +62,23 @@ router.post(`/categories`, checkJwt, async (req, res) => {
   /* eslint-enable */
   await newCategory.save();
   // res.json(newPhoto);
+});
+
+router.put(`/categories/:id`, checkJwt, async (req, res) => {
+  try {
+    const result = await Category.findById(req.body._id);
+    /* eslint-disable */
+    if (result) {
+      for (const prop in req.body) {
+        result[prop] = req.body[prop];
+      }
+      await result.save();
+      res.json(result);
+    }
+    /* eslint-enable */
+    else res.status(404).json({ message: `Not found...` });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 module.exports = router;

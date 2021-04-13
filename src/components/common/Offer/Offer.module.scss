@@ -6,14 +6,39 @@
   justify-content: center;
   position: relative;
 
-  .editButtons {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
+  .editCategoryButton,
+  .deletePhotoButton {
     position: absolute;
     top: -30px;
-    width: 100%;
     z-index: 1;
+  }
+  .editCategoryButton {
+    left: 0;
+  }
+  .deletePhotoButton {
+    right: 0;
+  }
+  .editOfferForm {
+    align-items: center;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    img {
+      height: 100%;
+      margin: 1vh 0 2vh 0;
+      object-fit: cover;
+      width: 90%;
+      border-radius: 5px;
+    }
+    .submitButton {
+      position: absolute;
+      bottom: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
   .offerBox {
     align-items: center;

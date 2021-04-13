@@ -34,9 +34,6 @@ router.get(`/photos`, async (req, res) => {
 router.get(`/photos/:id`, async (req, res) => {
   try {
     const result = await Photo.findById(req.params.id).populate(`category`);
-    console.log(result);
-    console.log(`body`, req.body);
-    console.log(`params`, req.params);
     if (!result) res.status(404).json({ photo: `Not found` });
     else res.json(result);
   } catch (err) {
@@ -62,7 +59,6 @@ router.post(`/photos`, checkJwt, async (req, res) => {
     }
     res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
   });
-  console.log(`body`, req.body);
   const newPhoto = new Photo({
     title: req.body.title,
     category: req.body.category,
@@ -107,10 +103,8 @@ router.put(`/photos/:id`, checkJwt, async (req, res) => {
 
 router.put(`/photos`, async (req, res) => {
   const filter = { slider: true };
-  console.log(`req`, req.body);
   try {
     const result = await Photo.updateMany(filter, { slider: false });
-    console.log(`result`, result);
     /* eslint-disable */
     // if (result) {
     //   for (const prop in req.body) {
@@ -135,7 +129,6 @@ router.delete(`/photos/:id`, checkJwt, async (req, res) => {
       await result.deleteOne();
       fs.unlink(`./public/${result.src}`, (err) => {
         if (err) throw err;
-        console.log(`file was deleted`);
       });
       res.json(result);
     } else res.status(404).json({ message: `Not found...` });
