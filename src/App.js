@@ -12,7 +12,7 @@ import { fetchPhotos } from './redux/photoRedux';
 
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { HomePage } from './components/views/HomePage/HomePage';
-// import { GalleryPage } from './components/features/GalleryPage/GalleryPage';
+import { Loader } from './components/common/Loader/Loader';
 import { Photos } from './components/features/Photos/Photos';
 import { OfferPage } from './components/views/OfferPage/OfferPage';
 import { Contact } from './components/views/Contact/Contact';
@@ -113,7 +113,9 @@ const App = () => {
             </MainLayout>
           </BrowserRouter>
         </div>
-      ) : null}
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };
