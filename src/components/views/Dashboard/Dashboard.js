@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
-
-// import { useDispatch } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
-
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { Loader } from '../../common/Loader/Loader';
 
 const Component = () => {
-  // const dispatch = useDispatch();
   const { isAuthenticated, isLoading } = useAuth0();
-  // const { auth, SetAuth } = useContext(userContext);
-
   const [auth, setAuth] = useState(false);
   useEffect(() => {
     if (isAuthenticated) {
@@ -22,7 +16,7 @@ const Component = () => {
   useEffect(() => {});
 
   if (isLoading) {
-    return <div>Loading ...</div>;
+    return <Loader />;
   }
   return auth ? <Redirect to="/" /> : null;
 };

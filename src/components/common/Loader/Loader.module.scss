@@ -1,0 +1,15 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  align-items: center;
+  background: $background-bg;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100vw;
+  z-index: 1000;
+  color: $loader-color;
+}
