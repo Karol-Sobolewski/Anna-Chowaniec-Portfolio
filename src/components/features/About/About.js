@@ -16,7 +16,6 @@ const Component = ({ className, children }) => {
   const allPages = useSelector((state) => state.descriptions.data);
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
-  const [editImg, setEditImg] = useState(false);
   const aboutPage = allPages.filter((item) => item.page === `about`)[0];
   // const { auth } = useContext(userContext);
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -56,11 +55,6 @@ const Component = ({ className, children }) => {
     setEdit(false);
   };
 
-  const handleEditButtonClick = () => {
-    setEdit(!edit);
-    setEditImg(false);
-  };
-
   return (
     <div className={clsx(className, styles.root)}>
       <Container
@@ -73,30 +67,6 @@ const Component = ({ className, children }) => {
             md={4}
             className="d-flex align-items-center justify-content-center mb-3 mb-lg-0"
           >
-            {isAuthenticated && edit ? (
-              <Button
-                onClick={() => setEditImg(!editImg)}
-                edit={editImg}
-                icon="plus"
-                className={styles.editImgButton}
-              />
-            ) : null}
-            <div
-              className={
-                editImg && edit ? styles.addPhoto : styles.addPhotoHidden
-              }
-            >
-              <ImageUploader
-                withIcon
-                buttonText="Wybierz obraz"
-                imgExtension={[`.jpg`, `.gif`, `.png`]}
-                maxFileSize={5242880}
-                withPreview
-                onChange={() => {}}
-                label="Maksymalny rozmiar: 5MB, Formaty: jpg, png, gif"
-                singleImage
-              />
-            </div>
             <div className={styles.aboutImage}>
               <img
                 src={aboutPage.images[0].src}
@@ -106,7 +76,7 @@ const Component = ({ className, children }) => {
           </Col>
           {isAuthenticated ? (
             <Button
-              onClick={() => handleEditButtonClick()}
+              onClick={() => setEdit(!edit)}
               edit={edit}
               icon="pencil"
               // auth={auth}
@@ -137,6 +107,16 @@ const Component = ({ className, children }) => {
                     rows="4"
                     cols="50"
                     defaultValue={aboutPage.description[0].text}
+                  />
+                  <ImageUploader
+                    withIcon
+                    buttonText="Wybierz obraz"
+                    imgExtension={[`.jpg`, `.gif`, `.png`]}
+                    maxFileSize={5242880}
+                    withPreview
+                    onChange={() => {}}
+                    label="Maksymalny rozmiar: 5MB, Formaty: jpg, png, gif"
+                    singleImage
                   />
                   <Button type="submit" name="Wyślij" />
                 </div>
