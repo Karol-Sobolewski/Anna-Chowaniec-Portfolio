@@ -1,0 +1,9 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: $font-text;
+  justify-content: center;
+}
