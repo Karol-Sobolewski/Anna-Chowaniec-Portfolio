@@ -57,6 +57,7 @@ const Component = ({ className, children }) => {
     // console.log(about);
     e.preventDefault();
     const token = await getAccessTokenSilently();
+    console.log(about);
     if (selectedImage.length > 0) {
       handleDispatchDescrRequest(
         {
@@ -64,10 +65,9 @@ const Component = ({ className, children }) => {
           images: [
             {
               src: `images/photos/about/${selectedImage[0].name}`,
-              title: `Anna Chowaniec`,
+              title: aboutPage.description[0].heading,
             },
           ],
-          selectedImage,
         },
         token
       );
