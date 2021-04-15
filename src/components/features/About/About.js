@@ -16,6 +16,7 @@ const Component = ({ className, children }) => {
   const allPages = useSelector((state) => state.descriptions.data);
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
+  const [selectedImage, setSelectedImage] = useState([]);
   const aboutPage = allPages.filter((item) => item.page === `about`)[0];
   // const { auth } = useContext(userContext);
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -47,12 +48,36 @@ const Component = ({ className, children }) => {
   //   [about]
   // );
 
+  const handleDispatchDescrRequest = (aboutObj, token) => {
+    dispatch(editDescriptionRequest(aboutObj, token));
+    setEdit(false);
+  };
+
   const handleSubmit = async (e) => {
     // console.log(about);
     e.preventDefault();
     const token = await getAccessTokenSilently();
-    dispatch(editDescriptionRequest(about, token));
-    setEdit(false);
+    if (selectedImage.length > 0) {
+      handleDispatchDescrRequest(
+        {
+          ...about,
+          images: [
+            {
+              src: `images/photos/about/${selectedImage[0].name}`,
+              title: `Anna Chowaniec`,
+            },
+          ],
+          selectedImage,
+        },
+        token
+      );
+    } else {
+      handleDispatchDescrRequest(about, token);
+    }
+  };
+
+  const handleSelectedImage = (file) => {
+    setSelectedImage(file);
   };
 
   return (
@@ -114,7 +139,7 @@ const Component = ({ className, children }) => {
                     imgExtension={[`.jpg`, `.gif`, `.png`]}
                     maxFileSize={5242880}
                     withPreview
-                    onChange={() => {}}
+                    onChange={handleSelectedImage}
                     label="Maksymalny rozmiar: 5MB, Formaty: jpg, png, gif"
                     singleImage
                   />
