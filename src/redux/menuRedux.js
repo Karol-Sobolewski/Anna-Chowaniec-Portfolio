@@ -8,6 +8,7 @@ const FETCH_START = createActionName(`FETCH_START`);
 const FETCH_SUCCESS = createActionName(`FETCH_SUCCESS`);
 const FETCH_ERROR = createActionName(`FETCH_ERROR`);
 const UPDATE_MENU = createActionName(` UPDATE_CATEGORY`);
+const REMOVE_MENU = createActionName(`REMOVE_MENU`);
 
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
@@ -16,6 +17,11 @@ export const updateMenu = (payload) => ({
   payload,
   type: UPDATE_MENU,
 });
+export const removeMenu = (payload) => ({
+  payload,
+  type: REMOVE_MENU,
+});
+
 export const fetchMenu = () => (dispatch) => {
   dispatch(fetchStarted());
 
@@ -55,6 +61,25 @@ export const editMenuRequest = (data, token) => async (dispatch) => {
     });
     await new Promise((resolve) => resolve());
     dispatch(updateMenu(res.data));
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
+export const removeMenuRequest = (data, token) => async (dispatch) => {
+  dispatch(fetchStarted());
+  try {
+    const res = await Axios.delete(`${API_URL}/menus/${data._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        data: {
+          data,
+        },
+      },
+    });
+
+    await new Promise((resolve) => resolve());
+    dispatch(removeMenu(res.data));
   } catch (err) {
     dispatch(fetchError(err.message || true));
   }
@@ -101,6 +126,12 @@ export default function reducer(statePart = [], action = {}) {
           }
           return data;
         }),
+      };
+    }
+    case REMOVE_MENU: {
+      return {
+        ...statePart,
+        data: statePart.data.filter((i) => i._id !== action.payload._id),
       };
     }
     default:

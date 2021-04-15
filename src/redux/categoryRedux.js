@@ -8,6 +8,7 @@ const FETCH_START = createActionName(`FETCH_START`);
 const FETCH_SUCCESS = createActionName(`FETCH_SUCCESS`);
 const FETCH_ERROR = createActionName(`FETCH_ERROR`);
 const UPDATE_CATEGORY = createActionName(` UPDATE_CATEGORY`);
+const REMOVE_CATEGORY = createActionName(`REMOVE_CATEGORY`);
 
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
@@ -16,6 +17,11 @@ export const updateCategory = (payload) => ({
   payload,
   type: UPDATE_CATEGORY,
 });
+export const removeCategory = (payload) => ({
+  payload,
+  type: REMOVE_CATEGORY,
+});
+
 export const fetchCategories = () => (dispatch) => {
   dispatch(fetchStarted());
 
@@ -60,6 +66,25 @@ export const editCategoryRequest = (data, token) => async (dispatch) => {
   }
 };
 
+export const removeCategoryRequest = (data, token) => async (dispatch) => {
+  dispatch(fetchStarted());
+  try {
+    const res = await Axios.delete(`${API_URL}/categories/${data._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        data: {
+          data,
+        },
+      },
+    });
+
+    await new Promise((resolve) => resolve());
+    dispatch(removeCategory(res.data));
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
     case FETCH_START: {
@@ -90,7 +115,6 @@ export default function reducer(statePart = [], action = {}) {
         },
       };
     }
-
     case UPDATE_CATEGORY: {
       return {
         ...statePart,
@@ -102,6 +126,12 @@ export default function reducer(statePart = [], action = {}) {
           }
           return data;
         }),
+      };
+    }
+    case REMOVE_CATEGORY: {
+      return {
+        ...statePart,
+        data: statePart.data.filter((i) => i._id !== action.payload._id),
       };
     }
     default:

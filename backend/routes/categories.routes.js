@@ -81,4 +81,17 @@ router.put(`/categories/:id`, checkJwt, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.delete(`/categories/:id`, checkJwt, async (req, res) => {
+  try {
+    const result = await Category.findById(req.params.id);
+    if (result) {
+      await result.deleteOne();
+      res.json(result);
+    } else res.status(404).json({ message: `Not found...` });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
