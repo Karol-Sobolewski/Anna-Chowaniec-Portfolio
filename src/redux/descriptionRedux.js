@@ -6,11 +6,13 @@ const createActionName = (name) => `app/${reducerName}/${name}`;
 
 const FETCH_START = createActionName(`FETCH_START`);
 const FETCH_SUCCESS = createActionName(`FETCH_SUCCESS`);
+const FETCH_LOADED = createActionName(`FETCH_LOADED`);
 const FETCH_ERROR = createActionName(`FETCH_ERROR`);
 const UPDATE_DESCRIPTION = createActionName(`UPDATE_DESCRIPTION`);
 
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
+export const fetchLoaded = (payload) => ({ payload, type: FETCH_LOADED });
 export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
 export const updateDescription = (payload) => ({
   payload,
@@ -48,6 +50,7 @@ export const editDescriptionRequest = (descr, token) => async (dispatch) => {
 export const removeDescriptionImageRequest = (descr, token) => async (
   dispatch
 ) => {
+  dispatch(fetchStarted());
   try {
     await Axios.delete(`${API_URL}/descriptions/image/${descr._id}`, {
       headers: {
@@ -58,6 +61,25 @@ export const removeDescriptionImageRequest = (descr, token) => async (
       },
     });
     await new Promise((resolve) => resolve());
+    dispatch(fetchLoaded());
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
+export const addDescriptionImageRequest = (image, token) => async (
+  dispatch
+) => {
+  try {
+    await Axios.post(`${API_URL}/descriptions/image`, image, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': `multipart/form-data`,
+      },
+      data: `test`,
+    });
+    await new Promise((resolve) => resolve());
+    dispatch(fetchLoaded());
   } catch (err) {
     dispatch(fetchError(err.message || true));
   }
@@ -82,6 +104,15 @@ export default function reducer(statePart = [], action = {}) {
           error: false,
         },
         data: action.payload,
+      };
+    }
+    case FETCH_LOADED: {
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+        },
       };
     }
     case FETCH_ERROR: {
