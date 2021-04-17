@@ -10,7 +10,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '../../common/Button/Button';
 import styles from './About.module.scss';
 
-import { editDescriptionRequest } from '../../../redux/descriptionRedux';
+import {
+  editDescriptionRequest,
+  removeDescriptionImageRequest,
+  addDescriptionImageRequest,
+} from '../../../redux/descriptionRedux';
 
 const Component = ({ className, children }) => {
   const allPages = useSelector((state) => state.descriptions.data);
@@ -57,8 +61,11 @@ const Component = ({ className, children }) => {
     // console.log(about);
     e.preventDefault();
     const token = await getAccessTokenSilently();
-    console.log(about);
     if (selectedImage.length > 0) {
+      const imageData = new FormData();
+      imageData.append(`file`, selectedImage[0]);
+      dispatch(removeDescriptionImageRequest(about, token));
+      dispatch(addDescriptionImageRequest(imageData, token));
       handleDispatchDescrRequest(
         {
           ...about,
