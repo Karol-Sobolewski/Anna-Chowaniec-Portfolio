@@ -54,7 +54,7 @@ router.delete(`/descriptions/image/:id`, checkJwt, async (req, res) => {
     const result = await Description.findById(req.params.id)
     if(result && result.images.length > 0) {
       for(let image of result.images) {
-        fs.unlink(`./public/${image.src}`, (err) => {
+        if(fs.existsSync(`./public/${image.src}`)) fs.unlink(`./public/${image.src}`, (err) => {
           if (err) throw err;
         });
       }
