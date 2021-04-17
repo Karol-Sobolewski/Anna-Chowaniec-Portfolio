@@ -49,4 +49,19 @@ router.put(`/descriptions/:id`, checkJwt, async (req, res) => {
   }
 });
 
+router.delete(`/descriptions/image/:id`, async (req, res) => {
+  try {
+    const result = await Description.findById(req.params.id)
+    if(result && result.images.length > 0) {
+      for(let image of result.images) {
+        fs.unlink(`./public/${image.src}`, (err) => {
+          if (err) throw err;
+        });
+      }
+    } else res.status(404).json({ message: `Not found...` });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
