@@ -49,7 +49,7 @@ router.put(`/descriptions/:id`, checkJwt, async (req, res) => {
   }
 });
 
-router.delete(`/descriptions/image/:id`, async (req, res) => {
+router.delete(`/descriptions/image/:id`, checkJwt, async (req, res) => {
   try {
     const result = await Description.findById(req.params.id)
     if(result && result.images.length > 0) {
