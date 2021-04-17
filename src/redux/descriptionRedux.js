@@ -45,6 +45,24 @@ export const editDescriptionRequest = (descr, token) => async (dispatch) => {
   }
 };
 
+export const removeDescriptionImageRequest = (descr, token) => async (
+  dispatch
+) => {
+  try {
+    await Axios.delete(`${API_URL}/descriptions/image/${descr._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        data: {
+          descr,
+        },
+      },
+    });
+    await new Promise((resolve) => resolve());
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
     case FETCH_START: {
