@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import ImageUploader from 'react-images-upload';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -9,12 +10,17 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '../../common/Button/Button';
 import styles from './About.module.scss';
 
-import { editDescriptionRequest } from '../../../redux/descriptionRedux';
+import {
+  editDescriptionRequest,
+  removeDescriptionImageRequest,
+  addDescriptionImageRequest,
+} from '../../../redux/descriptionRedux';
 
 const Component = ({ className, children }) => {
   const allPages = useSelector((state) => state.descriptions.data);
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
+  const [selectedImage, setSelectedImage] = useState([]);
   const aboutPage = allPages.filter((item) => item.page === `about`)[0];
   // const { auth } = useContext(userContext);
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -46,12 +52,39 @@ const Component = ({ className, children }) => {
   //   [about]
   // );
 
+  const handleDispatchDescrRequest = (aboutObj, token) => {
+    dispatch(editDescriptionRequest(aboutObj, token));
+    setEdit(false);
+  };
+
   const handleSubmit = async (e) => {
     // console.log(about);
     e.preventDefault();
     const token = await getAccessTokenSilently();
-    dispatch(editDescriptionRequest(about, token));
-    setEdit(false);
+    if (selectedImage.length > 0) {
+      const imageData = new FormData();
+      imageData.append(`file`, selectedImage[0]);
+      dispatch(removeDescriptionImageRequest(about, token));
+      dispatch(addDescriptionImageRequest(imageData, token));
+      handleDispatchDescrRequest(
+        {
+          ...about,
+          images: [
+            {
+              src: `images/photos/about/${selectedImage[0].name}`,
+              title: aboutPage.description[0].heading,
+            },
+          ],
+        },
+        token
+      );
+    } else {
+      handleDispatchDescrRequest(about, token);
+    }
+  };
+
+  const handleSelectedImage = (file) => {
+    setSelectedImage(file);
   };
 
   return (
@@ -106,6 +139,16 @@ const Component = ({ className, children }) => {
                     rows="4"
                     cols="50"
                     defaultValue={aboutPage.description[0].text}
+                  />
+                  <ImageUploader
+                    withIcon
+                    buttonText="Wybierz obraz"
+                    imgExtension={[`.jpg`, `.gif`, `.png`]}
+                    maxFileSize={5242880}
+                    withPreview
+                    onChange={handleSelectedImage}
+                    label="Maksymalny rozmiar: 5MB, Formaty: jpg, png, gif"
+                    singleImage
                   />
                   <Button type="submit" name="Wyślij" />
                 </div>
