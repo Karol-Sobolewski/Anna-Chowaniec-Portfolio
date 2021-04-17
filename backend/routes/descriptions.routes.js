@@ -49,4 +49,39 @@ router.put(`/descriptions/:id`, checkJwt, async (req, res) => {
   }
 });
 
+router.delete(`/descriptions/image/:id`, checkJwt, async (req, res) => {
+  try {
+    const result = await Description.findById(req.params.id)
+    if(result && result.images.length > 0) {
+      for(let image of result.images) {
+        if(fs.existsSync(`./public/${image.src}`)) fs.unlink(`./public/${image.src}`, (err) => {
+          if (err) throw err;
+        });
+      }
+    } else res.status(404).json({ message: `Not found...` });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.post(`/descriptions/image`, checkJwt, async (req, res) => {
+  try {
+    const { file } = req.files;
+    if(!file) {
+      return res.status(400).json({ message: `no files uploaded` });
+    }
+
+    const filePath = `images/photos/about/${file.name}`;
+    file.mv(`./public/${filePath}`, (err) => {
+      if (err) {
+        console.err(err);
+        return res.status(500).send(err);
+      }
+      res.json({ fileName: file.name, filePath: `/uploads/${file.name}` })
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
