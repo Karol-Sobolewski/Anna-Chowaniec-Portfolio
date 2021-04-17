@@ -10,7 +10,6 @@ import { Button } from '../Button/Button';
 import { PhotoSelector } from '../PhotoSelector/PhotoSelector';
 
 import styles from './Offer.module.scss';
-import { SliderSelector } from '../SliderSelector/SliderSelector';
 import {
   editCategoryRequest,
   removeCategoryRequest,
