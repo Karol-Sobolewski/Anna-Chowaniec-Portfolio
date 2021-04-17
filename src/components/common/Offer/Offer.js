@@ -9,8 +9,11 @@ import { OfferModal } from '../OfferModal/OfferModal';
 import { Button } from '../Button/Button';
 import styles from './Offer.module.scss';
 import { SliderSelector } from '../SliderSelector/SliderSelector';
-import { editCategoryRequest } from '../../../redux/categoryRedux';
-import { editMenuRequest } from '../../../redux/menuRedux';
+import {
+  editCategoryRequest,
+  removeCategoryRequest,
+} from '../../../redux/categoryRedux';
+import { editMenuRequest, removeMenuRequest } from '../../../redux/menuRedux';
 
 const removeDiacritics = require(`diacritics`).remove;
 
@@ -24,7 +27,7 @@ const Component = ({ className, offer }) => {
   const [modalData, setModalData] = useState(null);
 
   const photos = allPhotos.filter((item) =>
-    item.category.name
+    item.category
       ? removeDiacritics(item.category.name).toLowerCase() ===
         removeDiacritics(offer.name).toLowerCase()
       : null
@@ -112,6 +115,26 @@ const Component = ({ className, offer }) => {
     });
   };
 
+  const handlePhotosNumber = () => {
+    if (photos.length === 0) return `zdjęć`;
+    if (photos.length === 1) return `zdjęcie`;
+    if (photos.length >= 2 && photos.length <= 4) return `zdjęcia`;
+    if (photos.length >= 5) return `zdjęć`;
+  };
+
+  const handleDelete = async () => {
+    const token = await getAccessTokenSilently();
+    const confirm = window.confirm(
+      `Uwaga! Usuwając tę kategorię usuniesz również ${
+        photos.length
+      } ${handlePhotosNumber()}`
+    );
+    if (confirm) {
+      await dispatch(removeCategoryRequest(category, token));
+      await dispatch(removeMenuRequest(menu, token));
+    }
+  };
+
   return (
     <div className={clsx(className, styles.root)}>
       {isAuthenticated ? (
@@ -124,7 +147,7 @@ const Component = ({ className, offer }) => {
       ) : null}
       {isAuthenticated ? (
         <Button
-          // onClick={() => handleDelete(photo)}
+          onClick={() => handleDelete()}
           icon="delete"
           className={styles.deletePhotoButton}
         />

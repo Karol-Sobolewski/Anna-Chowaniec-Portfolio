@@ -61,4 +61,16 @@ router.put(`/menus/:id`, checkJwt, async (req, res) => {
   }
 });
 
+router.delete(`/menus/:id`, checkJwt, async (req, res) => {
+  try {
+    const result = await Menu.findById(req.params.id);
+    if (result) {
+      await result.deleteOne();
+      res.json(result);
+    } else res.status(404).json({ message: `Not found...` });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
