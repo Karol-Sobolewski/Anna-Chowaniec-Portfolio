@@ -7,6 +7,8 @@ import clsx from 'clsx';
 import { useAuth0 } from '@auth0/auth0-react';
 import { OfferModal } from '../OfferModal/OfferModal';
 import { Button } from '../Button/Button';
+import { PhotoSelector } from '../PhotoSelector/PhotoSelector';
+
 import styles from './Offer.module.scss';
 import { SliderSelector } from '../SliderSelector/SliderSelector';
 import {
@@ -169,7 +171,11 @@ const Component = ({ className, offer }) => {
               onClick={(e) => handleSubmit(e)}
             />
           </form>
-          <SliderSelector photos={photos} onChangeValue={handleChangePhoto} />
+          <PhotoSelector
+            photos={photos}
+            onChangeValue={handleChangePhoto}
+            checkedPhoto={category.image}
+          />
         </div>
       ) : (
         <button
