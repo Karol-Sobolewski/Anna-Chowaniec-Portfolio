@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '../../common/Button/Button';
+import { Loader } from '../../common/Loader/Loader';
 import styles from './About.module.scss';
 
 import {
@@ -95,7 +96,7 @@ const Component = ({ className, children }) => {
         // eslint-disable-next-line no-nested-ternary
         loadingStatus === undefined || loadingStatus.active || loadingStatus.error
           ?
-          loadingStatus === undefined || loadingStatus.error ? null : <h1>Load</h1>
+          loadingStatus === undefined || loadingStatus.error ? null : <Loader />
           :
           loadingStatus === undefined || loadingStatus.error ? null :
             <Container
