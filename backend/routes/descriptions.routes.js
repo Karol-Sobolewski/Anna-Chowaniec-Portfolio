@@ -64,4 +64,24 @@ router.delete(`/descriptions/image/:id`, async (req, res) => {
   }
 });
 
+router.post(`/descriptions/image`, checkJwt, async (req, res) => {
+  try {
+    const { file } = req.files;
+    if(!file) {
+      return res.status(400).json({ message: `no files uploaded` });
+    }
+
+    const filePath = `images/photos/about/${file.name}`;
+    file.mv(`./public/${filePath}`, (err) => {
+      if (err) {
+        console.err(err);
+        return res.status(500).send(err);
+      }
+      res.json({ fileName: file.name, filePath: `/uploads/${file.name}` })
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
