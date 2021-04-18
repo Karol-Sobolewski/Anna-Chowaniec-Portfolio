@@ -42,6 +42,7 @@ export const editDescriptionRequest = (descr, token) => async (dispatch) => {
 
     await new Promise((resolve) => resolve());
     dispatch(updateDescription(res.data));
+    dispatch(fetchLoaded());
   } catch (err) {
     dispatch(fetchError(err.message || true));
   }
