@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import './styles/bootstrap.scss';
 import styles from './App.module.scss';
@@ -106,12 +106,14 @@ const App = () => {
                 atActive={{ opacity: 1 }}
                 className={styles.switchWrapper}
               > */}
-              <Route exact path="/" component={() => <HomePage />} />
-              {routeComponents}
-              <Route exact path="/oferta" component={() => <OfferPage />} />
-              <Route exact path="/kontakt" component={() => <Contact />} />
-              <ProtectedRoute path="/login" component={<Dashboard />} />
-              <Route path="*" component={() => <NotFound />} />
+              <Switch>
+                <Route exact path="/" component={() => <HomePage />} />
+                {routeComponents}
+                <Route exact path="/oferta" component={() => <OfferPage />} />
+                <Route exact path="/kontakt" component={() => <Contact />} />
+                <ProtectedRoute path="/login" component={<Dashboard />} />
+                <Route path="*" component={() => <NotFound />} />
+              </Switch>
               {/* </AnimatedSwitch> */}
             </MainLayout>
           </BrowserRouter>
