@@ -31,14 +31,16 @@ const Component = ({ className, children }) => {
   const [about, setAbout] = useState({
     ...aboutPage,
   });
-  const [description, setDescription] = useState({
-    ...aboutPage.description[0],
-  });
+
+  const description = {...aboutPage.description[0]};
+
   const handleChange = (e) => {
     const { target } = e;
     const { value } = target;
     const { name } = target;
-    setDescription({ ...description, [name]: value });
+
+    description[name] = value;
+
     setAbout({ ...about, description });
   };
 
