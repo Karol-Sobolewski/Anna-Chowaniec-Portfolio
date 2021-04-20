@@ -17,6 +17,8 @@ import { Photos } from './components/features/Photos/Photos';
 import { OfferPage } from './components/views/OfferPage/OfferPage';
 import { Contact } from './components/views/Contact/Contact';
 import { Dashboard } from './components/views/Dashboard/Dashboard';
+import { NotFound } from './components/views/NotFound/NotFound';
+
 import ProtectedRoute from './auth/protected-route';
 import history from './utils/history';
 
@@ -109,6 +111,7 @@ const App = () => {
               <Route exact path="/oferta" component={() => <OfferPage />} />
               <Route exact path="/kontakt" component={() => <Contact />} />
               <ProtectedRoute path="/login" component={<Dashboard />} />
+              <Route path="*" component={() => <NotFound />} />
               {/* </AnimatedSwitch> */}
             </MainLayout>
           </BrowserRouter>
