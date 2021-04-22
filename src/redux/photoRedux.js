@@ -112,6 +112,26 @@ export const removePhotoRequest = (photo, token) => async (dispatch) => {
   }
 };
 
+export const removeAllCategoryPhotosRequest = (category, token) => async (
+  dispatch
+) => {
+  try {
+    await Axios.delete(`${API_URL}/photos/categories/${category._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        category,
+      },
+    });
+
+    await new Promise((resolve) => resolve());
+    dispatch(removeAllCategoryPhotos({ id: category._id }));
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
     case FETCH_START: {
@@ -192,7 +212,6 @@ export default function reducer(statePart = [], action = {}) {
     }
 
     case REMOVE_ALL_CATEGORY_PHOTOS: {
-      console.log(action.payload);
       return {
         ...statePart,
         data: statePart.data.filter(
