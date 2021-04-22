@@ -137,4 +137,23 @@ router.delete(`/photos/:id`, checkJwt, async (req, res) => {
   }
 });
 
+router.delete(`/photos/categories/:id`, checkJwt, async (req, res) => {
+  try {
+    const results = await Photo.find({ category: req.params.id });
+
+    if (results) {
+      results.forEach(async result => {
+        await result.deleteOne();
+        fs.unlink(`./public/${result.src}`, (err) => {
+          if (err) throw err;
+        });
+      });
+
+      res.json(results);
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
