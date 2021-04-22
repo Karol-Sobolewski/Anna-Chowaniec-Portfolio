@@ -15,6 +15,7 @@ import {
   removeCategoryRequest,
 } from '../../../redux/categoryRedux';
 import { editMenuRequest, removeMenuRequest } from '../../../redux/menuRedux';
+import { removeAllCategoryPhotosRequest } from '../../../redux/photoRedux';
 
 const removeDiacritics = require(`diacritics`).remove;
 
@@ -131,6 +132,7 @@ const Component = ({ className, offer }) => {
       } ${handlePhotosNumber()}`
     );
     if (confirm) {
+      dispatch(removeAllCategoryPhotosRequest(category, token));
       await dispatch(removeCategoryRequest(category, token));
       await dispatch(removeMenuRequest(menu, token));
     }
