@@ -33,7 +33,6 @@ router.get(`/offers`, async (req, res) => {
 });
 
 router.post(`/offers`, async (req, res) => {
-  console.log(`body`, req.body);
   const newCategory = new Offer({
     name: req.body.name,
     descriptions: req.body.description,
