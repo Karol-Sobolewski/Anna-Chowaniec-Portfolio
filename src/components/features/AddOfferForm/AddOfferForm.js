@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import styles from './AddOfferForm.module.scss';
 import { Button } from '../../common/Button/Button';
 
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { addOfferRequest } from '../../../redux/offerRedux';
 
 const Component = ({ className, category }) => {
   const dispatch = useDispatch();
@@ -53,8 +53,8 @@ const Component = ({ className, category }) => {
   const handleSubmit = async (e) => {
     const token = await getAccessTokenSilently();
     e.preventDefault();
-    dispatch(addOfferRequest(offer, token));
     console.log(`offer`, offer);
+    dispatch(addOfferRequest(offer, token));
   };
 
   return (
@@ -66,7 +66,7 @@ const Component = ({ className, category }) => {
         onSubmit={(e) => handleSubmit(e)}
         onChange={(e) => handleChange(e)}
       >
-        <input type="text" placeholder="Tytuł" name="name" />
+        <input type="text" placeholder="Nazwa Pakietu" name="name" />
         {inputList.map((x, i) => (
           <div className={styles.offerDescriptionBox}>
             <input
@@ -92,7 +92,7 @@ const Component = ({ className, category }) => {
             />
           </div>
         ))}
-        <input type="text" placeholder="Cena" name="price" />
+        <input type="text" placeholder="Cena (bez zł)" name="price" />
         <Button className={styles.addPhotoButton} type="submit" name="Dodaj" />
       </form>
     </div>

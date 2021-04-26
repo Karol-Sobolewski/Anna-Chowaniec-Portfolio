@@ -11,7 +11,7 @@
     align-items: center;
     display: flex;
     height: 100%;
-    justify-content: space-around;
+    justify-content: center;
     overflow: auto;
     padding-bottom: 2vh;
     width: 100%;
@@ -31,6 +31,7 @@
         overflow: auto;
         position: relative;
         text-align: center;
+        width: 100%;
         .offerTitle {
           background: linear-gradient(-45deg, #cfd9df 0%, #abbdc7 100%);
           color: $link-color;
@@ -48,6 +49,7 @@
           height: 80%;
           list-style-type: none;
           overflow: auto;
+          width: 100%;
           li {
             margin: 1vh 0 1vh 0;
             width: 80%;

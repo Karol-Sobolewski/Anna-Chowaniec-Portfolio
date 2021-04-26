@@ -12,6 +12,24 @@ export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
 
+export const addOfferRequest = (data, token) => async (dispatch) => {
+  dispatch(fetchStarted());
+  console.log(`data`, data);
+  try {
+    await Axios.post(`${API_URL}/offers`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': `application/json`,
+        data: {
+          data,
+        },
+      },
+    });
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
 export const fetchOffers = () => (dispatch) => {
   dispatch(fetchStarted());
 
