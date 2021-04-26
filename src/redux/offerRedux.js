@@ -14,7 +14,6 @@ export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
 
 export const addOfferRequest = (data, token) => async (dispatch) => {
   dispatch(fetchStarted());
-  console.log(`data`, data);
   try {
     await Axios.post(`${API_URL}/offers`, data, {
       headers: {
