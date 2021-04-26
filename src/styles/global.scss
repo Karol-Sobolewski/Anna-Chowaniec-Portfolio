@@ -23,6 +23,7 @@ textarea {
   color: $link-color;
   height: 50px;
   padding: 0 30px;
+  max-width: 100%;
 }
 
 ::-webkit-scrollbar-track {

@@ -1,17 +1,40 @@
 @import "../../../styles/settings.scss";
 
 .root {
-  background: none;
-  background: $button-main-bg;
-  border-radius: 50%;
-  border: none;
-  color: $button-main-text;
-  font-family: $font-text;
-  height: 50px;
-  width: 50px;
-  transition: $transition;
-  &:hover {
-    background: $button-main-bg-hover;
+  align-items: center;
+  background: white;
+  border-radius: 5px;
+  box-shadow: $box-shadow-small;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+  padding: 2vh 0 2vh 0;
+  width: 100%;
+  input {
+    margin: 1vh 0 1vh 0;
+  }
+  .offerDescriptionBox {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // width: 100%;
+    position: relative;
+    button {
+      height: 2em;
+      position: absolute;
+      width: 2em;
+    }
+    .removeOfferButton {
+      right: -5%;
+      top: 0;
+    }
+    .addOfferButton {
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 10%);
+    }
   }
 }
 
@@ -47,6 +70,9 @@
 /* Extra Small Devices, Phones */
 @media only screen and (min-width: 0px) and (max-width: 479px) {
   .root {
+    .offerDescriptionBox {
+      width: 100%;
+    }
   }
 }
 
