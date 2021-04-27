@@ -11,6 +11,9 @@ const ADD_PHOTO = createActionName(`ADD_PHOTO`);
 const UPDATE_PHOTO = createActionName(`UPDATE_PHOTO`);
 const REMOVE_PHOTO = createActionName(`REMOVE_PHOTO`);
 const FETCH_SELECTED_PHOTO = createActionName(`FETCH_SELECTED_PHOTO`);
+const REMOVE_ALL_CATEGORY_PHOTOS = createActionName(
+  `REMOVE_ALL_CATEGORY_PHOTOS`
+);
 
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
@@ -28,6 +31,11 @@ export const removePhoto = (payload) => ({
 export const fetchSelectedPhoto = (payload) => ({
   payload,
   type: FETCH_SELECTED_PHOTO,
+});
+
+export const removeAllCategoryPhotos = (payload) => ({
+  payload,
+  type: REMOVE_ALL_CATEGORY_PHOTOS,
 });
 
 export const fetchPhotos = () => (dispatch) => {
@@ -99,6 +107,26 @@ export const removePhotoRequest = (photo, token) => async (dispatch) => {
 
     await new Promise((resolve) => resolve());
     dispatch(removePhoto(res.data));
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
+export const removeAllCategoryPhotosRequest = (category, token) => async (
+  dispatch
+) => {
+  try {
+    await Axios.delete(`${API_URL}/photos/categories/${category._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        category,
+      },
+    });
+
+    await new Promise((resolve) => resolve());
+    dispatch(removeAllCategoryPhotos({ id: category._id }));
   } catch (err) {
     dispatch(fetchError(err.message || true));
   }
@@ -180,6 +208,15 @@ export default function reducer(statePart = [], action = {}) {
       return {
         ...statePart,
         data: statePart.data.filter((i) => i._id !== action.payload._id),
+      };
+    }
+
+    case REMOVE_ALL_CATEGORY_PHOTOS: {
+      return {
+        ...statePart,
+        data: statePart.data.filter(
+          (photo) => photo.category._id !== action.payload.id
+        ),
       };
     }
 
