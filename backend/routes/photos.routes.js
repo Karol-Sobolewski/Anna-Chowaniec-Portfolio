@@ -139,17 +139,13 @@ router.delete(`/photos/:id`, checkJwt, async (req, res) => {
 
 router.delete(`/photos/categories/:id`, checkJwt, async (req, res) => {
   try {
-    const results = await Photo.find({ category: req.params.id });
+    const result = await Photo.findOne({ category: req.params.id });
 
-    if (results) {
-      results.forEach(async result => {
-        await result.deleteOne();
-        fs.unlink(`./public/${result.src}`, (err) => {
-          if (err) throw err;
-        });
+    if (result) {
+      await Photo.deleteMany({ category: req.params.id });
+      fs.rmdirSync(`./public/${result.src.substr(0,result.src.search(result.title))}`,{ recursive: true }, (err) => {
+        if (err) throw err;
       });
-
-      res.json(results);
     }
   } catch (err) {
     res.status(500).json(err);
