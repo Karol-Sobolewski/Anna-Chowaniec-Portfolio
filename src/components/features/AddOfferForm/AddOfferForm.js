@@ -53,7 +53,6 @@ const Component = ({ className, category }) => {
   const handleSubmit = async (e) => {
     const token = await getAccessTokenSilently();
     e.preventDefault();
-    console.log(`offer`, offer);
     dispatch(addOfferRequest(offer, token));
   };
 
@@ -68,7 +67,7 @@ const Component = ({ className, category }) => {
       >
         <input type="text" placeholder="Nazwa Pakietu" name="name" />
         {inputList.map((x, i) => (
-          <div className={styles.offerDescriptionBox}>
+          <div key={i} className={styles.offerDescriptionBox}>
             <input
               type="text"
               placeholder="Oferta"
