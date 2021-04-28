@@ -13,13 +13,10 @@ import styles from './OfferModal.module.scss';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({ className, children, offerCategory }) => {
-  // console.log(`OfferModal`);
   // const dispatch = useDispatch();
   const allOffers = useSelector((state) => state.offers.data);
-  console.log(`offerCategory`, offerCategory);
-  console.log(`allOffers`, allOffers);
   const offers = allOffers.filter(
-    (offer) => offer.category?._id === offerCategory // eslint-disable-line
+    (offer) => offer.category?._id === offerCategory
   );
   const [active, setActive] = useState(false);
 
