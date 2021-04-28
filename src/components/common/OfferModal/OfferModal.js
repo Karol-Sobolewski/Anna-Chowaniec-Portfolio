@@ -16,12 +16,13 @@ const Component = ({ className, children, offerCategory }) => {
   // console.log(`OfferModal`);
   // const dispatch = useDispatch();
   const allOffers = useSelector((state) => state.offers.data);
+  console.log(`offerCategory`, offerCategory);
+  console.log(`allOffers`, allOffers);
   const offers = allOffers.filter(
-    (offer) => offer.category._id === offerCategory // eslint-disable-line
+    (offer) => offer.category?._id === offerCategory // eslint-disable-line
   );
   const [active, setActive] = useState(false);
 
-  // console.log(`offerCategory`, offers);
   const { isAuthenticated } = useAuth0();
   return (
     <div className={clsx(className, styles.root)}>
