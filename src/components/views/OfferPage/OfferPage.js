@@ -7,7 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { AddCategoryForm } from '../../features/AddCategoryForm/AddCategoryForm';
 
 import { Button } from '../../common/Button/Button';
-import { Offer } from '../../common/Offer/Offer';
+import { Category } from '../../common/Category/Category';
 import { fetchOffers } from '../../../redux/offerRedux';
 import styles from './OfferPage.module.scss';
 
@@ -32,7 +32,7 @@ const Component = ({ className, children }) => {
             key={offer._id}
             className="col-12 col-md-6 mt-3 d-flex justify-content-center align-items-center"
           >
-            <Offer offer={offer} key={offer._id} />
+            <Category offer={offer} key={offer._id} />
           </Col>
         ))}
         {isAuthenticated ? (
