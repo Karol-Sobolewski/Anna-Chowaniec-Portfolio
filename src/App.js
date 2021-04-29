@@ -9,7 +9,6 @@ import { fetchMenu } from './redux/menuRedux';
 import { fetchCategories } from './redux/categoryRedux';
 import { fetchDescriptions } from './redux/descriptionRedux';
 import { fetchPhotos } from './redux/photoRedux';
-
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { HomePage } from './components/views/HomePage/HomePage';
 import { Loader } from './components/common/Loader/Loader';

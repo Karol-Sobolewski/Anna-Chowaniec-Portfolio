@@ -4,7 +4,24 @@
   align-items: center;
   display: flex;
   justify-content: center;
+  position: relative;
   width: 100%;
+  .editOfferButton {
+    position: absolute;
+    bottom: 0.2rem;
+    left: 5%;
+    z-index: 1;
+  }
+  .submitEditedOfferButton {
+    position: absolute;
+    bottom: 0.2rem;
+    right: 5%;
+    z-index: 1;
+  }
+  .offerPriceInput {
+    width: 50%;
+    text-align: center;
+  }
   .offerColumnInner {
     align-items: center;
     border-radius: 5px;
@@ -39,6 +56,10 @@
       li {
         margin: 1vh 0 1vh 0;
         width: 80%;
+        button {
+          height: 2rem;
+          width: 2rem;
+        }
       }
     }
   }
