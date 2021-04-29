@@ -14,9 +14,9 @@
     justify-content: center;
     overflow: auto;
     padding-bottom: 2vh;
-    width: 100%;
+    width: 80%;
     .offerColumn {
-      height: 90%;
+      height: 70%;
       display: flex;
       justify-content: center;
     }
@@ -54,15 +54,18 @@
 }
 
 /* Medium Devices, Tablets iPad */
-@media only screen and (min-width: 768px) and (max-width: 1023px) {
+@media only screen and (min-width: 0) and (max-width: 1023px) {
   .root {
+    width: 100%;
+    .offerRow {
+      width: 100%;
+    }
   }
 }
 
 /* Small Devices, Small tablets Large Phones */
 @media only screen and (min-width: 0px) and (max-width: 767px) {
-  .root .offerRow .offerColumn {
-    height: auto;
+  .root {
   }
 }
 

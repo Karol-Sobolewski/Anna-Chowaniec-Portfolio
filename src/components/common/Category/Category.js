@@ -64,6 +64,8 @@ const Component = ({ className, offer }) => {
       justifyContent: `center`,
       alignItems: `center`,
       backgroundColor: `#EDF7F6`,
+      inset: `10px`,
+      overflow: `hidden`,
     },
   };
 

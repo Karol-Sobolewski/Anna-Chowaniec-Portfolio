@@ -1,6 +1,9 @@
 @import "../../../styles/settings.scss";
 
 .root {
+  align-items: center;
+  display: flex;
+  justify-content: center;
   width: 100%;
   .offerColumnInner {
     align-items: center;
@@ -8,7 +11,7 @@
     box-shadow: $box-shadow-small;
     display: flex;
     flex-direction: column;
-    height: 90%;
+    height: 100%;
     justify-content: space-between;
     margin: 0;
     overflow: auto;
@@ -41,6 +44,11 @@
   }
 }
 
+/* Small Devices, Small tablets Large Phones */
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+  .root {
+  }
+}
 /* ExtraExtraLarge Devices, UltraWide Desktops  */
 @media (min-width: 1921px) {
   .root {
