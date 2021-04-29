@@ -19,43 +19,6 @@
       height: 90%;
       display: flex;
       justify-content: center;
-      .offerColumnInner {
-        align-items: center;
-        border-radius: 5px;
-        box-shadow: $box-shadow-small;
-        display: flex;
-        flex-direction: column;
-        height: 90%;
-        justify-content: space-between;
-        margin: 0;
-        overflow: auto;
-        position: relative;
-        text-align: center;
-        width: 100%;
-        .offerTitle {
-          background: linear-gradient(-45deg, #cfd9df 0%, #abbdc7 100%);
-          color: $link-color;
-          margin: 0;
-          padding: 1vh 0 1vh 0;
-          width: 100%;
-        }
-        .offerPrice {
-          margin-bottom: 1vh;
-        }
-        .offerDescription {
-          align-items: center;
-          display: flex;
-          flex-direction: column;
-          height: 80%;
-          list-style-type: none;
-          overflow: auto;
-          width: 100%;
-          li {
-            margin: 1vh 0 1vh 0;
-            width: 80%;
-          }
-        }
-      }
     }
     .addOfferColumn {
       display: flex;
