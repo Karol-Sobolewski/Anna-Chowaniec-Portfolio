@@ -53,6 +53,12 @@
       list-style-type: none;
       overflow: auto;
       width: 100%;
+      ul {
+        width: 90%;
+        li {
+          width: 100%;
+        }
+      }
       li {
         margin: 1vh 0 1vh 0;
         width: 80%;
@@ -64,7 +70,17 @@
     }
   }
 }
-
+.sortableHelper {
+  z-index: 9999 !important;
+  list-style-type: square;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  span {
+    cursor: pointer;
+  }
+}
 /* Small Devices, Small tablets Large Phones */
 @media only screen and (min-width: 0px) and (max-width: 767px) {
   .root {

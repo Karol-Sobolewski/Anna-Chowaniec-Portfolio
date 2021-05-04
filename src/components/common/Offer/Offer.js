@@ -3,6 +3,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import autosize from 'autosize';
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+} from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 import { Button } from '../Button/Button';
 import styles from './Offer.module.scss';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
@@ -16,6 +22,7 @@ const Component = ({ className, offer }) => {
     category: offer.category,
     description: [],
   });
+  const [descriptionItems, setDescriptionItems] = useState(offer.descriptions);
 
   const mapDescription = () => {
     if (edit) {
@@ -25,8 +32,11 @@ const Component = ({ className, offer }) => {
         return descriptionArr;
       });
       setEditedOffer({ ...editedOffer, description: descriptionArr });
+      // setItems(descriptionArr);
     }
   };
+
+  // console.log(`descriptionArr`, descriptionArr);
 
   autosize(document.querySelectorAll(`textarea`));
 
@@ -41,7 +51,13 @@ const Component = ({ className, offer }) => {
     setEditedOffer({ ...editedOffer, [name]: value });
   };
 
-  const handleChangeSubForm = (e, index) => {
+  const handleChangeSubForm = (e) => {
+    // for (const item of descriptionItems) {
+    //   // editedItems.push(item);
+    //   console.table(`descriptionItems`, descriptionItems);
+    //   return index;
+    // }
+    const index = descriptionItems.findIndex((i) => i._id === e.target.id);
     const { name, value } = e.target;
     const descriptionArray = [...editedOffer.description];
     descriptionArray[index][name] = value;
@@ -54,6 +70,50 @@ const Component = ({ className, offer }) => {
   const handleSubmit = (e) => {
     console.log(editedOffer);
   };
+
+  useEffect(() => {
+    setEditedOffer({ ...editedOffer, description: descriptionItems });
+  }, [descriptionItems]);
+
+  const onSortEnd = async ({ oldIndex, newIndex }) => {
+    setDescriptionItems(arrayMove(descriptionItems, oldIndex, newIndex));
+    // console.log(`descriptionItems`, descriptionItems);
+    setEditedOffer({ ...editedOffer, description: descriptionItems });
+  };
+  const DragHandle = SortableHandle(() => <span>::</span>);
+
+  const SortableItem = SortableElement(({ value, _id, index }) => (
+    <li className={styles.sortableHelper} index={index}>
+      <DragHandle />
+      <textarea
+        defaultValue={value}
+        name="text"
+        id={_id}
+        index={index}
+        onChange={(e) => handleChangeSubForm(e, index)}
+        placeholder="Oferta"
+        type="text"
+      />
+    </li>
+  ));
+
+  const SortableList = SortableContainer(() => {
+    if (edit) {
+      return (
+        <ul lockAxis pressDelay={200}>
+          {descriptionItems.map((value, index) => (
+            <SortableItem
+              key={index}
+              index={index}
+              value={value.text}
+              _id={value._id}
+              transitionDuration={300}
+            />
+          ))}
+        </ul>
+      );
+    }
+  });
 
   return (
     <div className={clsx(className, styles.root)}>
@@ -81,22 +141,44 @@ const Component = ({ className, offer }) => {
           )}
         </div>
         <ul className={styles.offerDescription}>
-          {offer.descriptions.map((description, i) => (
-            <li key={i}>
-              {edit ? (
-                <textarea
-                  defaultValue={description.text}
-                  name="text"
-                  onChange={(e) => handleChangeSubForm(e, i)}
-                  placeholder="Oferta"
-                  type="text"
-                />
-              ) : (
-                <p>{description.text}</p>
-              )}
-            </li>
-          ))}
+          {
+            edit ? (
+              <SortableList
+                items={descriptionItems}
+                onSortEnd={onSortEnd}
+                helperClass="sortableHelper"
+                lockAxis
+                pressDelay={200}
+                disableAutoscroll
+                axis="y"
+                useDragHandle
+              />
+            ) : (
+              descriptionItems.map((description, i) => (
+                <li key={i}>
+                  <p>{description.text}</p>
+                </li>
+              ))
+            )
 
+            // {offer.descriptions.map((description, i) => {
+            //   console.log(`description`, description);
+            //   return (
+            //     <li key={i}>
+            //       {edit ? (
+            //       ) : (
+            //         // <textarea
+            //         //   defaultValue={description.text}
+            //         //   name="text"
+            //         //   onChange={(e) => handleChangeSubForm(e, i)}
+            //         //   placeholder="Oferta"
+            //         //   type="text"
+            //         // />
+            //         <p>{description.text}</p>
+            //       )}
+            //     </li>
+            //   );
+          }
           {/* {edit
             ? inputList.map((item, i) => (
               <div key={i} className={styles.offerDescriptionBox}>
