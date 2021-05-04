@@ -19,6 +19,8 @@ const uniqid = require(`uniqid`);
 const Component = ({ className, offer }) => {
   const { isAuthenticated } = useAuth0();
   const [edit, setEdit] = useState(false);
+  const [addOfferState, setAddOfferState] = useState(false);
+  const [sortOfferState, setSortOfferState] = useState(false);
   const [editedOffer, setEditedOffer] = useState({
     _id: offer._id,
     name: offer.name,
@@ -27,8 +29,6 @@ const Component = ({ className, offer }) => {
   });
   const [descriptionItems, setDescriptionItems] = useState(offer.descriptions);
   const [newOffer, setNewOffer] = useState({ _id: uniqid(), text: `` });
-  const [addOfferState, setAddOfferState] = useState(false);
-  const [sortOfferState, setSortOfferState] = useState(false);
   autosize(document.querySelectorAll(`textarea`));
 
   const mapDescription = () => {
@@ -49,6 +49,21 @@ const Component = ({ className, offer }) => {
   useEffect(() => {
     autosize(document.querySelectorAll(`textarea`));
   }, [sortOfferState]);
+
+  const handleEdit = () => {
+    setEdit(!edit);
+    if (!edit) {
+      setAddOfferState(false);
+      setSortOfferState(false);
+    }
+  };
+
+  const handleSort = () => {
+    setSortOfferState(!sortOfferState);
+    if (!sortOfferState) {
+      setAddOfferState(false);
+    }
+  };
 
   const handleChangeUpperForm = (e) => {
     const { target } = e;
@@ -132,7 +147,7 @@ const Component = ({ className, offer }) => {
       {isAuthenticated ? (
         <Button
           className={styles.editOfferButton}
-          onClick={() => setEdit(!edit)}
+          onClick={() => handleEdit()}
           edit={edit}
           icon="pencil"
         />
@@ -156,7 +171,7 @@ const Component = ({ className, offer }) => {
             <li>
               <Button
                 className={styles.sortOfferButton}
-                onClick={() => setSortOfferState(!sortOfferState)}
+                onClick={() => handleSort()}
                 type="button"
                 icon="sort"
                 edit={sortOfferState}
