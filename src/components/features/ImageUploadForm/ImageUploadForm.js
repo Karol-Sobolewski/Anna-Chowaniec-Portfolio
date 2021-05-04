@@ -56,7 +56,7 @@ const Component = ({ className, children, category }) => {
       formData.append(key, photo[key]);
     }
     formData.append(`file`, photo.file);
-    dispatch(addPhotoRequest(formData, token));
+    dispatch(addPhotoRequest(formData, token, category));
     // dispatch(fetchPhotos());
   };
 
