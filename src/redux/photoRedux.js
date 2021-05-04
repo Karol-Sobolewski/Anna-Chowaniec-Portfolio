@@ -62,15 +62,19 @@ export const fetchSelectedPhotoRequest = (photo) => async (dispatch) => {
   }
 };
 
-export const addPhotoRequest = (data, token) => async (dispatch) => {
+export const addPhotoRequest = (data, token, category) => async (dispatch) => {
   dispatch(fetchStarted());
   try {
-    await Axios.post(`${API_URL}/photos`, data, {
+    const res = await Axios.post(`${API_URL}/photos`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': `multipart/form-data`,
       },
     });
+    if (res.status === 200) {
+      res.data.category = category;
+      dispatch(addNewPhoto(res.data));
+    }
   } catch (err) {
     dispatch(fetchError(err.message || true));
   }
