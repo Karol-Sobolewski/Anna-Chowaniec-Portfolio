@@ -9,8 +9,11 @@ import {
   SortableHandle,
 } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
+
 import { Button } from '../Button/Button';
 import styles from './Offer.module.scss';
+
+const uniqid = require(`uniqid`);
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({ className, offer }) => {
@@ -20,9 +23,13 @@ const Component = ({ className, offer }) => {
     _id: offer._id,
     name: offer.name,
     category: offer.category,
-    description: [],
+    description: ``,
   });
   const [descriptionItems, setDescriptionItems] = useState(offer.descriptions);
+  const [newOffer, setNewOffer] = useState({ _id: uniqid(), text: `` });
+  const [addOfferState, setAddOfferState] = useState(false);
+  const [sortOfferState, setSortOfferState] = useState(false);
+  autosize(document.querySelectorAll(`textarea`));
 
   const mapDescription = () => {
     if (edit) {
@@ -32,88 +39,93 @@ const Component = ({ className, offer }) => {
         return descriptionArr;
       });
       setEditedOffer({ ...editedOffer, description: descriptionArr });
-      // setItems(descriptionArr);
     }
   };
-
-  // console.log(`descriptionArr`, descriptionArr);
-
-  autosize(document.querySelectorAll(`textarea`));
 
   useEffect(() => {
     if (edit) return mapDescription();
   }, [edit]);
 
-  const handleChange = (e) => {
+  useEffect(() => {
+    autosize(document.querySelectorAll(`textarea`));
+  }, [sortOfferState]);
+
+  const handleChangeUpperForm = (e) => {
     const { target } = e;
     const { value } = target;
     const { name } = target;
     setEditedOffer({ ...editedOffer, [name]: value });
   };
 
-  const handleChangeSubForm = (e) => {
-    // for (const item of descriptionItems) {
-    //   // editedItems.push(item);
-    //   console.table(`descriptionItems`, descriptionItems);
-    //   return index;
-    // }
-    const index = descriptionItems.findIndex((i) => i._id === e.target.id);
+  const handleChangeSubForm = (e, index) => {
     const { name, value } = e.target;
     const descriptionArray = [...editedOffer.description];
     descriptionArray[index][name] = value;
     setEditedOffer({ ...editedOffer, description: descriptionArray });
-  };
-  const handleOfferDescription = (e) => {
-    console.log(editedOffer);
+    setDescriptionItems(descriptionArray);
+    e.target.focus();
   };
 
-  const handleSubmit = (e) => {
-    console.log(editedOffer);
+  const handleRemoveDescription = (e, id) => {
+    const index = descriptionItems.findIndex((i) => i._id === id);
+    const descriptionArray = [...editedOffer.description];
+    descriptionArray.splice(index, 1);
+    setEditedOffer({ ...editedOffer, description: descriptionArray });
+    setDescriptionItems(descriptionArray);
+  };
+
+  const handleDescriptionChange = (e) => {
+    const { target } = e;
+    const { value } = target;
+    setNewOffer({ ...newOffer, text: value });
+  };
+
+  const submitDescription = (e) => {
+    const descriptionArray = [...editedOffer.description];
+    descriptionArray.push(newOffer);
+    setEditedOffer({ ...editedOffer, description: descriptionArray });
+    setDescriptionItems(descriptionArray);
+    setNewOffer({ _id: uniqid(), text: `` });
+  };
+
+  const onSortEnd = async ({ oldIndex, newIndex }) => {
+    setDescriptionItems(arrayMove(descriptionItems, oldIndex, newIndex));
+    setEditedOffer({ ...editedOffer, description: descriptionItems });
   };
 
   useEffect(() => {
     setEditedOffer({ ...editedOffer, description: descriptionItems });
-  }, [descriptionItems]);
+  }, [descriptionItems]); /* eslint-disable-line */
 
-  const onSortEnd = async ({ oldIndex, newIndex }) => {
-    setDescriptionItems(arrayMove(descriptionItems, oldIndex, newIndex));
-    // console.log(`descriptionItems`, descriptionItems);
-    setEditedOffer({ ...editedOffer, description: descriptionItems });
-  };
   const DragHandle = SortableHandle(() => <span>::</span>);
 
-  const SortableItem = SortableElement(({ value, _id, index }) => (
-    <li className={styles.sortableHelper} index={index}>
+  const SortableItem = SortableElement(({ value, index }) => (
+    <li className={styles.sortableHelper} key={index}>
       <DragHandle />
-      <textarea
-        defaultValue={value}
-        name="text"
-        id={_id}
-        index={index}
-        onChange={(e) => handleChangeSubForm(e, index)}
-        placeholder="Oferta"
-        type="text"
-      />
+      <p>{value}</p>
     </li>
   ));
 
   const SortableList = SortableContainer(() => {
     if (edit) {
       return (
-        <ul lockAxis pressDelay={200}>
+        <ul
+          className={styles.offerDescription}
+          lockAxis
+          pressDelay={200}
+          transitionDuration={300}
+        >
           {descriptionItems.map((value, index) => (
-            <SortableItem
-              key={index}
-              index={index}
-              value={value.text}
-              _id={value._id}
-              transitionDuration={300}
-            />
+            <SortableItem key={value._id} index={index} value={value.text} />
           ))}
         </ul>
       );
     }
   });
+
+  const handleSubmit = (e) => {
+    console.log(editedOffer);
+  };
 
   return (
     <div className={clsx(className, styles.root)}>
@@ -125,7 +137,6 @@ const Component = ({ className, offer }) => {
           icon="pencil"
         />
       ) : null}
-
       <div className={styles.offerColumnInner}>
         <div className={styles.offerTitle}>
           {edit ? (
@@ -134,95 +145,97 @@ const Component = ({ className, offer }) => {
               type="text"
               placeholder="Tytuł"
               defaultValue={offer.name}
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => handleChangeUpperForm(e)}
             />
           ) : (
             <h3>{offer.name}</h3>
           )}
         </div>
         <ul className={styles.offerDescription}>
-          {
-            edit ? (
-              <SortableList
-                items={descriptionItems}
-                onSortEnd={onSortEnd}
-                helperClass="sortableHelper"
-                lockAxis
-                pressDelay={200}
-                disableAutoscroll
-                axis="y"
-                useDragHandle
+          {edit ? (
+            <li>
+              <Button
+                className={styles.sortOfferButton}
+                onClick={() => setSortOfferState(!sortOfferState)}
+                type="button"
+                icon="sort"
+                edit={sortOfferState}
               />
-            ) : (
-              descriptionItems.map((description, i) => (
+            </li>
+          ) : null}
+          {descriptionItems.map(
+            (description, i) =>
+              /* eslint-disable */
+              !sortOfferState && edit ? (
+                <li key={i}>
+                  <textarea
+                    value={description.text}
+                    name="text"
+                    key={i}
+                    id={i}
+                    index={i}
+                    onChange={(e) => handleChangeSubForm(e, i)}
+                    placeholder="Oferta"
+                    type="text"
+                  />
+                  <Button
+                    type="button"
+                    className={styles.removeDescriptionButton}
+                    onClick={(e) => handleRemoveDescription(e, i)}
+                    icon="delete"
+                  />
+                </li>
+              ) : sortOfferState && edit ? null : (
                 <li key={i}>
                   <p>{description.text}</p>
                 </li>
-              ))
-            )
-
-            // {offer.descriptions.map((description, i) => {
-            //   console.log(`description`, description);
-            //   return (
-            //     <li key={i}>
-            //       {edit ? (
-            //       ) : (
-            //         // <textarea
-            //         //   defaultValue={description.text}
-            //         //   name="text"
-            //         //   onChange={(e) => handleChangeSubForm(e, i)}
-            //         //   placeholder="Oferta"
-            //         //   type="text"
-            //         // />
-            //         <p>{description.text}</p>
-            //       )}
-            //     </li>
-            //   );
-          }
-          {/* {edit
-            ? inputList.map((item, i) => (
-              <div key={i} className={styles.offerDescriptionBox}>
-                  <textarea
-                  type="text"
-                    placeholder="Oferta"
-                    name="text"
-                    value={item.text}
-                  onChange={(e) => handleInputChange(e, i)}
-                />
-                  {inputList.length >= 2 ? (
-                  <Button
-                      type="button"
-                    className={styles.removeOfferButton}
-                      onClick={() => handleRemoveClick(i)}
-                      icon="delete"
-                  />
-                  ) : null}
-                <Button
-                    className={styles.addOfferButton}
-                  onClick={handleAddClick}
-                    type="button"
-                    icon="plus"
-                />
-                </div>
-            ))
-            : null} */}
-          {/* {edit ? (
+              )
+            /* eslint-enable */
+          )}
+          {sortOfferState && edit ? (
+            <SortableList
+              items={descriptionItems}
+              onSortEnd={onSortEnd}
+              helperClass="sortableHelper"
+              lockAxis
+              pressDelay={200}
+              useDragHandle
+            />
+          ) : null}
+          {addOfferState && edit ? (
             <li>
-              <textarea name="text" placeholder="nowa oferta" type="text" />
+              <textarea
+                name="name"
+                type="text"
+                placeholder="Oferta"
+                value={newOffer.text}
+                onChange={(e) => handleDescriptionChange(e)}
+              />
               <Button
-                className={styles.addOfferDescriptionButton}
-                onClick={(e) => handleOfferDescription(e)}
-                name="Ok"
+                className={styles.submitDescriptionButton}
+                onClick={(e) => submitDescription(e)}
+                name="ok"
               />
             </li>
-          ) : null} */}
+          ) : null}
+          {edit && !sortOfferState ? (
+            <li>
+              <Button
+                className={styles.addOfferButton}
+                onClick={() => setAddOfferState(!addOfferState)}
+                type="button"
+                icon="plus"
+                edit={addOfferState}
+              />
+            </li>
+          ) : null}
         </ul>
         {edit ? (
           <input
             className={styles.offerPriceInput}
             defaultValue={offer.price}
             name="price"
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeUpperForm(e)}
             placeholder="Cena"
             type="text"
           />

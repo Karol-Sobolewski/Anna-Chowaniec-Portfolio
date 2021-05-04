@@ -53,15 +53,23 @@
       list-style-type: none;
       overflow: auto;
       width: 100%;
-      ul {
-        width: 90%;
-        li {
-          width: 100%;
-        }
-      }
       li {
         margin: 1vh 0 1vh 0;
+        position: relative;
         width: 80%;
+        .sortOfferButton {
+          position: absolute;
+          left: -0.5rem;
+          top: 50%;
+          z-index: 1001;
+        }
+        .removeDescriptionButton,
+        .submitDescriptionButton {
+          position: absolute;
+          right: -0.5rem;
+          top: 50%;
+          transform: translate(0, -60%);
+        }
         button {
           height: 2rem;
           width: 2rem;
@@ -71,16 +79,34 @@
   }
 }
 .sortableHelper {
-  z-index: 9999 !important;
-  list-style-type: square;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  box-shadow: $box-shadow-small;
+  display: flex;
+  height: auto;
+  justify-content: flex-start;
+  list-style-type: square;
+  padding: 1rem;
+  position: relative;
+  z-index: 1000 !important;
+  background-color: $white;
+  border-radius: $radius;
+  text-align: left;
+  p {
+    margin: 0;
+    padding: 0;
+  }
   span {
+    margin-right: 1rem;
     cursor: pointer;
   }
+  .removeDescriptionButton {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: -1rem;
+  }
 }
+
 /* Small Devices, Small tablets Large Phones */
 @media only screen and (min-width: 0px) and (max-width: 767px) {
   .root {
