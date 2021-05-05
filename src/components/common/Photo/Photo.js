@@ -65,8 +65,9 @@ const Component = ({ photo, photos, className }) => {
     const confirm = window.confirm(`Chcesz usunąć zdjęcie?`);
     if (confirm) {
       const token = await getAccessTokenSilently();
-      dispatch(removePhotoRequest(item, token));
-      dispatch(fetchPhotos());
+      await dispatch(removePhotoRequest(item, token));
+      await dispatch(fetchPhotos());
+      window.location.reload(false);
     }
   };
 

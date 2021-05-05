@@ -57,7 +57,7 @@ router.post(`/photos`, checkJwt, async (req, res) => {
       console.err(err);
       return res.status(500).send(err);
     }
-    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+    // res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
   });
   const newPhoto = new Photo({
     title: req.body.title,
@@ -79,7 +79,7 @@ router.post(`/photos`, checkJwt, async (req, res) => {
   });
   /* eslint-enable */
   await newPhoto.save();
-  // res.json(newPhoto);
+  res.json(newPhoto);
 });
 
 router.put(`/photos/:id`, checkJwt, async (req, res) => {
