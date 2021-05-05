@@ -73,22 +73,6 @@ const Component = ({ className }) => {
       categoryFormData.append(key, category[key]);
     }
     categoryFormData.append(`file`, category.photo.file);
-
-    // const PhotoFormData = new FormData();
-    // for (const key of [
-    //   `category`,
-    //   `title`,
-    //   `categoryName`,
-    //   `format`,
-    //   `order`,
-    // ]) {
-    //   PhotoFormData.append(key, photo[key]);
-    // }
-    // PhotoFormData.append(`file`, photo.file);
-
-    // console.log(photo);
-    // dispatch(addPhotoRequest(formData, token));
-
     dispatch(addCategoryRequest(categoryFormData, token));
     dispatch(addMenuRequest(category, token));
   };
@@ -111,7 +95,6 @@ const Component = ({ className }) => {
         onChange={handleImage}
         label="Maksymalny rozmiar: 5MB, Formaty: jpg, png, gif"
         singleImage
-        // className={photo.file ? `hide` : `animated fadeInUp`}
       />
       <Button className={styles.addPhotoButton} type="submit" name="Wyślij" />
     </form>

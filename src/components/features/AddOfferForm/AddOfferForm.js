@@ -2,23 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useAuth0 } from '@auth0/auth0-react';
-
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import autosize from 'autosize';
 
 import styles from './AddOfferForm.module.scss';
 import { Button } from '../../common/Button/Button';
 
 import { addOfferRequest } from '../../../redux/offerRedux';
 
+const uniqid = require(`uniqid`);
+
 const Component = ({ className, category }) => {
   const dispatch = useDispatch();
+  autosize(document.querySelectorAll(`textarea`));
+
   const [offer, setOffer] = useState({
     name: ``,
     description: [],
     category,
   });
-  const [inputList, setInputList] = useState([{ text: `` }]);
+  const [inputList, setInputList] = useState([{ _id: uniqid(), text: `` }]);
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -37,7 +41,7 @@ const Component = ({ className, category }) => {
   };
 
   const handleAddClick = () => {
-    setInputList([...inputList, { text: `` }]);
+    setInputList([...inputList, { _id: uniqid(), text: `` }]);
   };
 
   const handleRemoveClick = (index) => {
@@ -53,6 +57,7 @@ const Component = ({ className, category }) => {
   const handleSubmit = async (e) => {
     const token = await getAccessTokenSilently();
     e.preventDefault();
+    console.log(`offer`, offer);
     dispatch(addOfferRequest(offer, token));
   };
 
@@ -66,13 +71,13 @@ const Component = ({ className, category }) => {
         onChange={(e) => handleChange(e)}
       >
         <input type="text" placeholder="Nazwa Pakietu" name="name" />
-        {inputList.map((x, i) => (
+        {inputList.map((item, i) => (
           <div key={i} className={styles.offerDescriptionBox}>
-            <input
+            <textarea
               type="text"
               placeholder="Oferta"
               name="text"
-              value={x.text}
+              value={item.text}
               onChange={(e) => handleInputChange(e, i)}
             />
             {inputList.length >= 2 ? (

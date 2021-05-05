@@ -10,6 +10,7 @@ import {
   faTimes,
   faPlus,
   faTrash,
+  faSortAlphaDown,
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './Button.module.scss';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
@@ -45,6 +46,9 @@ const Component = ({
       ) : null}
       {isAuthenticated && icon === `delete` ? (
         <FontAwesomeIcon icon={faTrash} />
+      ) : null}
+      {isAuthenticated && !edit && icon === `sort` ? (
+        <FontAwesomeIcon icon={faSortAlphaDown} />
       ) : null}
       {isAuthenticated && edit ? <FontAwesomeIcon icon={faTimes} /> : null}
     </button>
