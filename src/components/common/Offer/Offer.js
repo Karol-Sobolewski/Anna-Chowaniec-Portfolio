@@ -128,12 +128,7 @@ const Component = ({ className, offer }) => {
   const SortableList = SortableContainer(() => {
     if (edit) {
       return (
-        <ul
-          className={styles.offerDescription}
-          lockAxis
-          pressDelay={200}
-          transitionDuration={300}
-        >
+        <ul className={styles.offerDescription} key={1}>
           {descriptionItems.map((value, index) => (
             <SortableItem key={value._id} index={index} value={value.text} />
           ))}
@@ -232,12 +227,10 @@ const Component = ({ className, offer }) => {
                 )
                 )}
               {sortOfferState && edit ? (
-                  <SortableList
+                <SortableList
                   items={descriptionItems}
                   onSortEnd={onSortEnd}
                   helperClass="sortableHelper"
-                  lockAxis
-                  pressDelay={200}
                   useDragHandle
                 />
                 ) : null}
