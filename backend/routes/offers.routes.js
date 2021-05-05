@@ -32,7 +32,7 @@ router.get(`/offers`, async (req, res) => {
   }
 });
 
-router.post(`/offers`, async (req, res) => {
+router.post(`/offers`, checkJwt, async (req, res) => {
   const newCategory = new Offer({
     name: req.body.name,
     descriptions: req.body.description,
@@ -43,6 +43,23 @@ router.post(`/offers`, async (req, res) => {
 
   await newCategory.save();
   // res.json(newPhoto);
+});
+
+router.put(`/offers/:id`, checkJwt, async (req, res) => {
+  try {
+    const result = await Offer.findById(req.body._id);
+    if (result) {
+      /* eslint-disable */
+      for (const prop in req.body) {
+        result[prop] = req.body[prop];
+      }
+      await result.save();
+      res.json(result);
+    }
+    else res.status(404).json({ message: `Not found...` });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;

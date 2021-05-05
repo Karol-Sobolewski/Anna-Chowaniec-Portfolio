@@ -7,7 +7,12 @@ const offerSchema = new mongoose.Schema({
     required: true,
     ref: `Category`,
   },
-  descriptions: { type: Array },
+  descriptions: [
+    {
+      _id: String,
+      text: String,
+    },
+  ],
   price: { type: Number },
 });
 
