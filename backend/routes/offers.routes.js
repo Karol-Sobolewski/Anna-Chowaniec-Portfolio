@@ -62,4 +62,18 @@ router.put(`/offers/:id`, checkJwt, async (req, res) => {
   }
 });
 
+router.delete(`/offers/:id`, checkJwt, async (req, res) => {
+  try {
+    const result = await Offer.findById(req.params.id);
+    if (result) {
+      await result.deleteOne();
+      res.json(result);
+    } else res.status(404).json({ message: `Not found...` });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
+
+

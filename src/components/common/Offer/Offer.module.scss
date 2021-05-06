@@ -12,6 +12,12 @@
     left: 5%;
     z-index: 1;
   }
+  .deleteOfferButton {
+    position: absolute;
+    top: -1rem;
+    right: -0.5rem;
+    z-index: 1;
+  }
   .submitEditedOfferButton {
     position: absolute;
     bottom: 0.2rem;
@@ -24,6 +30,7 @@
   }
   .offerColumnInner {
     align-items: center;
+    background: $offer-bg;
     border-radius: 5px;
     box-shadow: $box-shadow-small;
     display: flex;

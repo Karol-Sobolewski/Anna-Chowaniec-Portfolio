@@ -9,7 +9,7 @@ import autosize from 'autosize';
 import styles from './AddOfferForm.module.scss';
 import { Button } from '../../common/Button/Button';
 
-import { addOfferRequest } from '../../../redux/offerRedux';
+import { addOfferRequest, fetchOffers } from '../../../redux/offerRedux';
 
 const uniqid = require(`uniqid`);
 
@@ -21,6 +21,7 @@ const Component = ({ className, category }) => {
     name: ``,
     description: [],
     category,
+    price: ``,
   });
   const [inputList, setInputList] = useState([{ _id: uniqid(), text: `` }]);
 
@@ -52,26 +53,42 @@ const Component = ({ className, category }) => {
 
   useEffect(() => {
     setOffer({ ...offer, description: inputList });
-  }, [inputList]); //eslint-disable-line
+  }, [inputList]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = async (e) => {
     const token = await getAccessTokenSilently();
     e.preventDefault();
-    console.log(`offer`, offer);
     dispatch(addOfferRequest(offer, token));
+
+    setTimeout(() => {
+      dispatch(fetchOffers());
+      setOffer({
+        name: ``,
+        description: [],
+        category,
+        price: ``,
+      });
+      setInputList([{ _id: uniqid(), text: `` }]);
+      console.log(inputList);
+    }, 500);
   };
 
   return (
-    <div className={clsx(className, styles.root)}>
-      <form
-        className={clsx(className, styles.root)}
-        action="#"
-        method="post"
-        onSubmit={(e) => handleSubmit(e)}
-        onChange={(e) => handleChange(e)}
-      >
-        <input type="text" placeholder="Nazwa Pakietu" name="name" />
-        {inputList.map((item, i) => (
+    <form
+      className={clsx(className, styles.root)}
+      action="#"
+      method="post"
+      onSubmit={(e) => handleSubmit(e)}
+      onChange={(e) => handleChange(e)}
+    >
+      <input
+        type="text"
+        placeholder="Nazwa Pakietu"
+        name="name"
+        value={offer.name}
+      />
+      {inputList &&
+        inputList.map((item, i) => (
           <div key={i} className={styles.offerDescriptionBox}>
             <textarea
               type="text"
@@ -96,10 +113,14 @@ const Component = ({ className, category }) => {
             />
           </div>
         ))}
-        <input type="text" placeholder="Cena (bez zł)" name="price" />
-        <Button className={styles.addPhotoButton} type="submit" name="Dodaj" />
-      </form>
-    </div>
+      <input
+        type="text"
+        placeholder="Cena (bez zł)"
+        name="price"
+        value={offer.price}
+      />
+      <Button className={styles.addPhotoButton} type="submit" name="Dodaj" />
+    </form>
   );
 };
 
