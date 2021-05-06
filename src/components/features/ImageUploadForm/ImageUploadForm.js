@@ -114,7 +114,6 @@ const Component = ({ className, children, category }) => {
             <img src="/images/utils/horizontal.png" alt="horizontal" />
           </label>
         </div>
-
         <Button className={styles.addPhotoButton} type="submit" name="Wyślij" />
       </form>
       <main>{children}</main>
