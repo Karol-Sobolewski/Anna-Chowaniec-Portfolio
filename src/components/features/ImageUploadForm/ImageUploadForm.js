@@ -7,11 +7,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import ImageUploader from 'react-images-upload';
 
+import Resizer from 'react-image-file-resizer';
 import { Button } from '../../common/Button/Button';
 import styles from './ImageUploadForm.module.scss';
 import { addPhotoRequest } from '../../../redux/photoRedux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
-
 const Component = ({ className, children, category }) => {
   const { getAccessTokenSilently } = useAuth0();
 
@@ -28,10 +28,27 @@ const Component = ({ className, children, category }) => {
     order: 0,
   });
 
-  const handleImage = (files) => {
-    if (files) setPhoto({ ...photo, file: files[0] });
-    else setPhoto({ ...photo, file: null });
-    // console.log(`file`, files[0].height);
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        1024,
+        1024,
+        `WEBP`,
+        90,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        `file`
+      );
+    });
+
+  const handleImage = async (files) => {
+    if (files[0]) {
+      const image = await resizeFile(files[0]);
+      setPhoto({ ...photo, file: image });
+    } else setPhoto({ ...photo, file: null });
   };
 
   const handleChange = (e) => {
@@ -58,7 +75,6 @@ const Component = ({ className, children, category }) => {
     formData.append(`file`, photo.file);
     await dispatch(addPhotoRequest(formData, token, category));
     window.location.reload(false);
-    // dispatch(fetchPhotos());
   };
 
   return (
@@ -98,8 +114,6 @@ const Component = ({ className, children, category }) => {
             <img src="/images/utils/horizontal.png" alt="horizontal" />
           </label>
         </div>
-        {/* <label htmlFor="vertical">Vertical</label> */}
-        {/* <label htmlFor="horizontal">Horizontal</label> */}
         <Button className={styles.addPhotoButton} type="submit" name="Wyślij" />
       </form>
       <main>{children}</main>
