@@ -14,7 +14,11 @@ import arrayMove from 'array-move';
 import { Button } from '../Button/Button';
 import { Loader } from '../Loader/Loader';
 import styles from './Offer.module.scss';
-import { fetchOffers, editOfferRequest } from '../../../redux/offerRedux';
+import {
+  fetchOffers,
+  editOfferRequest,
+  removeOfferRequest,
+} from '../../../redux/offerRedux';
 
 const uniqid = require(`uniqid`);
 
@@ -155,6 +159,14 @@ const Component = ({ className, offer }) => {
     }, 500);
   };
 
+  const handleDelete = async () => {
+    const token = await getAccessTokenSilently();
+    const confirm = window.confirm(`Chcesz usunąć ofertę?`);
+    if (confirm) {
+      dispatch(removeOfferRequest(editedOffer, token));
+    }
+  };
+
   return (
     <div className={clsx(className, styles.root)}>
       {isAuthenticated ? (
@@ -163,6 +175,13 @@ const Component = ({ className, offer }) => {
           onClick={() => handleEdit()}
           edit={edit}
           icon="pencil"
+        />
+      ) : null}
+      {isAuthenticated ? (
+        <Button
+          onClick={() => handleDelete()}
+          icon="delete"
+          className={styles.deleteOfferButton}
         />
       ) : null}
       {
