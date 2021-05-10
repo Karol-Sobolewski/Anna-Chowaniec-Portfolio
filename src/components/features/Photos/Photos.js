@@ -13,7 +13,7 @@ const Component = ({ className, galleryName }) => {
   const categories = useSelector((state) => state.categories.data);
 
   const photos = allPhotos.filter((photo) =>
-    photo.category
+    photo.category && photo.category.name !== undefined
       ? removeDiacritics(photo.category.name).toLowerCase() ===
         removeDiacritics(galleryName).toLowerCase()
       : null
