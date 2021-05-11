@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useModal } from 'react-modal-hook';
 import ReactModal from 'react-modal';
@@ -16,6 +16,7 @@ import {
 } from '../../../redux/categoryRedux';
 import { editMenuRequest, removeMenuRequest } from '../../../redux/menuRedux';
 import { removeAllCategoryPhotosRequest } from '../../../redux/photoRedux';
+import { removeAllCategoryOffersRequest } from '../../../redux/offerRedux';
 
 const removeDiacritics = require(`diacritics`).remove;
 
@@ -23,13 +24,15 @@ const Component = ({ className, offer }) => {
   const dispatch = useDispatch();
   const allPhotos = useSelector((state) => state.photos.data);
   const allMenus = useSelector((state) => state.menu.data);
+  const allOffers = useSelector((state) => state.offers.data);
 
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [edit, setEdit] = useState(false);
+  const [offers, setOffers] = useState(false);
   const [modalData, setModalData] = useState(null);
 
   const photos = allPhotos.filter((item) =>
-    item.category
+    item.category && item.category.name !== undefined
       ? removeDiacritics(item.category.name).toLowerCase() ===
         removeDiacritics(offer.name).toLowerCase()
       : null
@@ -41,6 +44,18 @@ const Component = ({ className, offer }) => {
         removeDiacritics(offer.name).toLowerCase()
       : null
   )[0];
+
+  useEffect(() => {
+    if (allOffers) {
+      const offerArr = allOffers.filter((item) =>
+        item.category && item.category.name !== undefined
+          ? removeDiacritics(item.category.name).toLowerCase() ===
+            removeDiacritics(offer.name).toLowerCase()
+          : null
+      );
+      setOffers(offerArr.length);
+    }
+  }, [allOffers]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [category, setCategory] = useState({
     _id: offer._id,
@@ -126,15 +141,23 @@ const Component = ({ className, offer }) => {
     if (photos.length >= 5) return `zdjęć`;
   };
 
+  const handleOffersNumber = () => {
+    if (offers === 0) return `ofert`;
+    if (offers === 1) return `ofertę`;
+    if (offers >= 2 && offers <= 4) return `oferty`;
+    if (offers >= 5) return `ofert`;
+  };
+
   const handleDelete = async () => {
     const token = await getAccessTokenSilently();
     const confirm = window.confirm(
       `Uwaga! Usuwając tę kategorię usuniesz również ${
         photos.length
-      } ${handlePhotosNumber()}`
+      } ${handlePhotosNumber()} oraz ${offers} ${handleOffersNumber()}`
     );
     if (confirm) {
       dispatch(removeAllCategoryPhotosRequest(category, token));
+      dispatch(removeAllCategoryOffersRequest(category, token));
       await dispatch(removeCategoryRequest(category, token));
       await dispatch(removeMenuRequest(menu, token));
     }
