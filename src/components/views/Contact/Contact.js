@@ -52,7 +52,27 @@ const Component = ({ className, children }) => {
   }, []);
   return (
     <div className={clsx(className, styles.root)}>
-      {contactPage.description.map((item) => (
+      <Row className={styles.contactRow}>
+        <Col className={`${styles.contactCol} col-12 col-md-6`}>
+          <h3>Skontaktuj się ze mną</h3>
+          <p>contact form</p>
+        </Col>
+        <Col className={`${styles.contactCol} col-12 col-md-6`}>
+          {contactPage.description.map((item) =>
+            item.type !== `web` ? <p>{item.text}</p> : null
+          )}
+          <Row>
+            {contactPage.description.map((item) =>
+              item.type === `web` ? (
+                <Col className="col-md-6">
+                  <p>{item.text}</p>
+                </Col>
+              ) : null
+            )}
+          </Row>
+        </Col>
+      </Row>
+      {/* {contactPage.description.map((item) => (
         <form
           action="#"
           method="put"
@@ -72,12 +92,9 @@ const Component = ({ className, children }) => {
                     defaultValue={item.heading}
                   />
                 </div>
-              ) : (
-                <h3>{item.heading}</h3>
-              )}
+              ) : null}
             </Col>
             <Col className={`col-12 col-md-6 ${edit ? `d-none` : `flex`}`}>
-              {/* eslint-disable */}
                 {item.type === `mail` ? (
                   <a href={`mailto:${item.value}`}>{item.text}</a>
                 ) : item.type === `phone` ? (
@@ -85,7 +102,6 @@ const Component = ({ className, children }) => {
                 ) : item.type === `web` ? (
                   <a target="_blank" href={`${item.value}`}>{item.text}</a>
                 ) : null}
-                {/* eslint-enable */}
             </Col>
             <Row className={`${!edit ? `d-none` : `flex`}`}>
               <Col className="col-12 col-md-6">
@@ -100,6 +116,7 @@ const Component = ({ className, children }) => {
           </Row>
         </form>
       ))}
+      */}
       {isAuthenticated ? (
         <Button
           onClick={() => setEdit(!edit)}
@@ -108,9 +125,6 @@ const Component = ({ className, children }) => {
           // auth={auth}
           className={styles.editContactButton}
         />
-      ) : null}
-      {isAuthenticated && edit ? (
-        <Button type="submit" name="Wyślij" onClick={(e) => handleSubmit(e)} />
       ) : null}
       <main>{children}</main>
     </div>
