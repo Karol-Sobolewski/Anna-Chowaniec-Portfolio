@@ -10,7 +10,9 @@ const FETCH_LOADED = createActionName(`FETCH_LOADED`);
 const FETCH_ERROR = createActionName(`FETCH_ERROR`);
 const UPDATE_OFFER = createActionName(`UPDATE_OFFER`);
 const REMOVE_OFFER = createActionName(`REMOVE_OFFER`);
-
+const REMOVE_ALL_CATEGORY_OFFERS = createActionName(
+  `REMOVE_ALL_CATEGORY_OFFERS`
+);
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
 export const fetchLoaded = (payload) => ({ payload, type: FETCH_LOADED });
@@ -23,6 +25,10 @@ export const updateOffer = (payload) => ({
 export const removeOffer = (payload) => ({
   payload,
   type: REMOVE_OFFER,
+});
+export const removeAllCategoryOffers = (payload) => ({
+  payload,
+  type: REMOVE_ALL_CATEGORY_OFFERS,
 });
 
 export const addOfferRequest = (data, token) => async (dispatch) => {
@@ -95,6 +101,26 @@ export const removeOfferRequest = (data, token) => async (dispatch) => {
   }
 };
 
+export const removeAllCategoryOffersRequest = (category, token) => async (
+  dispatch
+) => {
+  try {
+    await Axios.delete(`${API_URL}/offers/categories/${category._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        category,
+      },
+    });
+
+    await new Promise((resolve) => resolve());
+    dispatch(removeAllCategoryOffers({ id: category._id }));
+  } catch (err) {
+    dispatch(fetchError(err.message || true));
+  }
+};
+
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
     case FETCH_START: {
@@ -151,6 +177,14 @@ export default function reducer(statePart = [], action = {}) {
       return {
         ...statePart,
         data: statePart.data.filter((i) => i._id !== action.payload._id),
+      };
+    }
+    case REMOVE_ALL_CATEGORY_OFFERS: {
+      return {
+        ...statePart,
+        data: statePart.data.filter(
+          (offer) => offer.category._id !== action.payload.id
+        ),
       };
     }
     default:

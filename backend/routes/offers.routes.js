@@ -74,6 +74,18 @@ router.delete(`/offers/:id`, checkJwt, async (req, res) => {
   }
 });
 
+router.delete(`/offers/categories/:id`, checkJwt, async (req, res) => {
+  try {
+    const result = await Offer.findOne({ category: req.params.id });
+
+    if (result) {
+      await Offer.deleteMany({ category: req.params.id });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
 
 
