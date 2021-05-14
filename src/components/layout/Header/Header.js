@@ -88,7 +88,7 @@ const Component = ({ splash, RWD }) => {
 };
 Component.propTypes = {
   splash: PropTypes.bool,
-  RWD: PropTypes.bool,
+  RWD: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 export {
