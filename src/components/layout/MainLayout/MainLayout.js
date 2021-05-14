@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Header } from '../Header/Header';
@@ -7,22 +7,35 @@ import { Footer } from '../Footer/Footer';
 import styles from './MainLayout.module.scss';
 
 const Component = ({ className, children }) => {
-  // const MenuItems = useSelector((state) => state.Menu);
+  const history = useHistory();
   const location = useLocation();
-  // console.log(`params`, location.pathname);
   const [splash, setSplash] = useState(false);
   const [margin, setMargin] = useState(true);
-
+  const [RWD, setRWD] = useState(``);
+  useEffect(() => {
+    if (window.innerWidth >= 1200) {
+      setRWD(false);
+    } else {
+      setRWD(true);
+    }
+  }, []);
+  window.addEventListener(`resize`, function () {
+    if (window.innerWidth >= 1200) {
+      setRWD(false);
+    } else {
+      setRWD(true);
+    }
+  });
   function scrollFunction() {
     if (
       (document.body.scrollTop > 1 || document.documentElement.scrollTop) > 1 &&
-      location.pathname === `/`
+      history.location.pathname === `/`
     ) {
       setSplash(false);
     } else if (
       (document.body.scrollTop <= 1 || document.documentElement.scrollTop) <=
         1 &&
-      location.pathname === `/`
+      history.location.pathname === `/`
     ) {
       setSplash(true);
     } else {
@@ -30,25 +43,24 @@ const Component = ({ className, children }) => {
     }
   }
   useEffect(() => {
-    if (location.pathname === `/`) {
+    if (history.location.pathname === `/`) {
       window.onscroll = function () {
-        scrollFunction(); // Scrolls anyway
+        scrollFunction();
       };
       setSplash(true);
     } else {
       setSplash(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (location.pathname !== `/`) {
+    if (history.location.pathname !== `/`) {
       setSplash(false);
       setMargin(false);
     }
-  }, [location.pathname]);
+  }, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div className={clsx(className, styles.root)}>
-      <Header splash={splash} />
+      <Header splash={splash} RWD={RWD} />
       <div className={margin ? styles.content__splash : styles.content}>
         {children}
       </div>

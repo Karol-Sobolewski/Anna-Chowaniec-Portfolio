@@ -3,24 +3,23 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Burger } from '../../features/Burger/Burger';
+import { HamburgerSqueeze } from 'react-animated-burgers';
 
+import { useAuth0 } from '@auth0/auth0-react';
 import styles from './Header.module.scss';
-import { useAuth0 } from "@auth0/auth0-react"; //eslint-disable-line
+
 const removeDiacritics = require(`diacritics`).remove;
 
-const Component = ({ splash }) => {
-  // const MenuItems = useSelector((state) => state.Menu);
+const Component = ({ splash, RWD }) => {
   const { isAuthenticated, logout } = useAuth0();
   const MenuItems = useSelector((state) => state.menu.data);
-  const [, setActive] = useState(false);
-  const [, setActiveRWD] = useState(false);
+  const [active, setActive] = useState(false);
+  const toggleTrueFalse = () => setActive(!active);
 
   const useOutsideMenu = (ref) => {
     useEffect(() => {
       function handleClickOutside(e) {
         if (ref.current && !ref.current.contains(e.target)) {
-          setActiveRWD(false);
           setActive(false);
         }
       }
@@ -31,18 +30,22 @@ const Component = ({ splash }) => {
     }, [ref]);
   };
 
-  // console.log(`auth`, isAuthenticated);
-
   const menuRef = useRef(null);
   useOutsideMenu(menuRef);
   return (
     <header className={styles.root} ref={menuRef}>
-      {/* <HamburgerSqueeze
-        className={styles.burgerButton}
-        id="burgerButton"
-        isActive={activeRWD}
-        onClick={toggleMenuButton}
-      /> */}
+      {RWD ? (
+        <HamburgerSqueeze
+          className={
+            active || !splash
+              ? styles.burgerButton__active
+              : styles.burgerButton
+          }
+          id="burgerButton"
+          isActive={active}
+          onClick={toggleTrueFalse}
+        />
+      ) : null}
       <nav className={!splash ? styles.mainMenu : styles.mainMenu__scroll}>
         <a
           href="/"
@@ -55,34 +58,37 @@ const Component = ({ splash }) => {
             aria-label="Logo"
           />
         </a>
-        {/* <div className={activeRWD ? styles.mainMenuRWD : null}> */}
-        {MenuItems.map((item) => (
-          <NavLink
-            key={item._id}
-            to={removeDiacritics(item.shortName).toLowerCase()}
-            activeClassName="active"
-            onClick={() => setActiveRWD(false)}
-            className={splash ? styles.link : styles.link__scroll}
-          >
-            {item.name}
-          </NavLink>
-        ))}
-        {isAuthenticated ? (
-          <button
-            type="button"
-            className={splash ? styles.link : styles.link__scroll}
-            onClick={() => logout()}
-          >
-            Wyloguj
-          </button>
-        ) : null}
+        <div
+          className={RWD ? (active ? styles.links_RWD : styles.links_RWDHidden) : styles.links} //eslint-disable-line
+        >
+          {MenuItems.map((item) => (
+            <NavLink
+              key={item._id}
+              to={removeDiacritics(item.shortName).toLowerCase()}
+              activeClassName="active"
+              onClick={() => setActive(false)}
+              className={splash && !RWD ? styles.link : styles.link__scroll}
+            >
+              {item.name}
+            </NavLink>
+          ))}
+          {isAuthenticated ? (
+            <button
+              type="button"
+              className={splash && !RWD ? styles.link : styles.link__scroll}
+              onClick={() => logout()}
+            >
+              Wyloguj
+            </button>
+          ) : null}
+        </div>
       </nav>
-      <Burger button={splash} />
     </header>
   );
 };
 Component.propTypes = {
   splash: PropTypes.bool,
+  RWD: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 export {
