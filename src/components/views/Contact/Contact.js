@@ -6,13 +6,16 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { Row, Col } from 'react-bootstrap';
+import autosize from 'autosize';
 
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { faIcons, fas } from '@fortawesome/free-solid-svg-icons';
+import { IconsGenerator } from '../../common/IconsGenerator/IconsGenerator';
 import { Button } from '../../common/Button/Button';
 
 import styles from './Contact.module.scss';
 
 import { editDescriptionRequest } from '../../../redux/descriptionRedux';
-
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({ className, children }) => {
@@ -31,13 +34,7 @@ const Component = ({ className, children }) => {
     const { target } = e;
     const { value } = target;
     const { name } = target;
-    // setDescription({ ...description, [name]: value });
-    // const descriptionIndex =
     item[name] = value;
-    // const filtered = menu.filter((item) => item.component === `GalleryPage`);
-    // console.log(matchItem[0]);
-    // console.log(item);
-    // console.log(description);
   };
 
   const handleSubmit = async (e) => {
@@ -47,30 +44,98 @@ const Component = ({ className, children }) => {
     setEdit(false);
   };
 
+  const handleLink = (link, type) => {
+    if (type === `web`) {
+      if (link.includes(`https://`)) {
+        return link;
+      }
+      if (!link.includes(`https://`)) {
+        return `https://${link}`;
+      }
+    }
+    if (type === `phone`) return `tel:${link}`;
+    if (type === `mail`) return `mailto:${link}`;
+  };
+
   useEffect(() => {
-    // console.log(auth);
-  }, []);
+    autosize(document.querySelectorAll(`textarea`));
+  });
   return (
     <div className={clsx(className, styles.root)}>
       <Row className={styles.contactRow}>
         <Col className={`${styles.contactCol} col-12 col-md-6`}>
-          <h3>Skontaktuj się ze mną</h3>
+          <h3>Napisz do mnie</h3>
           <p>contact form</p>
         </Col>
         <Col className={`${styles.contactCol} col-12 col-md-6`}>
           {contactPage.description.map((item) =>
-            item.type !== `web` ? <p>{item.text}</p> : null
-          )}
-          <Row>
-            {contactPage.description.map((item) =>
-              item.type === `web` ? (
-                <Col className="col-md-6">
+            // eslint-disable-next-line no-nested-ternary
+            item.type !== `web` ? (
+              !edit ? (
+                <a
+                  href={handleLink(item.value, item.type)}
+                  className={styles.contactLink}
+                >
+                  <IconsGenerator
+                    iconName={item.icon}
+                    iconsList={fas}
+                    alternativeIcon={faIcons}
+                    size="2"
+                  />
                   <p>{item.text}</p>
-                </Col>
+                </a>
+              ) : (
+                <textarea
+                  name="text"
+                  type="text"
+                  defaultValue={item.text}
+                  onChange={(e) => handleChange(e, item)}
+                />
+              )
+            ) : null
+          )}
+          <Row className={styles.socialIconsRow}>
+            {contactPage.description.map((item) =>
+              // eslint-disable-next-line no-nested-ternary
+              item.type === `web` ? (
+                !edit ? (
+                  <Col className="col">
+                    <a href={handleLink(item.value, item.type)}>
+                      <IconsGenerator
+                        iconName={item.icon}
+                        iconsList={fab}
+                        alternativeIcon={faIcons}
+                        size="2"
+                      />
+                    </a>
+                  </Col>
+                ) : (
+                  <textarea
+                    name="value"
+                    type="text"
+                    defaultValue={item.value}
+                    onChange={(e) => handleChange(e, item)}
+                  />
+                )
               ) : null
             )}
+            {isAuthenticated && edit ? (
+              <Button
+                onClick={(e) => handleSubmit(e)}
+                name="Wyślij"
+                className={styles.submitContactButton}
+              />
+            ) : null}
           </Row>
         </Col>
+        {isAuthenticated ? (
+          <Button
+            onClick={() => setEdit(!edit)}
+            edit={edit}
+            icon="pencil"
+            className={styles.editContactButton}
+          />
+        ) : null}
       </Row>
       {/* {contactPage.description.map((item) => (
         <form
@@ -117,15 +182,7 @@ const Component = ({ className, children }) => {
         </form>
       ))}
       */}
-      {isAuthenticated ? (
-        <Button
-          onClick={() => setEdit(!edit)}
-          edit={edit}
-          icon="pencil"
-          // auth={auth}
-          className={styles.editContactButton}
-        />
-      ) : null}
+
       <main>{children}</main>
     </div>
   );
