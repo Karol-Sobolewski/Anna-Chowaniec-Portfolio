@@ -77,7 +77,7 @@
   color: $link-color;
   display: flex;
   font-family: $font-title;
-  font-size: 2em;
+  font-size: 3rem;
   height: 2rem;
   justify-content: center;
   position: absolute;
@@ -101,6 +101,10 @@
       width: 80%;
     }
   }
+  .hideModalButton {
+    right: 1rem;
+    top: 1rem;
+  }
 }
 
 /* ExtraLarge Devices, Desktops  */
@@ -110,6 +114,10 @@
       width: 60%;
     }
   }
+  .hideModalButton {
+    right: 0.5rem;
+    top: 0.5rem;
+  }
 }
 /* Large Devices, Laptops, Large Tablets iPad Pro */
 @media only screen and (min-width: 1024px) and (max-width: 1199px) {
@@ -117,6 +125,10 @@
     .offerRow {
       width: 80%;
     }
+  }
+  .hideModalButton {
+    right: 0.25rem;
+    top: 0.25rem;
   }
 }
 
