@@ -13,28 +13,21 @@ import {
 } from '../../../redux/photoRedux';
 import styles from './Photo.module.scss';
 import { Button } from '../Button/Button';
-
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { Popup } from '../Popup/Popup';
 
 const Component = ({ photo, photos, className }) => {
   const [currentImage, setCurrentImage] = useState(``);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const [edit, setEdit] = useState(false);
   const [image, setImage] = useState(photo);
-
-  // console.log(`edit`, photo);
+  const [popup, setPopup] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const [remove, setRemove] = useState(false);
 
   const dispatch = useDispatch();
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  // const allPhotos = useSelector((state) => state.photos.data);
-  // const photos = allPhotos.filter(
-  //   (ph) =>
-  //     removeDiacritics(ph.category.name).toLowerCase() ===
-  //     removeDiacritics(galleryName).toLowerCase()
-  // );
 
   const openLightbox = useCallback(() => {
-    // console.log(2);
     const selected = photos.findIndex((i) => i._id === photo._id);
     setCurrentImage(selected);
     setViewerIsOpen(true);
@@ -56,31 +49,31 @@ const Component = ({ photo, photos, className }) => {
     e.preventDefault();
     const token = await getAccessTokenSilently();
     await dispatch(editPhotoRequest(image, token));
-    // console.log(`edit`);
-    // dispatch(fetchSelectedPhotoRequest(image, token));
     dispatch(fetchPhotos());
   };
 
+  const handleDeleteClick = async (item) => {
+    setPopup(true);
+    setRemove(item);
+  };
+
   const handleDelete = async (item) => {
-    const confirm = window.confirm(`Chcesz usunąć zdjęcie?`);
-    if (confirm) {
-      const token = await getAccessTokenSilently();
-      await dispatch(removePhotoRequest(item, token));
-      await dispatch(fetchPhotos());
-      window.location.reload(false);
-    }
+    const token = await getAccessTokenSilently();
+    await dispatch(removePhotoRequest(item, token));
+    await dispatch(fetchPhotos());
+    window.location.reload(false);
   };
 
   const handleClick = () => {
-    // onClick(e, { photo, index });
     openLightbox();
   };
-  // console.log(photos);
 
   useEffect(() => {
-    // dispatch(fetchPhotos());
-    // console.log(`photo`);
-  }, [photo]);
+    if (confirm) {
+      handleDelete(remove);
+    }
+  }, [confirm]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div className={clsx(className, styles.root)}>
       <div className={styles.photoBox}>
@@ -90,14 +83,12 @@ const Component = ({ photo, photos, className }) => {
             onClick={() => setEdit(!edit)}
             edit={edit}
             icon="pencil"
-            // auth={auth}
           />
         ) : null}
         {isAuthenticated ? (
           <Button
-            onClick={() => handleDelete(photo)}
+            onClick={() => handleDeleteClick(photo)}
             icon="delete"
-            // auth={auth}
             className={styles.deletePhotoButton}
           />
         ) : null}
@@ -106,7 +97,6 @@ const Component = ({ photo, photos, className }) => {
           <form
             action="#"
             method="put"
-            // onSubmit={(e) => handleSubmit(e)}
             onChange={(e) => handleChange(e)}
             className={styles.editPhotoForm}
           >
@@ -138,6 +128,9 @@ const Component = ({ photo, photos, className }) => {
           </Modal>
         ) : null}
       </ModalGateway>
+      <Popup visible={popup} setVisible={setPopup} verifyConfirm={setConfirm}>
+        <p>Chcesz usunąć to zdjęcie?</p>
+      </Popup>
     </div>
   );
 };
