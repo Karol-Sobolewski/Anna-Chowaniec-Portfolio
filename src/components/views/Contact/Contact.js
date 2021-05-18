@@ -78,7 +78,7 @@ const Component = ({ className, children }) => {
                     iconName={item.icon}
                     iconsList={fas}
                     alternativeIcon={faIcons}
-                    size="2"
+                    size={2}
                   />
                   <p>{item.value}</p>
                 </a>
@@ -107,7 +107,7 @@ const Component = ({ className, children }) => {
                         iconName={item.icon}
                         iconsList={fab}
                         alternativeIcon={faIcons}
-                        size="2"
+                        size={2}
                       />
                     </a>
                   </Col>
