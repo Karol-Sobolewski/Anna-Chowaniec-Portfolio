@@ -71,6 +71,7 @@ const Component = ({ className, children }) => {
             item.type !== `web` ? (
               !edit ? (
                 <a
+                  key={item.heading}
                   href={handleLink(item.value, item.type)}
                   className={styles.contactLink}
                 >
@@ -84,6 +85,7 @@ const Component = ({ className, children }) => {
                 </a>
               ) : (
                 <textarea
+                  key={item.heading}
                   name="value"
                   type="text"
                   defaultValue={item.value}
@@ -101,7 +103,7 @@ const Component = ({ className, children }) => {
               // eslint-disable-next-line no-nested-ternary
               item.type === `web` ? (
                 !edit ? (
-                  <Col className="col">
+                  <Col key={item.heading} className="col">
                     <a href={handleLink(item.value, item.type)}>
                       <IconsGenerator
                         iconName={item.icon}
@@ -113,6 +115,7 @@ const Component = ({ className, children }) => {
                   </Col>
                 ) : (
                   <textarea
+                    key={item.heading}
                     name="value"
                     type="text"
                     defaultValue={item.value}
