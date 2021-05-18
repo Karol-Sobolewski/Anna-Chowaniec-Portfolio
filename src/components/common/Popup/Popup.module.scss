@@ -15,14 +15,14 @@
   z-index: 9999999;
   .popupContent {
     align-items: center;
-    background-color: white;
+    background-color: #edf7f6;
     border-radius: $radius;
     display: flex;
     flex-direction: column;
-    height: 50%;
+    height: 30%;
     justify-content: center;
     position: relative;
-    width: 75%;
+    width: 30%;
     .actionButtons {
       align-items: center;
       display: flex;
