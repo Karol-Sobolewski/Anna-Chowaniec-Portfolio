@@ -80,13 +80,13 @@ const Component = ({ className, children }) => {
                     alternativeIcon={faIcons}
                     size="2"
                   />
-                  <p>{item.text}</p>
+                  <p>{item.value}</p>
                 </a>
               ) : (
                 <textarea
-                  name="text"
+                  name="value"
                   type="text"
-                  defaultValue={item.text}
+                  defaultValue={item.value}
                   onChange={(e) => handleChange(e, item)}
                 />
               )
