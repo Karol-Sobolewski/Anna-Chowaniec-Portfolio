@@ -13,6 +13,7 @@ import arrayMove from 'array-move';
 
 import { Button } from '../Button/Button';
 import { Loader } from '../Loader/Loader';
+import { Popup } from '../Popup/Popup';
 import styles from './Offer.module.scss';
 import {
   fetchOffers,
@@ -37,6 +38,10 @@ const Component = ({ className, offer }) => {
   });
   const [descriptionItems, setDescriptionItems] = useState(offer.descriptions);
   const [newOffer, setNewOffer] = useState({ _id: uniqid(), text: `` });
+
+  const [popup, setPopup] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+
   autosize(document.querySelectorAll(`textarea`));
 
   const mapDescription = () => {
@@ -151,8 +156,8 @@ const Component = ({ className, offer }) => {
       if (!loadingStatus.active && !loadingStatus.error) {
         dispatch(fetchOffers());
       } else {
-        const confirm = window.confirm(`Błąd! odświeżyć stronę?`);
-        if (confirm) {
+        const windowConfirm = window.confirm(`Błąd! odświeżyć stronę?`);
+        if (windowConfirm) {
           window.location.reload();
         }
       }
@@ -161,12 +166,16 @@ const Component = ({ className, offer }) => {
 
   const handleDelete = async () => {
     const token = await getAccessTokenSilently();
-    const confirm = window.confirm(`Chcesz usunąć ofertę?`);
     if (confirm) {
       dispatch(removeOfferRequest(editedOffer, token));
     }
   };
 
+  useEffect(() => {
+    if (confirm) {
+      handleDelete();
+    }
+  }, [confirm]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div className={clsx(className, styles.root)}>
       {isAuthenticated ? (
@@ -179,7 +188,7 @@ const Component = ({ className, offer }) => {
       ) : null}
       {isAuthenticated ? (
         <Button
-          onClick={() => handleDelete()}
+          onClick={() => setPopup(true)}
           icon="delete"
           className={styles.deleteOfferButton}
         />
@@ -304,6 +313,9 @@ const Component = ({ className, offer }) => {
           )
         /* eslint-enable */
       }
+      <Popup visible={popup} setVisible={setPopup} verifyConfirm={setConfirm}>
+        <p>Chcesz usunąć tę ofertę?</p>
+      </Popup>
     </div>
   );
 };
