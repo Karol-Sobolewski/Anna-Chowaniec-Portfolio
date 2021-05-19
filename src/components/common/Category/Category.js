@@ -177,7 +177,7 @@ const Component = ({ className, offer }) => {
         <Button
           onClick={() => handleDelete()}
           icon="delete"
-          className={styles.deletePhotoButton}
+          className={styles.deleteCategoryButton}
         />
       ) : null}
       {edit ? (
