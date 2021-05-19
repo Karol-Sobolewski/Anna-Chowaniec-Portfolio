@@ -1,33 +1,30 @@
 @import "../../../styles/settings.scss";
 
 .root {
-  width: 100%;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  // height: 15vh;
-  // bottom: 0;
   background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+  display: flex;
   font-family: $font-title;
   font-weight: 400;
+  justify-content: center;
+  width: 100%;
   a {
-    // text-shadow: $link-shadow;
     align-items: center;
     color: $link-color;
     display: flex;
+    font-size: 1.5em;
     justify-content: center;
     text-decoration: none;
-    font-size: 1.5em;
-  }
-  p {
-    margin: 0;
-    padding: 0;
+    svg {
+      font-size: 1.5rem;
+    }
+    p {
+      margin: 0 0 0 0.25rem;
+      padding: 0;
+    }
   }
   a:hover,
   p:hover {
     color: $link-color-active;
-  }
-  .footerIcon {
-    font-size: 1.5em;
   }
 }
