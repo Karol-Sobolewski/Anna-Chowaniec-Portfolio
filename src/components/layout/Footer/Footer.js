@@ -62,7 +62,10 @@ const Component = ({ className, children }) => {
           >
             {footerPage.description.map((item) =>
               item.type === `web` ? (
-                <a href={handleLink(item.value, item.type)}>
+                <a
+                  key={footerPage.description.indexOf(item)}
+                  href={handleLink(item.value, item.type)}
+                >
                   <IconsGenerator
                     iconName={item.icon}
                     iconsList={fab}
