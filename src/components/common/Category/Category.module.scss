@@ -7,7 +7,7 @@
   position: relative;
 
   .editCategoryButton,
-  .deletePhotoButton {
+  .deleteCategoryButton {
     position: absolute;
     top: -30px;
     z-index: 1;
@@ -15,7 +15,7 @@
   .editCategoryButton {
     left: 0;
   }
-  .deletePhotoButton {
+  .deleteCategoryButton {
     right: 0;
   }
   .editOfferForm {

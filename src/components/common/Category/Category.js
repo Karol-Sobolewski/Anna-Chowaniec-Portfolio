@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { useAuth0 } from '@auth0/auth0-react';
 import { OfferModal } from '../../features/OfferModal/OfferModal';
 import { Button } from '../Button/Button';
+import { Popup } from '../Popup/Popup';
 import { PhotoSelector } from '../PhotoSelector/PhotoSelector';
 
 import styles from './Category.module.scss';
@@ -30,6 +31,9 @@ const Component = ({ className, offer }) => {
   const [edit, setEdit] = useState(false);
   const [offers, setOffers] = useState(false);
   const [modalData, setModalData] = useState(null);
+
+  const [popup, setPopup] = useState(false);
+  const [confirm, setConfirm] = useState(false);
 
   const photos = allPhotos.filter((item) =>
     item.category && item.category.name !== undefined
@@ -150,11 +154,6 @@ const Component = ({ className, offer }) => {
 
   const handleDelete = async () => {
     const token = await getAccessTokenSilently();
-    const confirm = window.confirm(
-      `Uwaga! Usuwając tę kategorię usuniesz również ${
-        photos.length
-      } ${handlePhotosNumber()} oraz ${offers} ${handleOffersNumber()}`
-    );
     if (confirm) {
       dispatch(removeAllCategoryPhotosRequest(category, token));
       dispatch(removeAllCategoryOffersRequest(category, token));
@@ -162,6 +161,12 @@ const Component = ({ className, offer }) => {
       await dispatch(removeMenuRequest(menu, token));
     }
   };
+
+  useEffect(() => {
+    if (confirm) {
+      handleDelete();
+    }
+  }, [confirm]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={clsx(className, styles.root)}>
@@ -175,9 +180,9 @@ const Component = ({ className, offer }) => {
       ) : null}
       {isAuthenticated ? (
         <Button
-          onClick={() => handleDelete()}
+          onClick={() => setPopup(true)}
           icon="delete"
-          className={styles.deletePhotoButton}
+          className={styles.deleteCategoryButton}
         />
       ) : null}
       {edit ? (
@@ -218,6 +223,12 @@ const Component = ({ className, offer }) => {
           </div>
         </button>
       )}
+      <Popup visible={popup} setVisible={setPopup} verifyConfirm={setConfirm}>
+        <p>
+          Uwaga! Usuwając tę kategorię usuniesz również {photos.length} {` `}
+          {handlePhotosNumber()} oraz {offers} {handleOffersNumber()}
+        </p>
+      </Popup>
     </div>
   );
 };
