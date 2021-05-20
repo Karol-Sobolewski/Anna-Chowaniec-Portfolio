@@ -71,7 +71,7 @@ const Component = ({ className, children }) => {
             item.type !== `web` ? (
               !edit ? (
                 <a
-                  key={item.heading}
+                  key={contactPage.description.indexOf(item)}
                   href={handleLink(item.value, item.type)}
                   className={styles.contactLink}
                 >
@@ -85,7 +85,7 @@ const Component = ({ className, children }) => {
                 </a>
               ) : (
                 <textarea
-                  key={item.heading}
+                  key={contactPage.description.indexOf(item)}
                   name="value"
                   type="text"
                   defaultValue={item.value}
@@ -115,7 +115,7 @@ const Component = ({ className, children }) => {
                   </Col>
                 ) : (
                   <textarea
-                    key={item.heading}
+                    key={contactPage.description.indexOf(item)}
                     name="value"
                     type="text"
                     defaultValue={item.value}

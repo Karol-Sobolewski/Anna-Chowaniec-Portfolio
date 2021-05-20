@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faPhoneAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-
 import { Container, Row, Col } from 'react-bootstrap';
+
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { faIcons, fas } from '@fortawesome/free-solid-svg-icons';
+import { IconsGenerator } from '../../common/IconsGenerator/IconsGenerator';
 import styles from './Footer.module.scss';
 
 // import { connect } from 'react-redux';
@@ -18,65 +18,65 @@ const Component = ({ className, children }) => {
 
   const footerPage = allPages.filter((item) => item.page === `contact`)[0];
 
-  const footerPageLinks = footerPage.description.filter(
-    (item) => item.type === `web`
-  );
+  const handleLink = (link, type) => {
+    if (type === `web`) {
+      if (link.includes(`https://`)) {
+        return link;
+      }
+      if (!link.includes(`https://`)) {
+        return `https://${link}`;
+      }
+    }
+    if (type === `phone`) return `tel:${link}`;
+    if (type === `mail`) return `mailto:${link}`;
+  };
 
   return (
     <footer className={clsx(className, styles.root)}>
       <Container>
         <Row className="d-flex align-items-center justify-content-center">
-          {footerPage.description.slice(0, 2).map((item) => (
-            <Col
-              key={footerPage.description.indexOf(item)}
-              md={4}
-              className="col-12 col-md-6 col-lg-4 d-flex align-items-center justify-content-center p-3"
-            >
-              {/* eslint-disable */}
-              {item.type === `mail` ? (
-                <a href={`mailto:${item.value}`}>
-                  <FontAwesomeIcon
-                    icon={faEnvelope}
-                    className={`${styles.footerIcon} pr-1`}
+          {footerPage.description.map((item) =>
+            item.type !== `web` ? (
+              <Col
+                key={footerPage.description.indexOf(item)}
+                md={4}
+                className="col-12 col-md-6 col-lg-4 d-flex align-items-center justify-content-center p-3"
+              >
+                <a
+                  href={handleLink(item.value, item.type)}
+                  className={styles.contactLink}
+                >
+                  <IconsGenerator
+                    iconName={item.icon}
+                    iconsList={fas}
+                    alternativeIcon={faIcons}
+                    size={2}
                   />
-                  {item.text}
+                  <p>{item.value}</p>
                 </a>
-              ) : item.type === `phone` ? (
-                <a href={`tel:${item.value}`}>
-                  <FontAwesomeIcon
-                    icon={faPhoneAlt}
-                    className={`${styles.footerIcon} pr-1`}
-                  />
-                  <p>{item.text}</p>
-                </a>
-              ) : null}
-              {/* eslint-enable */}
-            </Col>
-          ))}
+              </Col>
+            ) : null
+          )}
           <Col
             md={4}
             className="col-12 col-md-6 col-lg-4 d-flex align-items-center justify-content-center p-3"
           >
-            {footerPageLinks.map((item) => (
-              <a
-                key={footerPageLinks.indexOf(item)}
-                href={item.value}
-                className="pr-2 d-flex align-items-center justify-content-center"
-              >
-                {/* eslint-disable */}
-                <FontAwesomeIcon
-                  icon={
-                    item.heading === `Instagram`
-                      ? faInstagram
-                      : item.heading === `Facebook`
-                      ? faFacebook
-                      : null
-                    }
-                    className={styles.footerIcon}
-                    />
-                {/* eslint-enable */}
-              </a>
-            ))}
+            {footerPage.description.map((item) =>
+              item.type === `web` ? (
+                <a
+                  key={footerPage.description.indexOf(item)}
+                  href={handleLink(item.value, item.type)}
+                >
+                  <IconsGenerator
+                    iconName={item.icon}
+                    iconsList={fab}
+                    alternativeIcon={faIcons}
+                    size={2}
+                    className="mr-2"
+                  />
+                </a>
+              ) : null
+            )}
           </Col>
         </Row>
         <main>{children}</main>
