@@ -33,7 +33,6 @@ router.get(`/categories`, async (req, res) => {
 
 router.post(`/categories`, checkJwt, async (req, res) => {
   const image = JSON.parse(req.body.image);
-  console.log(`req`, req.body);
   const newCategory = new Category({
     _id: req.body._id,
     name: req.body.name,
