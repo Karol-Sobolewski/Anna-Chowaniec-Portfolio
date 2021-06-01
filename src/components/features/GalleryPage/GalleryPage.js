@@ -17,35 +17,21 @@ import { editPhotoRequest } from '../../../redux/photoRedux';
 
 import styles from './GalleryPage.module.scss';
 import { ImageUploadForm } from '../ImageUploadForm/ImageUploadForm';
-
-const SortablePhoto = SortableElement(
-  (item) => <Photo {...item} /> //eslint-disable-line
-);
+/* eslint-disable react/jsx-props-no-spreading */
+const SortablePhoto = SortableElement((item) => <Photo {...item} />);
 
 const SortableGallery = SortableContainer(({ items }) => (
   <Gallery
     photos={items}
-    renderImage={(props) => (
-          <SortablePhoto {...props} photos={items}/> //eslint-disable-line
-    )}
+    renderImage={(props) => <SortablePhoto {...props} photos={items} />}
   />
 ));
 
 const Component = ({ className, photos, category }) => {
-  // const allPhotos = useSelector((state) => state.photos.data);
-
-  // const photos = allPhotos.filter((photo) =>
-  //   photo.category.name
-  //     ? removeDiacritics(photo.category.name).toLowerCase() ===
-  //       removeDiacritics(galleryName).toLowerCase()
-  //     : null
-  // );
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const { isAuthenticated } = useAuth0();
-
   const [items, setItems] = useState(photos);
-  // const [category, setCategory] = useState(photos);
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -66,14 +52,8 @@ const Component = ({ className, photos, category }) => {
         updatePhotos(editedItem);
       });
     }
-    // console.log();
-    // setCategory(items[0].category);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
-
-  useEffect(() => {
-    // setItems(photos);
-  }, [photos]);
 
   const useOutsideAlerter = (ref) => {
     useEffect(() => {
@@ -95,21 +75,13 @@ const Component = ({ className, photos, category }) => {
 
   const imageRenderer = useCallback(
     ({ index, key, photo }) => (
-      <Photo
-        key={key}
-        index={index}
-        photo={photo}
-        photos={photos}
-        //! galleryName={galleryName}
-      />
+      <Photo key={key} index={index} photo={photo} photos={photos} />
     ),
     [photos]
   );
 
   const onSortEnd = async ({ oldIndex, newIndex }) => {
     setItems(arrayMove(items, oldIndex, newIndex));
-
-    // await dispatch(editPhotoRequest(image token));
   };
 
   return (
@@ -119,14 +91,10 @@ const Component = ({ className, photos, category }) => {
           onClick={() => setActive(!active)}
           edit={active}
           icon="plus"
-          // auth={auth}
           className={styles.addPhotoButton}
         />
       ) : null}
-      <div
-        className={active ? styles.addPhoto : styles.addPhoto__hidden}
-        ref={wrapperRef}
-      >
+      <div className={active ? styles.addPhoto : styles.addPhoto__hidden}>
         {isAuthenticated && active ? (
           <ImageUploadForm category={category} />
         ) : null}
