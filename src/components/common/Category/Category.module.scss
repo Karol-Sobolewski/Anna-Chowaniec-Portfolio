@@ -20,36 +20,48 @@
   }
   .editOfferForm {
     align-items: center;
-    background-color: white;
+    background-color: $category-bg;
+    border-radius: $radius;
+    box-shadow: $box-shadow-small;
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
     width: 100%;
+    form {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      input {
+        align-self: start;
+        margin-left: 10%;
+        width: 80%;
+      }
+    }
     img {
+      border-radius: 5px;
       height: 100%;
-      margin: 1vh 0 2vh 0;
+      margin: 1vh 0 1.5vh 0;
       object-fit: cover;
       width: 90%;
-      border-radius: 5px;
     }
     .submitButton {
-      position: absolute;
       bottom: -10%;
       left: 50%;
+      position: absolute;
       transform: translateX(-50%);
     }
   }
   .offerBox {
     align-items: center;
-    background-color: white;
+    background-color: $category-bg;
+    border-radius: $radius;
     border: none;
     box-shadow: $box-shadow-small;
     display: flex;
     justify-content: center;
     width: 100%;
-    border-radius: 5px;
-
     &:hover .offerDescription {
       color: $link-color-active;
     }
@@ -57,14 +69,14 @@
     .offerDescription {
       height: 50%;
       margin: 20px;
-      text-align: left;
       position: relative;
+      text-align: left;
       img {
+        border-radius: 5px;
         height: 100%;
         margin-top: 1vh;
         object-fit: cover;
         width: 100%;
-        border-radius: 5px;
       }
     }
   }
