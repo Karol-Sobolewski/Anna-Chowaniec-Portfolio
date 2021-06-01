@@ -32,13 +32,19 @@ const Component = ({ className }) => {
     description: ``,
     component: `GalleryPage`,
     shortName: ``,
+<<<<<<< HEAD
     order: categories + 1,
     image: {
+=======
+    order: filtered.length + 1,
+    photo: {
+>>>>>>> 0c000f2 (Add image optimizer while creating category && Fix styling for addCategoryForm & Add page reaload after creation of new category)
       alt: ``,
       src: ``,
     },
   });
 
+<<<<<<< HEAD
   const [photo, setPhoto] = useState({
     file: null,
     title: ``,
@@ -50,6 +56,23 @@ const Component = ({ className }) => {
     order: 0,
     src: ``,
   });
+=======
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        1024,
+        1024,
+        `WEBP`,
+        90,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        `file`
+      );
+    });
+>>>>>>> 0c000f2 (Add image optimizer while creating category && Fix styling for addCategoryForm & Add page reaload after creation of new category)
 
   const handleChange = (e) => {
     const { target } = e;
@@ -103,12 +126,26 @@ const Component = ({ className }) => {
         `file`
       );
     });
+<<<<<<< HEAD
 
   const handleImage = async (file) => {
     if (file[0]) {
       const image = await resizeFile(file[0]);
       setPhoto({ ...photo, file: image });
     } else setPhoto({ ...photo, file: null });
+=======
+  }, [category.description]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleImage = async (files) => {
+    if (files[0]) {
+      const image = await resizeFile(files[0]);
+      setCategory({
+        ...category,
+        photo: { ...category.photo, file: image },
+      });
+    } else
+      setCategory({ ...category, photo: { ...category.photo, file: null } });
+>>>>>>> 0c000f2 (Add image optimizer while creating category && Fix styling for addCategoryForm & Add page reaload after creation of new category)
   };
 
   const handleSubmit = async (e) => {
