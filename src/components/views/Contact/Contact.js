@@ -13,6 +13,7 @@ import { faIcons, fas } from '@fortawesome/free-solid-svg-icons';
 import styles from './Contact.module.scss';
 
 import { Button } from '../../common/Button/Button';
+import { ContactForm } from '../../features/ContactForm/ContactForm';
 import { IconsGenerator } from '../../common/IconsGenerator/IconsGenerator';
 import { editDescriptionRequest } from '../../../redux/descriptionRedux';
 
@@ -63,7 +64,7 @@ const Component = ({ className, children }) => {
       <Row className={styles.contactRow}>
         <Col className={`${styles.contactCol} col-12 col-md-6`}>
           <h3>Napisz do mnie</h3>
-          <p>contact form</p>
+          <ContactForm />
         </Col>
         <Col className={`${styles.contactCol} col-12 col-md-6`}>
           {contactPage.description.map((item) =>

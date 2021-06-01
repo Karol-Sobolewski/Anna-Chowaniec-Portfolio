@@ -1,0 +1,102 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  .formCell {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    .formInput {
+      margin: 0.75em 0 1.5em 0;
+      transition: $transition;
+    }
+    .formInput__error {
+      @extend .formInput;
+      border-left: 1em solid $contact-error;
+      border: 2px solid $contact-error;
+    }
+  }
+  .submitForm {
+    background: $button-main-bg;
+    border: none;
+    color: $button-main-text;
+    cursor: pointer;
+    margin: 4px 2px;
+    padding: 16px 32px;
+    text-decoration: none;
+    transition: $transition;
+    &:hover {
+    }
+  }
+  textarea {
+    height: 6em;
+    max-height: 6em;
+    overflow: auto;
+    padding-top: 0.5em;
+    width: 100%;
+  }
+  .errorMessage {
+    color: $contact-error-text;
+    position: absolute;
+    bottom: 0;
+  }
+}
+.submitFeedback {
+  background-color: $colorSuccess;
+  color: $white;
+}
+
+/* ExtraExtraLarge Devices, UltraWide Desktops  */
+@media (min-width: 1921px) {
+  .root {
+  }
+}
+
+/* ExtraLarge Devices, Desktops  */
+@media (min-width: 1200px) and (max-width: 1920px) {
+  .root {
+  }
+}
+/* Large Devices, Laptops, Large Tablets iPad Pro */
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+  .root {
+  }
+}
+
+/* Medium Devices, Tablets iPad */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .root {
+  }
+}
+
+/* Small Devices, Small tablets Large Phones */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .root {
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 0px) and (max-width: 479px) {
+  .root {
+  }
+}
+
+/* Media pointer*/
+@media (hover: hover) and (pointer: fine) {
+  .root .submitForm:hover {
+    background: $button-main-bg-hover;
+    box-shadow: $box-shadow-small;
+    transform: scale(1.01);
+  }
+}
+
+/* Media touchable */
+@media (pointer: coarse) {
+  .root .submitForm:active {
+    background: $button-main-bg-hover;
+    box-shadow: $box-shadow-small;
+    transform: scale(1.01);
+    transition: 0s;
+  }
+}
