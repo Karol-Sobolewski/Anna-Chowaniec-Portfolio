@@ -102,7 +102,7 @@ const Component = ({ className, offer }) => {
           className={styles.hideModalButton}
           onClick={closeModal}
         >
-          <p>x</p>
+          <span>x</span>
         </button>
       </ReactModal>
     );

@@ -7,8 +7,12 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: $font-title;
   color: #3d4447;
-  // text-shadow: 2px 2px #95a5ad;
+  font-family: $font-title;
   margin: 0;
+  font-weight: 100;
+}
+
+p {
+  font-family: $font-text;
 }

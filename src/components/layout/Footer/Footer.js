@@ -52,7 +52,7 @@ const Component = ({ className, children }) => {
                     alternativeIcon={faIcons}
                     size={2}
                   />
-                  <p>{item.value}</p>
+                  <span>{item.value}</span>
                 </a>
               </Col>
             ) : null
