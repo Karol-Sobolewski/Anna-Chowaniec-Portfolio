@@ -18,6 +18,27 @@ code {
 }
 
 @font-face {
+  font-family: "PetitFormalScript";
+  src: local("PetitFormalScript"),
+    url(./fonts/PetitFormalScript.ttf) format("truetype");
+}
+
+@font-face {
   font-family: "Lato";
   src: local("Lato"), url(./fonts/Lato.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Quicksand";
+  src: local("Quicksand"), url(./fonts/Quicksand.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "KaushanScript";
+  src: local("KaushanScript"), url(./fonts/KaushanScript.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Olympic";
+  src: local("Olympic"), url(./fonts/Olympic.ttf) format("truetype");
 }
