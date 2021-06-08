@@ -3,6 +3,7 @@
 .root {
   align-items: center;
   background: white;
+  border-radius: $radius;
   box-shadow: $box-shadow-small;
   display: flex;
   flex-direction: column;
