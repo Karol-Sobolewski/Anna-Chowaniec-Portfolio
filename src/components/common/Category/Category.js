@@ -155,10 +155,10 @@ const Component = ({ className, offer }) => {
   const handleDelete = async () => {
     const token = await getAccessTokenSilently();
     if (confirm) {
+      dispatch(removeMenuRequest(menu, token));
+      dispatch(removeCategoryRequest(category, token));
       dispatch(removeAllCategoryPhotosRequest(category, token));
       dispatch(removeAllCategoryOffersRequest(category, token));
-      await dispatch(removeCategoryRequest(category, token));
-      await dispatch(removeMenuRequest(menu, token));
     }
   };
 

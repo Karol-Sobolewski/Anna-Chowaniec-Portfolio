@@ -119,6 +119,9 @@ export const removePhotoRequest = (photo, token) => async (dispatch) => {
 export const removeAllCategoryPhotosRequest = (category, token) => async (
   dispatch
 ) => {
+  console.log(`cat`, category);
+  console.log(`dispatch`, dispatch);
+
   try {
     await Axios.delete(`${API_URL}/photos/categories/${category._id}`, {
       headers: {
@@ -219,7 +222,7 @@ export default function reducer(statePart = [], action = {}) {
       return {
         ...statePart,
         data: statePart.data.filter(
-          (photo) => photo.category._id !== action.payload.id
+          (photo) => photo.category._id !== action.payload._id
         ),
       };
     }

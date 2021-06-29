@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
@@ -11,7 +11,9 @@ import Resizer from 'react-image-file-resizer';
 import { Button } from '../../common/Button/Button';
 import styles from './ImageUploadForm.module.scss';
 import { addPhotoRequest } from '../../../redux/photoRedux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+
+const uniqid = require(`uniqid`);
+
 const Component = ({ className, children, category }) => {
   const { getAccessTokenSilently } = useAuth0();
 
@@ -58,6 +60,16 @@ const Component = ({ className, children, category }) => {
     setPhoto({ ...photo, [name]: value });
   };
 
+  useEffect(() => {
+    const photoTitle = `${category.name}_${uniqid()}`;
+
+    setPhoto({
+      ...photo,
+      src: `images/photos/${category.name}/${photoTitle}.WEBP`,
+    });
+    console.log(`photo src`, photo.src);
+  }, [photo.title]); //eslint-disable-line
+
   const handleSubmit = async (e) => {
     const token = await getAccessTokenSilently();
 
@@ -69,6 +81,7 @@ const Component = ({ className, children, category }) => {
       `categoryName`,
       `format`,
       `order`,
+      `src`,
     ]) {
       formData.append(key, photo[key]);
     }
