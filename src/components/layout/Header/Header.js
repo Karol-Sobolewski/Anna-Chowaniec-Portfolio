@@ -91,8 +91,4 @@ Component.propTypes = {
   RWD: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
-export {
-  Component as Header,
-  // Container as Footer,
-  Component as HeaderComponent,
-};
+export { Component as Header, Component as HeaderComponent };

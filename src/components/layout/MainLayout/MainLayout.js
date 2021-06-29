@@ -74,8 +74,4 @@ Component.propTypes = {
   className: PropTypes.string,
 };
 
-export {
-  Component as MainLayout,
-  // Container as MainLayout,
-  Component as MainLayoutComponent,
-};
+export { Component as MainLayout, Component as MainLayoutComponent };

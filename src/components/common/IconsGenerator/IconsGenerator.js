@@ -1,11 +1,8 @@
 import React from 'react';
-// import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './IconsGenerator.module.scss';
-
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({
   className,

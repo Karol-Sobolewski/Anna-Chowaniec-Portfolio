@@ -24,23 +24,7 @@ import history from './utils/history';
 const removeDiacritics = require(`diacritics`).remove;
 
 const App = () => {
-  // const {
-  //   getAccessTokenSilently,
-  //   loginWithPopup,
-  //   getAccessTokenWithPopup,
-  //   user,
-  //   isAuthenticated,
-  //   loginWithRedirect,
-  //   logout,
-  //   isLoading,
-  //   error,
-  // } = useAuth0();
-
-  // const { apiOrigin = `http://localhost:8000`, audience } = getConfig();
-  // const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
   useAuth0();
-
-  // console.log(`isAuthenticated`, isAuthenticated);
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
   const menu = useSelector((state) => state.menu.data);
@@ -53,15 +37,6 @@ const App = () => {
     dispatch(fetchCategories());
     dispatch(fetchMenu());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   if (!isLoading && menu.length !== 0) {
-  //     setLoaded(true);
-  //     // setTimeout(() => {}, 500);
-  //     console.log(`loaded`, loaded);
-  //   }
-  // }, [isLoading]);
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (
@@ -84,14 +59,6 @@ const App = () => {
     />
   ));
 
-  // if (error) {
-  //   return <div>Oops... {error.message}</div>;
-  // }
-
-  // if (isLoading) {
-  //   return <p>loading</p>;
-  // }
-
   return (
     <>
       {loaded ? (
@@ -99,12 +66,6 @@ const App = () => {
           <BrowserRouter history={history}>
             <MainLayout>
               <ScrollToTop />
-              {/* <AnimatedSwitch
-                atEnter={{ opacity: 0 }}
-                atLeave={{ opacity: 0 }}
-                atActive={{ opacity: 1 }}
-                className={styles.switchWrapper}
-              > */}
               <Switch>
                 <Route exact path="/" component={() => <HomePage />} />
                 {routeComponents}
@@ -113,7 +74,6 @@ const App = () => {
                 <ProtectedRoute path="/login" component={<Dashboard />} />
                 <Route path="*" component={() => <NotFound />} />
               </Switch>
-              {/* </AnimatedSwitch> */}
             </MainLayout>
           </BrowserRouter>
         </div>

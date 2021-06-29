@@ -11,8 +11,6 @@ import { Category } from '../../common/Category/Category';
 import { fetchOffers } from '../../../redux/offerRedux';
 import styles from './OfferPage.module.scss';
 
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
-
 const Component = ({ className, children }) => {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);

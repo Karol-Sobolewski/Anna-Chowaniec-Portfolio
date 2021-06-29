@@ -24,8 +24,6 @@ const checkJwt = jwt({
 router.get(`/categories`, async (req, res) => {
   try {
     const result = await Category.find();
-    // console.log(result);
-
     if (!result) res.status(404).json({ category: `Not found` });
     else res.json(result);
   } catch (err) {
@@ -47,7 +45,6 @@ router.post(`/categories`, checkJwt, async (req, res) => {
   });
   /* eslint-enable */
   await newCategory.save();
-  // res.json(newPhoto);
 });
 
 router.put(`/categories/:id`, checkJwt, async (req, res) => {

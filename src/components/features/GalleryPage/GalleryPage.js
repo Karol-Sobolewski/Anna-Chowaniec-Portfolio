@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import Gallery from 'react-photo-gallery';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-// import { useDispatch } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import arrayMove from 'array-move';
@@ -17,13 +16,17 @@ import { editPhotoRequest } from '../../../redux/photoRedux';
 
 import styles from './GalleryPage.module.scss';
 import { ImageUploadForm } from '../ImageUploadForm/ImageUploadForm';
-/* eslint-disable react/jsx-props-no-spreading */
-const SortablePhoto = SortableElement((item) => <Photo {...item} />);
+
+const SortablePhoto = SortableElement(
+  (item) => <Photo {...item} /> // eslint-disable-line react/jsx-props-no-spreading
+);
 
 const SortableGallery = SortableContainer(({ items }) => (
   <Gallery
     photos={items}
-    renderImage={(props) => <SortablePhoto {...props} photos={items} />}
+    renderImage={(props) => (
+      <SortablePhoto {...props} photos={items} /> // eslint-disable-line react/jsx-props-no-spreading
+    )}
   />
 ));
 

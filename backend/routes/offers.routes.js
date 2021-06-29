@@ -24,7 +24,6 @@ const checkJwt = jwt({
 router.get(`/offers`, async (req, res) => {
   try {
     const result = await Offer.find().populate(`category`);
-    // console.log(result);
     if (!result) res.status(404).json({ offer: `Not found` });
     else res.json(result);
   } catch (err) {
@@ -42,7 +41,6 @@ router.post(`/offers`, checkJwt, async (req, res) => {
   /* eslint-enable */
 
   await newCategory.save();
-  // res.json(newPhoto);
 });
 
 router.put(`/offers/:id`, checkJwt, async (req, res) => {
