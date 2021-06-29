@@ -1,5 +1,9 @@
 @import "../../../styles/settings.scss";
 
+.root {
+  width: 95%;
+}
+
 /* ExtraExtraLarge Devices, UltraWide Desktops  */
 @media (min-width: 1921px) {
   .root {
