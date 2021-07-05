@@ -91,7 +91,7 @@ export const editPhotoRequest = (photo, token) => async (dispatch) => {
 
     await new Promise((resolve) => resolve());
     dispatch(updatePhoto(res.data));
-    // dispatch(fetchPhotos());
+    dispatch(fetchPhotos());
   } catch (err) {
     dispatch(fetchError(err.message || true));
   }
@@ -184,12 +184,14 @@ export default function reducer(statePart = [], action = {}) {
     }
 
     case UPDATE_PHOTO: {
+      console.log(`acrionpayload`, action.payload);
       return {
         ...statePart,
         data: statePart.data.map((data) => {
           if (data._id === action.payload._id) {
             return {
-              ...action.payload,
+              ...data,
+              order: action.payload.order,
             };
           }
           return data;

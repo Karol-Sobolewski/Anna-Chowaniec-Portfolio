@@ -11,7 +11,6 @@ const removeDiacritics = require(`diacritics`).remove;
 const Component = ({ className, galleryName }) => {
   const allPhotos = useSelector((state) => state.photos.data);
   const categories = useSelector((state) => state.categories.data);
-
   const photos = allPhotos.filter((photo) =>
     photo.category && photo.category.name !== undefined
       ? removeDiacritics(photo.category.name).toLowerCase() ===
