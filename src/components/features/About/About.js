@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ImageUploader from 'react-images-upload';
+import Resizer from 'react-image-file-resizer';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -51,9 +52,9 @@ const Component = ({ className, children }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await getAccessTokenSilently();
-    if (selectedImage.length > 0) {
+    if (selectedImage) {
       const imageData = new FormData();
-      imageData.append(`file`, selectedImage[0]);
+      imageData.append(`file`, selectedImage);
       dispatch(removeDescriptionImageRequest(about, token));
       dispatch(addDescriptionImageRequest(imageData, token));
       handleDispatchDescrRequest(
@@ -61,7 +62,7 @@ const Component = ({ className, children }) => {
           ...about,
           images: [
             {
-              src: `images/photos/about/${selectedImage[0].name}`,
+              src: `images/photos/about/${selectedImage.name}`,
               title: aboutPage.description[0].heading,
             },
           ],
@@ -73,8 +74,27 @@ const Component = ({ className, children }) => {
     }
   };
 
-  const handleSelectedImage = (file) => {
-    setSelectedImage(file);
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        1024,
+        1024,
+        `WEBP`,
+        90,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        `file`
+      );
+    });
+
+  const handleSelectedImage = async (file) => {
+    if (file[0]) {
+      const image = await resizeFile(file[0]);
+      setSelectedImage(image);
+    }
   };
 
   return (
@@ -139,11 +159,11 @@ const Component = ({ className, children }) => {
                         <ImageUploader
                           withIcon
                           buttonText="Wybierz obraz"
-                          imgExtension={[`.jpg`, `.gif`, `.png`]}
+                          imgExtension={[`.jpg`, `.png`]}
                           maxFileSize={5242880}
                           withPreview
                           onChange={handleSelectedImage}
-                          label="Maksymalny rozmiar: 5MB, Formaty: jpg, png, gif"
+                          label="Maksymalny rozmiar: 5MB, Formaty: jpg, png"
                           singleImage
                         />
                         <Button type="submit" name="Wyślij" />
