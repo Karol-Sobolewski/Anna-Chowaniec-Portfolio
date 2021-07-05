@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ImageUploader from 'react-images-upload';
 import Resizer from 'react-image-file-resizer';
@@ -9,6 +9,7 @@ import clsx from 'clsx';
 
 import { Container, Row, Col } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
+import autosize from 'autosize';
 import { Button } from '../../common/Button/Button';
 import { Loader } from '../../common/Loader/Loader';
 import styles from './About.module.scss';
@@ -20,6 +21,7 @@ import {
 } from '../../../redux/descriptionRedux';
 
 const Component = ({ className, children }) => {
+
   const allPages = useSelector((state) => state.descriptions.data);
   const loadingStatus = useSelector((state) => state.descriptions.loading);
   const dispatch = useDispatch();
@@ -52,9 +54,9 @@ const Component = ({ className, children }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await getAccessTokenSilently();
-    if (selectedImage) {
+    if (selectedImage.length) {
       const imageData = new FormData();
-      imageData.append(`file`, selectedImage);
+      imageData.append(`file`, selectedImage[0]);
       dispatch(removeDescriptionImageRequest(about, token));
       dispatch(addDescriptionImageRequest(imageData, token));
       handleDispatchDescrRequest(
@@ -62,7 +64,7 @@ const Component = ({ className, children }) => {
           ...about,
           images: [
             {
-              src: `images/photos/about/${selectedImage.name}`,
+              src: `images/photos/about/${selectedImage[0].name}`,
               title: aboutPage.description[0].heading,
             },
           ],
@@ -73,6 +75,10 @@ const Component = ({ className, children }) => {
       handleDispatchDescrRequest(about, token);
     }
   };
+
+  useEffect(() => {
+    autosize(document.querySelectorAll(`textarea`));
+  });
 
   const resizeFile = (file) =>
     new Promise((resolve) => {
@@ -93,7 +99,7 @@ const Component = ({ className, children }) => {
   const handleSelectedImage = async (file) => {
     if (file[0]) {
       const image = await resizeFile(file[0]);
-      setSelectedImage(image);
+      setSelectedImage([image]);
     }
   };
 
@@ -169,7 +175,7 @@ const Component = ({ className, children }) => {
                         <Button type="submit" name="Wyślij" />
                       </div>
                     ) : (
-                      <div>
+                      <div className={styles.aboutDescription}>
                         <h3>{aboutPage.description[0].heading}</h3>
                         <p>{aboutPage.description[0].text}</p>
                       </div>
