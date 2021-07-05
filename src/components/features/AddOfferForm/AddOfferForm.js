@@ -69,7 +69,6 @@ const Component = ({ className, category }) => {
         price: ``,
       });
       setInputList([{ _id: uniqid(), text: `` }]);
-      console.log(inputList);
     }, 500);
   };
 

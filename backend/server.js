@@ -16,7 +16,6 @@ const photosRoutes = require(`./routes/photos.routes`);
 const categoriesRoutes = require(`./routes/categories.routes`);
 const offersRoutes = require(`./routes/offers.routes`);
 const descriptionsRoutes = require(`./routes/descriptions.routes`);
-// const { auth, requiresAuth } = require(`express-openid-connect`);
 
 const app = express();
 

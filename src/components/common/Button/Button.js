@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
+import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
@@ -13,7 +12,6 @@ import {
   faSortAlphaDown,
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './Button.module.scss';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = ({
   className,
@@ -26,13 +24,6 @@ const Component = ({
   icon,
   ...otherProps
 }) => {
-  // const dispatch = useDispatch();
-  // const { loginWithRedirect } = useAuth0();
-
-  useEffect(() => {
-    // dispatch(actionName(`whatToDispatch`));
-  }, []);
-
   const { isAuthenticated } = useAuth0();
 
   return (

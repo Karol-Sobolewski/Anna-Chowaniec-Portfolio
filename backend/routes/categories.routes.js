@@ -24,8 +24,6 @@ const checkJwt = jwt({
 router.get(`/categories`, async (req, res) => {
   try {
     const result = await Category.find();
-    // console.log(result);
-
     if (!result) res.status(404).json({ category: `Not found` });
     else res.json(result);
   } catch (err) {
@@ -34,34 +32,18 @@ router.get(`/categories`, async (req, res) => {
 });
 
 router.post(`/categories`, checkJwt, async (req, res) => {
-  const { file } = req.files;
-  if (!file) {
-    return res.status(400).json({ message: `no files uploaded` });
-  }
-  const fileExtension = file.name.split(`.`).pop();
-
-  const filePath = `images/photos/work/${
-    req.body.name
-  }_${uniqid()}.${fileExtension}`;
-  file.mv(`./public/${filePath}`, (err) => {
-    if (err) {
-      console.err(err);
-      return res.status(500).send(err);
-    }
-    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-  });
-
+  const image = JSON.parse(req.body.image);
   const newCategory = new Category({
+    _id: req.body._id,
     name: req.body.name,
     description: req.body.description,
     image: {
-      src: filePath,
-      alt: req.body.description,
+      src: image.src,
+      alt: image.alt,
     },
   });
   /* eslint-enable */
   await newCategory.save();
-  // res.json(newPhoto);
 });
 
 router.put(`/categories/:id`, checkJwt, async (req, res) => {

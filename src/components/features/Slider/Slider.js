@@ -20,10 +20,8 @@ import styles from './Slider.module.scss';
 const Component = ({ className }) => {
   const AutoplaySlider = withAutoplay(AwesomeSlider);
   const { isAuthenticated } = useAuth0();
-  // const sliderPage = allPages.filter((item) => item.page === `slider`)[0];
   const dispatch = useDispatch();
   const allPhotos = useSelector((state) => state.photos.data);
-  // console.log(allPhotos);
   const { getAccessTokenSilently } = useAuth0();
 
   const sliderPhotos = allPhotos.filter((item) => {
@@ -70,11 +68,7 @@ const Component = ({ className }) => {
           fillParent
         >
           {sliderPhotos.map((img) => (
-            <div key={img._id} data-src={img.src}>
-              {/* <div className={styles.caption}>
-                <p>{im.title}</p>
-              </div> */}
-            </div>
+            <div key={img._id} data-src={img.src} />
           ))}
         </AutoplaySlider>
       </Container>
@@ -100,8 +94,4 @@ Component.propTypes = {
   className: PropTypes.string,
 };
 
-export {
-  Component as Slider,
-  // Container as Slider,
-  Component as SliderComponent,
-};
+export { Component as Slider, Component as SliderComponent };

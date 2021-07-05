@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-// import { useDispatch } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import PropTypes from 'prop-types';

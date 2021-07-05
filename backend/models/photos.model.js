@@ -12,14 +12,6 @@ const photoSchema = new mongoose.Schema({
   },
   order: { type: Number },
   slider: { type: Boolean },
-  // items: [
-  //   {
-  //     src: { type: String },
-  //     title: { type: String },
-  //     width: { type: Number },
-  //     height: { type: Number },
-  //   },
-  // ],
 });
 
 module.exports = mongoose.model(`Photo`, photoSchema);

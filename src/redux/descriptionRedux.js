@@ -136,19 +136,6 @@ export default function reducer(statePart = [], action = {}) {
           }
           return data;
         }),
-        // data: action.p,
-        // activePost: action.payload,
-        // data: statePart.data.map((data) => {
-        //   console.log(`2`, data);
-
-        //   if (data.id === action.payload.id) {
-        //     return {
-        //       ...action.payload,
-        //     };
-        //   }
-        //   console.log(`3`, data);
-        //   return data;
-        // }),
       };
     }
     default:

@@ -91,7 +91,7 @@ export const editPhotoRequest = (photo, token) => async (dispatch) => {
 
     await new Promise((resolve) => resolve());
     dispatch(updatePhoto(res.data));
-    // dispatch(fetchPhotos());
+    dispatch(fetchPhotos());
   } catch (err) {
     dispatch(fetchError(err.message || true));
   }
@@ -186,7 +186,8 @@ export default function reducer(statePart = [], action = {}) {
         data: statePart.data.map((data) => {
           if (data._id === action.payload._id) {
             return {
-              ...action.payload,
+              ...data,
+              order: action.payload.order,
             };
           }
           return data;
@@ -219,7 +220,7 @@ export default function reducer(statePart = [], action = {}) {
       return {
         ...statePart,
         data: statePart.data.filter(
-          (photo) => photo.category._id !== action.payload.id
+          (photo) => photo.category._id !== action.payload._id
         ),
       };
     }

@@ -1,12 +1,9 @@
 import React from 'react';
-// import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import styles from './PhotoSelector.module.scss';
-
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 const Component = React.memo( //eslint-disable-line
   ({ className, photos, onChangeValue, checkIcon, checkedPhoto }) => {

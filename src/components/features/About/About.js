@@ -25,7 +25,6 @@ const Component = ({ className, children }) => {
   const [edit, setEdit] = useState(false);
   const [selectedImage, setSelectedImage] = useState([]);
   const aboutPage = allPages.filter((item) => item.page === `about`)[0];
-  // const { auth } = useContext(userContext);
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   const [about, setAbout] = useState({
@@ -44,26 +43,12 @@ const Component = ({ className, children }) => {
     setAbout({ ...about, description });
   };
 
-  // useEffect(
-  //   (e) => {
-  //     console.log(about);
-  //     const handleSubmit = async (e) => {
-  //       e.preventDefault();
-  //       await dispatch(editDescriptionRequest(about));
-  //       setEdit(false);
-  //     };
-  //     handleSubmit();
-  //   },
-  //   [about]
-  // );
-
   const handleDispatchDescrRequest = (aboutObj, token) => {
     dispatch(editDescriptionRequest(aboutObj, token));
     setEdit(false);
   };
 
   const handleSubmit = async (e) => {
-    // console.log(about);
     e.preventDefault();
     const token = await getAccessTokenSilently();
     if (selectedImage.length > 0) {
@@ -123,7 +108,6 @@ const Component = ({ className, children }) => {
                     onClick={() => setEdit(!edit)}
                     edit={edit}
                     icon="pencil"
-                    // auth={auth}
                     className={styles.editAboutButton}
                   />
                 ) : null}
@@ -180,16 +164,6 @@ const Component = ({ className, children }) => {
   );
 };
 
-// const mapStateToProps = (state) => ({
-//   someProp: reduxSelector(state);
-// })
-
-// const mapDispatchToProps = (dispatch) => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-
-//   const container = connect(mapStateToProps, mapStateToProps)(Component);
-// })
-
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
@@ -197,6 +171,5 @@ Component.propTypes = {
 
 export {
   Component as About,
-  // Container as About,
   Component as AboutComponent,
 };

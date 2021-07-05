@@ -11,10 +11,7 @@ import { Button } from '../../common/Button/Button';
 import styles from './OfferModal.module.scss';
 import { Offer } from '../../common/Offer/Offer';
 
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
-
 const Component = ({ className, children, offerCategory }) => {
-  // const dispatch = useDispatch();
   const allOffers = useSelector((state) => state.offers.data);
   const offers = allOffers.filter(
     (offer) => offer.category?._id === offerCategory

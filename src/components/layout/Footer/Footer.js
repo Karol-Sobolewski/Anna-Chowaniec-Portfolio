@@ -10,9 +10,6 @@ import { faIcons, fas } from '@fortawesome/free-solid-svg-icons';
 import { IconsGenerator } from '../../common/IconsGenerator/IconsGenerator';
 import styles from './Footer.module.scss';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
-
 const Component = ({ className, children }) => {
   const allPages = useSelector((state) => state.descriptions.data);
 
