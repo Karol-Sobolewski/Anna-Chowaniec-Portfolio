@@ -22,7 +22,6 @@ const Component = ({ className }) => {
 
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
-  const categories = useSelector((state) => state.categories.data).length;
   const categoryID = mongoose.Types.ObjectId();
 
   const [category, setCategory] = useState({
