@@ -67,7 +67,6 @@ const Component = ({ className, children, category }) => {
       ...photo,
       src: `images/photos/${category.name}/${photoTitle}.WEBP`,
     });
-    console.log(`photo src`, photo.src);
   }, [photo.title]); //eslint-disable-line
 
   const handleSubmit = async (e) => {

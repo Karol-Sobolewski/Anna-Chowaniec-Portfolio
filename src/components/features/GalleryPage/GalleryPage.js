@@ -56,7 +56,6 @@ const Component = ({ className, photos, category }) => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    console.log(`change`);
   }, [items]);
 
   const useOutsideAlerter = (ref) => {
