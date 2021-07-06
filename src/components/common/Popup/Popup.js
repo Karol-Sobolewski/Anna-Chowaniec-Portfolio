@@ -47,7 +47,9 @@ const Component = ({
       <Container className={styles.popupContent} ref={popupRef}>
         <main>{children}</main>
         <div className={styles.actionButtons}>
-          <Button onClick={() => handleConfirm()} type="button" name="✓" />
+          {verifyConfirm ? (
+            <Button onClick={() => handleConfirm()} type="button" name="✓" />
+          ) : null}
           <Button onClick={() => setVisible(false)} type="button" name="X" />
         </div>
       </Container>

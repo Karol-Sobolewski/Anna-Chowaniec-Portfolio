@@ -56,6 +56,10 @@ $button-outline-border: $lightBlack;
 $button-outline-text-hover: $white;
 $button-outline-text: $lightBlack;
 
+/*Input*/
+$input-error: $colorError;
+$input-error-text: $darkPink;
+
 /*Loader*/
 $loader-color: $gray;
 
@@ -98,7 +102,3 @@ $footer-bg: $lightGrayGradient;
 $header-bg: $lightGrayGradient;
 $header-link: $white;
 $header-link-stroke: 5px #fff;
-
-/*Contact*/
-$contact-error: $colorError;
-$contact-error-text: $darkPink;
