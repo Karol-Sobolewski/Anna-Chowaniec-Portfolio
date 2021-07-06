@@ -102,11 +102,11 @@ const Component = ({ className, children, category }) => {
         <ImageUploader
           withIcon
           buttonText="Wybierz obraz"
-          imgExtension={[`.jpg`, `.gif`, `.png`]}
+          imgExtension={[`.jpg`, `.png`]}
           maxFileSize={5242880}
           withPreview
           onChange={handleImage}
-          label="Maksymalny rozmiar: 5MB, Formaty: jpg, png, gif"
+          label="Maksymalny rozmiar: 5MB, Formaty: jpg, png"
           singleImage
           className={photo.file ? `hide` : `animated fadeInUp`}
         />

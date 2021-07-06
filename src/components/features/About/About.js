@@ -1,13 +1,15 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ImageUploader from 'react-images-upload';
+import Resizer from 'react-image-file-resizer';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { Container, Row, Col } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
+import autosize from 'autosize';
 import { Button } from '../../common/Button/Button';
 import { Loader } from '../../common/Loader/Loader';
 import styles from './About.module.scss';
@@ -19,6 +21,7 @@ import {
 } from '../../../redux/descriptionRedux';
 
 const Component = ({ className, children }) => {
+
   const allPages = useSelector((state) => state.descriptions.data);
   const loadingStatus = useSelector((state) => state.descriptions.loading);
   const dispatch = useDispatch();
@@ -51,7 +54,7 @@ const Component = ({ className, children }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await getAccessTokenSilently();
-    if (selectedImage.length > 0) {
+    if (selectedImage.length) {
       const imageData = new FormData();
       imageData.append(`file`, selectedImage[0]);
       dispatch(removeDescriptionImageRequest(about, token));
@@ -73,8 +76,31 @@ const Component = ({ className, children }) => {
     }
   };
 
-  const handleSelectedImage = (file) => {
-    setSelectedImage(file);
+  useEffect(() => {
+    autosize(document.querySelectorAll(`textarea`));
+  });
+
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        1024,
+        1024,
+        `WEBP`,
+        90,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        `file`
+      );
+    });
+
+  const handleSelectedImage = async (file) => {
+    if (file[0]) {
+      const image = await resizeFile(file[0]);
+      setSelectedImage([image]);
+    }
   };
 
   return (
@@ -139,17 +165,17 @@ const Component = ({ className, children }) => {
                         <ImageUploader
                           withIcon
                           buttonText="Wybierz obraz"
-                          imgExtension={[`.jpg`, `.gif`, `.png`]}
+                          imgExtension={[`.jpg`, `.png`]}
                           maxFileSize={5242880}
                           withPreview
                           onChange={handleSelectedImage}
-                          label="Maksymalny rozmiar: 5MB, Formaty: jpg, png, gif"
+                          label="Maksymalny rozmiar: 5MB, Formaty: jpg, png"
                           singleImage
                         />
                         <Button type="submit" name="Wyślij" />
                       </div>
                     ) : (
-                      <div>
+                      <div className={styles.aboutDescription}>
                         <h3>{aboutPage.description[0].heading}</h3>
                         <p>{aboutPage.description[0].text}</p>
                       </div>
