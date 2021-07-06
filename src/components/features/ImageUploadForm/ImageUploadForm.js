@@ -4,21 +4,27 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useForm } from 'react-hook-form';
 
 import ImageUploader from 'react-images-upload';
 
 import Resizer from 'react-image-file-resizer';
+import { addPhotoRequest } from '../../../redux/photoRedux';
 import { Button } from '../../common/Button/Button';
 import styles from './ImageUploadForm.module.scss';
-import { addPhotoRequest } from '../../../redux/photoRedux';
 
 const uniqid = require(`uniqid`);
 
 const Component = ({ className, children, category }) => {
+  /* eslint-disable react/jsx-props-no-spreading */
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const { getAccessTokenSilently } = useAuth0();
-
   const dispatch = useDispatch();
-  const [format] = useState(``);
+
   const [photo, setPhoto] = useState({
     file: null,
     title: ``,
@@ -26,9 +32,17 @@ const Component = ({ className, children, category }) => {
     categoryName: category.name,
     width: ``,
     height: ``,
-    format,
+    format: ``,
     order: 0,
   });
+  const [photoError, setPhotoError] = useState(false);
+  useEffect(() => {
+    if (photo.file) setPhotoError(false);
+  }, [photo.file]); // eslint-disable-line react-hooks/exhaustive-deps
+  const [formatError, setFormatError] = useState(false);
+  useEffect(() => {
+    if (photo.format) setFormatError(false);
+  }, [photo.format]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const resizeFile = (file) =>
     new Promise((resolve) => {
@@ -69,24 +83,26 @@ const Component = ({ className, children, category }) => {
     });
   }, [photo.title]); //eslint-disable-line
 
-  const handleSubmit = async (e) => {
-    const token = await getAccessTokenSilently();
-
-    e.preventDefault();
-    const formData = new FormData();
-    for (const key of [
-      `category`,
-      `title`,
-      `categoryName`,
-      `format`,
-      `order`,
-      `src`,
-    ]) {
-      formData.append(key, photo[key]);
+  const onSubmit = async () => {
+    if (photo.file && photo.format) {
+      const token = await getAccessTokenSilently();
+      const formData = new FormData();
+      for (const key of [
+        `category`,
+        `title`,
+        `categoryName`,
+        `format`,
+        `order`,
+        `src`,
+      ]) {
+        formData.append(key, photo[key]);
+      }
+      formData.append(`file`, photo.file);
+      await dispatch(addPhotoRequest(formData, token, category));
+      window.location.reload(false);
     }
-    formData.append(`file`, photo.file);
-    await dispatch(addPhotoRequest(formData, token, category));
-    window.location.reload(false);
+    if (!photo.file) setPhotoError(true);
+    if (!photo.format) setFormatError(true);
   };
 
   return (
@@ -94,11 +110,27 @@ const Component = ({ className, children, category }) => {
       <form
         action="#"
         method="post"
-        onSubmit={(e) => handleSubmit(e)}
+        onSubmit={handleSubmit(onSubmit)}
         onChange={(e) => handleChange(e)}
       >
         <p>Tytuł:</p>
-        <input name="title" type="text" placeholder="Nazwa zdjęcia" />
+        <input
+          name="title"
+          type="text"
+          placeholder="Nazwa zdjęcia"
+          className={
+            !errors.description ? styles.formInput : styles.formInput__error
+          }
+          {...register(`title`, {
+            required: true,
+            maxLength: 80,
+          })}
+        />
+        {errors.title && (
+          <span className={styles.errorMessage}>
+            Proszę podać tytuł zdjęcia
+          </span>
+        )}
         <ImageUploader
           withIcon
           buttonText="Wybierz obraz"
@@ -110,6 +142,9 @@ const Component = ({ className, children, category }) => {
           singleImage
           className={photo.file ? `hide` : `animated fadeInUp`}
         />
+        {photoError && (
+          <span className={styles.errorMessage}>Proszę dodać zdjęcie</span>
+        )}
         <p>Format:</p>
         <div className={styles.radioRow}>
           <label htmlFor="vertical">
@@ -126,6 +161,11 @@ const Component = ({ className, children, category }) => {
             <img src="/images/utils/horizontal.png" alt="horizontal" />
           </label>
         </div>
+        {formatError && (
+          <span className={styles.errorMessage}>
+            Proszę wybrać format zdjęcia
+          </span>
+        )}
         <Button className={styles.addPhotoButton} type="submit" name="Wyślij" />
       </form>
       <main>{children}</main>

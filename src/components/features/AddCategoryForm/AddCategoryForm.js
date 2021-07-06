@@ -7,12 +7,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useForm } from 'react-hook-form';
 
 import ImageUploader from 'react-images-upload';
-import { Popup } from '../../common/Popup/Popup';
-import styles from './AddCategoryForm.module.scss';
-import { Button } from '../../common/Button/Button';
 import { addCategoryRequest } from '../../../redux/categoryRedux';
 import { addMenuRequest } from '../../../redux/menuRedux';
 import { addPhotoRequest } from '../../../redux/photoRedux';
+import { Button } from '../../common/Button/Button';
+import styles from './AddCategoryForm.module.scss';
 
 const mongoose = require(`mongoose`);
 const uniqid = require(`uniqid`);
@@ -24,13 +23,13 @@ const Component = ({ className }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const categoryID = mongoose.Types.ObjectId();
+  const { getAccessTokenSilently } = useAuth0();
+  const dispatch = useDispatch();
 
   const allMenus = useSelector((state) => state.menu.data);
   const filtered = allMenus.filter((item) => item.component === `GalleryPage`);
 
-  const dispatch = useDispatch();
-  const { getAccessTokenSilently } = useAuth0();
-  const categoryID = mongoose.Types.ObjectId();
   const [photoError, setPhotoError] = useState(false);
   const [category, setCategory] = useState({
     _id: categoryID,
@@ -62,13 +61,6 @@ const Component = ({ className }) => {
     const { name } = target;
     setCategory({ ...category, [name]: value });
   };
-
-  useEffect(() => {
-    setCategory({
-      ...category,
-      shortName: category.name,
-    });
-  }, [category.name]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setCategory({
@@ -120,7 +112,7 @@ const Component = ({ className }) => {
     } else setPhoto({ ...photo, file: null });
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async () => {
     if (photo.file) {
       const token = await getAccessTokenSilently();
       const categoryFormData = new FormData();
@@ -149,6 +141,7 @@ const Component = ({ className }) => {
       setPhotoError(true);
     }
   };
+
   return (
     <form
       className={clsx(className, styles.root)}
