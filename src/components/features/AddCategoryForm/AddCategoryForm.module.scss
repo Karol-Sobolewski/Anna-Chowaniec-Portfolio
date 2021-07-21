@@ -11,6 +11,19 @@
   justify-content: space-around;
   padding: 2vh 0 2vh 0;
   width: 100%;
+  .errorMessage {
+    color: $input-error-text;
+    bottom: 0;
+  }
+  .formInput {
+    margin: 0.75em 0 1.5em 0;
+    transition: $transition;
+  }
+  .formInput__error {
+    @extend .formInput;
+    border-left: 1em solid $input-error;
+    border: 2px solid $input-error;
+  }
 }
 
 /* ExtraExtraLarge Devices, UltraWide Desktops  */

@@ -19,17 +19,17 @@
     border-radius: $radius;
     display: flex;
     flex-direction: column;
-    height: 30%;
+    height: 50vh;
     justify-content: center;
     position: relative;
-    width: 30%;
+    width: 50vw;
     .actionButtons {
       align-items: center;
       display: flex;
       justify-content: space-around;
       padding: 1rem;
-      :first-child {
-        margin-right: 1rem;
+      :nth-child(2) {
+        margin-left: 1rem;
       }
     }
   }

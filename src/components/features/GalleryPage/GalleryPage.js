@@ -55,8 +55,7 @@ const Component = ({ className, photos, category }) => {
         updatePhotos(editedItem);
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
+  }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const useOutsideAlerter = (ref) => {
     useEffect(() => {

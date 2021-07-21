@@ -110,9 +110,9 @@ router.delete(`/photos/:id`, checkJwt, async (req, res) => {
 });
 
 router.delete(`/photos/categories/:id`, checkJwt, async (req, res) => {
+  const categoryName = await Category.findById(req.params.id).exec();
   try {
     const result = await Photo.findOne({ category: req.params.id });
-    const categoryName = await Category.findOne({ _id: result.category });
     if (result) {
       await Photo.deleteMany({ category: req.params.id });
       fs.rmdirSync(
