@@ -67,34 +67,41 @@ const Component = ({ className, children }) => {
           <ContactForm />
         </Col>
         <Col className={`${styles.contactCol} col-12 col-md-6`}>
-          {contactPage.description.map((item) =>
-            // eslint-disable-next-line no-nested-ternary
-            item.type !== `web` ? (
-              !edit ? (
-                <a
-                  key={contactPage.description.indexOf(item)}
-                  href={handleLink(item.value, item.type)}
-                  className={styles.contactLink}
-                >
-                  <IconsGenerator
-                    iconName={item.icon}
-                    iconsList={fas}
-                    alternativeIcon={faIcons}
-                    size={2}
+          <Row
+            className={
+              edit ? styles.socialIconsRow__edit : styles.socialIconsRow
+            }
+          >
+            {contactPage.description.map((item) =>
+              // eslint-disable-next-line no-nested-ternary
+              item.type !== `web` ? (
+                !edit ? (
+                  <a
+                    key={contactPage.description.indexOf(item)}
+                    href={handleLink(item.value, item.type)}
+                    className={styles.contactLink}
+                  >
+                    <IconsGenerator
+                      iconName={item.icon}
+                      iconsList={fas}
+                      alternativeIcon={faIcons}
+                      size={2}
+                    />
+                    <p>{item.value}</p>
+                  </a>
+                ) : (
+                  <textarea
+                    key={contactPage.description.indexOf(item)}
+                    name="value"
+                    type="text"
+                    defaultValue={item.value}
+                    onChange={(e) => handleChange(e, item)}
                   />
-                  <p>{item.value}</p>
-                </a>
-              ) : (
-                <textarea
-                  key={contactPage.description.indexOf(item)}
-                  name="value"
-                  type="text"
-                  defaultValue={item.value}
-                  onChange={(e) => handleChange(e, item)}
-                />
-              )
-            ) : null
-          )}
+                )
+              ) : null
+            )}
+          </Row>
+          <br />
           <Row
             className={
               edit ? styles.socialIconsRow__edit : styles.socialIconsRow
@@ -103,17 +110,20 @@ const Component = ({ className, children }) => {
             {contactPage.description.map((item) =>
               // eslint-disable-next-line no-nested-ternary
               item.type === `web` ? (
+                // eslint-disable-next-line no-nested-ternary
                 !edit ? (
-                  <Col key={item.heading} className="col">
-                    <a href={handleLink(item.value, item.type)}>
-                      <IconsGenerator
-                        iconName={item.icon}
-                        iconsList={fab}
-                        alternativeIcon={faIcons}
-                        size={2}
-                      />
-                    </a>
-                  </Col>
+                  item.value ? (
+                    <Col key={item.heading} className="col">
+                      <a href={handleLink(item.value, item.type)}>
+                        <IconsGenerator
+                          iconName={item.icon}
+                          iconsList={fab}
+                          alternativeIcon={faIcons}
+                          size={2}
+                        />
+                      </a>
+                    </Col>
+                  ) : null
                 ) : (
                   <textarea
                     key={contactPage.description.indexOf(item)}
@@ -121,6 +131,7 @@ const Component = ({ className, children }) => {
                     type="text"
                     defaultValue={item.value}
                     onChange={(e) => handleChange(e, item)}
+                    placeholder={`${item.heading} link`}
                   />
                 )
               ) : null

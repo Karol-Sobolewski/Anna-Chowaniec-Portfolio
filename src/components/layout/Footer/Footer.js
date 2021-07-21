@@ -59,7 +59,7 @@ const Component = ({ className, children }) => {
             className="col-12 col-md-6 col-lg-4 d-flex align-items-center justify-content-center p-3"
           >
             {footerPage.description.map((item) =>
-              item.type === `web` ? (
+              item.type === `web` && item.value ? (
                 <a
                   key={footerPage.description.indexOf(item)}
                   href={handleLink(item.value, item.type)}
