@@ -3,10 +3,10 @@
 .root {
   .photoBox {
     cursor: pointer;
+    height: auto;
     margin: 2px;
     position: relative;
     width: auto;
-    height: auto;
     img {
       object-fit: cover;
     }

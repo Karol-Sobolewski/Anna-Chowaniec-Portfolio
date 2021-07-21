@@ -13,8 +13,8 @@
     }
     .formInput__error {
       @extend .formInput;
-      border-left: 1em solid $contact-error;
-      border: 2px solid $contact-error;
+      border-left: 1em solid $input-error;
+      border: 2px solid $input-error;
     }
   }
   .submitForm {
@@ -37,7 +37,7 @@
     width: 100%;
   }
   .errorMessage {
-    color: $contact-error-text;
+    color: $input-error-text;
     position: absolute;
     bottom: 0;
   }
