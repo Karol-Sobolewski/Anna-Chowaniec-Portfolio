@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import './styles/bootstrap.scss';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './App.module.scss';
 import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
 import { fetchMenu } from './redux/menuRedux';
@@ -17,7 +19,6 @@ import { OfferPage } from './components/views/OfferPage/OfferPage';
 import { Contact } from './components/views/Contact/Contact';
 import { Dashboard } from './components/views/Dashboard/Dashboard';
 import { NotFound } from './components/views/NotFound/NotFound';
-
 import ProtectedRoute from './auth/protected-route';
 import history from './utils/history';
 
@@ -25,6 +26,8 @@ const removeDiacritics = require(`diacritics`).remove;
 
 const App = () => {
   useAuth0();
+  gsap.registerPlugin(ScrollTrigger);
+
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
   const menu = useSelector((state) => state.menu.data);

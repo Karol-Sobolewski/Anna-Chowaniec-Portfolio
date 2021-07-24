@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 import { Container, Row, Col } from 'react-bootstrap';
 
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -28,10 +31,48 @@ const Component = ({ className, children }) => {
     if (type === `mail`) return `mailto:${link}`;
   };
 
+  const footerRef = useRef(null);
+  useEffect(() => {
+    const footerElements = footerRef.current.childNodes;
+    for (const footerElement of footerElements) {
+      const element = footerElement.childNodes;
+      gsap.set(element, { autoAlpha: 0, y: `50%` });
+      ScrollTrigger.batch(element, {
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            autoAlpha: 1,
+            duration: 1,
+            stagger: 0.15,
+            y: 0,
+          }),
+        onEnterBack: (batch) =>
+          gsap.to(batch, {
+            autoAlpha: 1,
+            delay: 0.5,
+            stagger: 0.15,
+            y: 0,
+          }),
+        onLeaveBack: (batch) =>
+          gsap.to(batch, {
+            autoAlpha: 0,
+            delay: 0.5,
+            stagger: 0.1,
+            y: `50%`,
+          }),
+      });
+      ScrollTrigger.addEventListener(`refreshInit`, () =>
+        gsap.set(footerElement, { y: `50%` })
+      );
+    }
+  }, []);
+
   return (
     <footer className={clsx(className, styles.root)}>
       <Container>
-        <Row className="d-flex align-items-center justify-content-center">
+        <Row
+          className="d-flex align-items-center justify-content-center"
+          ref={footerRef}
+        >
           {footerPage.description.map((item) =>
             item.type !== `web` ? (
               <Col
