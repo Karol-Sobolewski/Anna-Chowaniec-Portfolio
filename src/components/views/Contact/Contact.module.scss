@@ -68,6 +68,15 @@
   textarea {
     width: 90%;
   }
+  .socialIcon {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 33%;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
 }
 /* ExtraExtraLarge Devices, UltraWide Desktops  */
 @media (min-width: 1921px) {

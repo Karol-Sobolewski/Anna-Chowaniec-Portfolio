@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { gsap } from 'gsap';
 
 import { Row, Col } from 'react-bootstrap';
 import { AddOfferForm } from '../AddOfferForm/AddOfferForm';
@@ -19,9 +20,33 @@ const Component = ({ className, children, offerCategory }) => {
   const [active, setActive] = useState(false);
 
   const { isAuthenticated } = useAuth0();
+
+  const offerRef = useRef(null);
+
+  useEffect(() => {
+    const offerElements = offerRef.current.childNodes;
+    for (const offerElement of offerElements) {
+      gsap.set(offerElement, {
+        autoAlpha: 0,
+        x: `-50%`,
+      });
+      const timelineOffer = gsap.timeline({
+        duration: 0.5,
+        defaults: {
+          ease: `Power3.easeOut`,
+        },
+      });
+      timelineOffer.fromTo(
+        offerElements,
+        { x: `-50%` },
+        { autoAlpha: 1, x: 0, stagger: 0.2 }
+      );
+    }
+  }, []);
+
   return (
     <div className={clsx(className, styles.root)}>
-      <Row className={styles.offerRow}>
+      <Row className={styles.offerRow} ref={offerRef}>
         {offers.map((item) => (
           <Col
             key={item._id}

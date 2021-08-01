@@ -36,32 +36,34 @@ const Component = ({ className, children }) => {
     const footerElements = footerRef.current.childNodes;
     for (const footerElement of footerElements) {
       const element = footerElement.childNodes;
-      gsap.set(element, { autoAlpha: 0, y: `50%` });
-      ScrollTrigger.batch(element, {
+      console.log(`footerElement`, footerElement);
+      gsap.set(footerElement, { autoAlpha: 0 });
+      ScrollTrigger.batch(footerElements, {
+        start: `top bottom`,
         onEnter: (batch) =>
           gsap.to(batch, {
             autoAlpha: 1,
-            duration: 1,
-            stagger: 0.15,
+            delay: 0.1,
+            duration: 0.5,
+            stagger: 0.2,
             y: 0,
           }),
         onEnterBack: (batch) =>
           gsap.to(batch, {
             autoAlpha: 1,
             delay: 0.5,
-            stagger: 0.15,
+            stagger: 0.2,
             y: 0,
           }),
         onLeaveBack: (batch) =>
           gsap.to(batch, {
             autoAlpha: 0,
             delay: 0.5,
-            stagger: 0.1,
-            y: `50%`,
+            stagger: 0.2,
           }),
       });
       ScrollTrigger.addEventListener(`refreshInit`, () =>
-        gsap.set(footerElement, { y: `50%` })
+        gsap.set(footerElement, { autoAlpha: 0 })
       );
     }
   }, []);
