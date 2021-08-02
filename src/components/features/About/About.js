@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState , useEffect} from 'react';
+import React, { useState , useEffect, useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ImageUploader from 'react-images-upload';
 import Resizer from 'react-image-file-resizer';
@@ -10,9 +10,12 @@ import clsx from 'clsx';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import autosize from 'autosize';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '../../common/Button/Button';
 import { Loader } from '../../common/Loader/Loader';
 import styles from './About.module.scss';
+
 
 import {
   editDescriptionRequest,
@@ -103,6 +106,53 @@ const Component = ({ className, children }) => {
     }
   };
 
+
+  const aboutRef = useRef(null);
+
+  useEffect(() => {
+    const aboutElements = aboutRef.current.childNodes;
+    const aboutHeader = aboutElements[0];
+    const aboutPhoto = aboutElements[1].firstChild;
+    const aboutContent = aboutElements[1].lastChild;
+
+    gsap.set(aboutHeader, {
+      autoAlpha: 0,
+      y: `100%`,
+    });
+    gsap.set(aboutPhoto, {
+      autoAlpha: 0,
+      x: `-100%`,
+    });
+    gsap.set(aboutContent, {
+      autoAlpha: 0,
+      x: `100%`,
+    });
+
+
+    const constAboutTimeline = gsap.timeline({
+      defaults: {
+        duration: 1,
+        ease: `Power3.easeOut`,
+      },
+      scrollTrigger: {
+        trigger: aboutHeader,
+        toggleActions: `play none play reverse`,
+        start: `top bottom`,
+      },
+    });
+    constAboutTimeline
+      .to(aboutHeader, {
+        delay: 0.3,
+        y: 0,
+        autoAlpha: 1,
+      })
+      .to([aboutPhoto, aboutContent], {
+        x: 0,
+        autoAlpha: 1,
+      }, `<0.5`);
+  },[]);
+
+
   return (
     <div className={clsx(className, styles.root)}>
       {
@@ -115,6 +165,7 @@ const Component = ({ className, children }) => {
             <Container
               fluid
               className={`${styles.container} d-flex flex-column justify-content-center`}
+              ref={aboutRef}
             >
               <h2>{aboutPage.heading}</h2>
               <Row className="row-cols-1 row-cols-md-4 justify-content-around">
