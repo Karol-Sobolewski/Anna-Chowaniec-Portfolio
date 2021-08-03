@@ -29,7 +29,6 @@ const Component = ({ className, children }) => {
 
   useEffect(() => {
     const categoryElements = categoryRef.current.childNodes;
-    console.log(`aboutElements`, categoryElements);
     for (const categoryElement of categoryElements) {
       gsap.set(categoryElement, {
         autoAlpha: 0,

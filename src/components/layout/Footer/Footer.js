@@ -35,8 +35,6 @@ const Component = ({ className, children }) => {
   useEffect(() => {
     const footerElements = footerRef.current.childNodes;
     for (const footerElement of footerElements) {
-      const element = footerElement.childNodes;
-      console.log(`footerElement`, footerElement);
       gsap.set(footerElement, { autoAlpha: 0 });
       ScrollTrigger.batch(footerElements, {
         start: `top bottom`,

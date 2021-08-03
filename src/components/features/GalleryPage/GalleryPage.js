@@ -86,16 +86,6 @@ const Component = ({ className, photos, category }) => {
     setItems(arrayMove(items, oldIndex, newIndex));
   };
 
-  const photoRef = useRef(null);
-  useEffect(() => {
-    const photoElements = photoRef.current.childNodes[0];
-
-    const ph = photoElements.getElementsByTagName(`*`);
-
-    // const arr = Array.from(ph);
-
-    console.log(ph);
-  }, []);
   return (
     <div className={clsx(className, styles.root)}>
       {isAuthenticated ? (
@@ -111,7 +101,7 @@ const Component = ({ className, photos, category }) => {
           <ImageUploadForm category={category} />
         ) : null}
       </div>
-      <div className={styles.galleryContainer} ref={photoRef}>
+      <div className={styles.galleryContainer}>
         {isAuthenticated ? (
           <SortableGallery
             items={items}
