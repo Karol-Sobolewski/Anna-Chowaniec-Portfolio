@@ -28,26 +28,28 @@ const Component = ({ className, children }) => {
   const categoryRef = useRef(null);
 
   useEffect(() => {
-    const categoryElements = categoryRef.current.childNodes;
-    for (const categoryElement of categoryElements) {
-      gsap.set(categoryElement, {
-        autoAlpha: 0,
-        y: `25%`,
-      });
-      const timelineCategory = gsap.timeline({
-        duration: 0.5,
-        delay: 0.3,
-        defaults: {
-          ease: `Power3.easeOut`,
-        },
-      });
-      timelineCategory.fromTo(
-        categoryElements,
-        { y: `25%` },
-        { autoAlpha: 1, y: 0, stagger: 0.2 }
-      );
+    if (!isAuthenticated) {
+      const categoryElements = categoryRef.current.childNodes;
+      for (const categoryElement of categoryElements) {
+        gsap.set(categoryElement, {
+          autoAlpha: 0,
+          y: `25%`,
+        });
+        const timelineCategory = gsap.timeline({
+          duration: 0.5,
+          delay: 0.3,
+          defaults: {
+            ease: `Power3.easeOut`,
+          },
+        });
+        timelineCategory.fromTo(
+          categoryElements,
+          { y: `25%` },
+          { autoAlpha: 1, y: 0, stagger: 0.2 }
+        );
+      }
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={clsx(className, styles.root)}>

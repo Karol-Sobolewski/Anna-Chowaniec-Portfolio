@@ -5,8 +5,6 @@
   display: flex;
   justify-content: center;
   position: relative;
-  .addOfferButton {
-  }
   .addOfferButton__active {
     position: absolute;
     right: 0;
@@ -70,17 +68,5 @@
     .offerRow {
       width: 80%;
     }
-  }
-}
-
-/* Media pointer*/
-@media (hover: hover) and (pointer: fine) {
-  .root {
-  }
-}
-
-/* Media touchable */
-@media (pointer: coarse) {
-  .root {
   }
 }

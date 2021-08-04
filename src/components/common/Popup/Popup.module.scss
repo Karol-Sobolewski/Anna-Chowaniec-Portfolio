@@ -7,7 +7,7 @@
   height: 100vh;
   justify-content: center;
   left: 50%;
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
   transition: opacity 500ms ease-in-out;
@@ -15,7 +15,7 @@
   z-index: 9999999;
   .popupContent {
     align-items: center;
-    background-color: #edf7f6;
+    background-color: $popup-content-bg;
     border-radius: $radius;
     display: flex;
     flex-direction: column;

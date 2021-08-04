@@ -24,25 +24,27 @@ const Component = ({ className, children, offerCategory }) => {
   const offerRef = useRef(null);
 
   useEffect(() => {
-    const offerElements = offerRef.current.childNodes;
-    for (const offerElement of offerElements) {
-      gsap.set(offerElement, {
-        autoAlpha: 0,
-        x: `-50%`,
-      });
-      const timelineOffer = gsap.timeline({
-        duration: 0.5,
-        defaults: {
-          ease: `Power3.easeOut`,
-        },
-      });
-      timelineOffer.fromTo(
-        offerElements,
-        { x: `-50%` },
-        { autoAlpha: 1, x: 0, stagger: 0.2 }
-      );
+    if (!isAuthenticated) {
+      const offerElements = offerRef.current.childNodes;
+      for (const offerElement of offerElements) {
+        gsap.set(offerElement, {
+          autoAlpha: 0,
+          x: `-50%`,
+        });
+        const timelineOffer = gsap.timeline({
+          duration: 0.5,
+          defaults: {
+            ease: `Power3.easeOut`,
+          },
+        });
+        timelineOffer.fromTo(
+          offerElements,
+          { x: `-50%` },
+          { autoAlpha: 1, x: 0, stagger: 0.2 }
+        );
+      }
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={clsx(className, styles.root)}>

@@ -24,8 +24,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      .addOfferButton {
-      }
       .addOfferButton__active {
         position: absolute;
         right: 0;
@@ -33,23 +31,6 @@
         z-index: 10;
       }
     }
-  }
-}
-
-/* ExtraExtraLarge Devices, UltraWide Desktops  */
-@media (min-width: 1921px) {
-  .root {
-  }
-}
-
-/* ExtraLarge Devices, Desktops  */
-@media (min-width: 1200px) and (max-width: 1920px) {
-  .root {
-  }
-}
-/* Large Devices, Laptops, Large Tablets iPad Pro */
-@media only screen and (min-width: 1024px) and (max-width: 1199px) {
-  .root {
   }
 }
 
@@ -63,31 +44,9 @@
   }
 }
 
-/* Small Devices, Small tablets Large Phones */
-@media only screen and (min-width: 0px) and (max-width: 767px) {
-  .root {
-  }
-}
-
-/* Extra Small Devices, Phones */
-@media only screen and (min-width: 0px) and (max-width: 479px) {
-  .root {
-  }
-}
-
 /* Extra Small Devices, Small Phones Landscape*/
 @media only screen and (max-height: 499px) {
   .root .offerRow .offerColumn {
     height: auto;
-  }
-}
-
-/* Media pointer*/
-@media (hover: hover) and (pointer: fine) {
-}
-
-/* Media touchable */
-@media (pointer: coarse) {
-  .root {
   }
 }

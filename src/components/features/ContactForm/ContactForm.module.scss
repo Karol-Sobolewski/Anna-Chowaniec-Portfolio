@@ -26,8 +26,6 @@
     padding: 16px 32px;
     text-decoration: none;
     transition: $transition;
-    &:hover {
-    }
   }
   textarea {
     height: 6em;
@@ -43,8 +41,8 @@
   }
 }
 .submitFeedback {
-  background-color: $colorSuccess;
-  color: $white;
+  background-color: $submitFeedback-bg;
+  color: $submitFeedback-color;
 }
 
 /* ExtraExtraLarge Devices, UltraWide Desktops  */

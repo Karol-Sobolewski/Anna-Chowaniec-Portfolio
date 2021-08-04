@@ -18,7 +18,7 @@ $lightGray: #748187;
 $lightGreen: #32cd32;
 $lightGreyBlue: #7aa3cc;
 $lightWhite: #f4f5f7;
-$lightWhiteBlue: #e0e3ed;
+$lightWhiteBlue: #edf7f6;
 $mint: #aaf0d1;
 $pink: #ffc0cb;
 $darkPink: #be6f7d;
@@ -101,4 +101,39 @@ $footer-bg: $lightGrayGradient;
 /*Header*/
 $header-bg: $lightGrayGradient;
 $header-link: $white;
-$header-link-stroke: 5px #fff;
+$header-link-stroke: 5px $white;
+
+/*Photo Selector*/
+$photoSelector-background: $white;
+$photoSelector-icon__chosen-color: $green;
+$photoSelector-icon__chosen-bg: $white;
+
+/*Popup*/
+$popup-content-bg: $lightWhiteBlue;
+
+/*Add Category Form*/
+$addCategoryForm-bg: $white;
+
+/*Add Offer Form*/
+$addOfferForm-bg: $white;
+
+/*Contact Form*/
+$submitFeedback-color: $white;
+$submitFeedback-bg: $colorSuccess;
+
+
+/*Slider*/
+$slider-caption-bg: rgba(0, 0, 0, 0.3);
+$slider-caption-text: $white;
+
+
+/*Main Layout*/
+$mainLayout-content__splash-bg: linear-gradient(
+  180deg,
+  rgba(0, 0, 0, 1) 0%,
+  rgba(0, 0, 0, 0) 100%
+);
+
+/*Contact Page*/
+
+$contactPage-bg: $white;

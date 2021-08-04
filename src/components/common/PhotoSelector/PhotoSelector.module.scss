@@ -2,7 +2,7 @@
 
 .root {
   align-items: center;
-  background-color: white;
+  background-color: $photoSelector-background;
   border-radius: 5px;
   bottom: 15%;
   box-shadow: $box-shadow-small;
@@ -15,9 +15,9 @@
   .photoPick {
     display: flex;
     flex-direction: row;
+    height: 100%;
     margin: 0;
     padding: 0;
-    height: 100%;
     .photoSlide {
       align-items: center;
       background: none;
@@ -30,80 +30,33 @@
       padding: 0;
       position: relative;
       .icon__chosen {
-        color: green;
+        background-color: $photoSelector-icon__chosen-bg;
+        border-radius: 50%;
+        color: $photoSelector-icon__chosen-color;
         position: absolute;
         right: 0;
         top: 5%;
-        background-color: white;
-        border-radius: 50%;
       }
       img {
-        object-fit: contain;
-        width: 6rem;
-        padding: 0.4rem 0.2rem;
         margin: 0;
+        object-fit: contain;
+        padding: 0.4rem 0.2rem;
+        width: 6rem;
       }
     }
     .photoSlide__checked {
       @extend .photoSlide;
       position: relative;
       &::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
         background: rgba(255, 255, 255, 0.5);
+        content: "";
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
         z-index: 1;
       }
     }
-  }
-}
-
-/* ExtraExtraLarge Devices, UltraWide Desktops  */
-@media (min-width: 1921px) {
-  .root {
-  }
-}
-
-/* ExtraLarge Devices, Desktops  */
-@media (min-width: 1200px) and (max-width: 1920px) {
-  .root {
-  }
-}
-/* Large Devices, Laptops, Large Tablets iPad Pro */
-@media only screen and (min-width: 1024px) and (max-width: 1199px) {
-  .root {
-  }
-}
-
-/* Medium Devices, Tablets iPad */
-@media only screen and (min-width: 768px) and (max-width: 1023px) {
-  .root {
-  }
-}
-
-/* Small Devices, Small tablets Large Phones */
-@media only screen and (min-width: 480px) and (max-width: 767px) {
-  .root {
-  }
-}
-
-/* Extra Small Devices, Phones */
-@media only screen and (min-width: 0px) and (max-width: 479px) {
-  .root {
-  }
-}
-
-/* Media pointer*/
-@media (hover: hover) and (pointer: fine) {
-  .root {
-  }
-}
-
-/* Media touchable */
-@media (pointer: coarse) {
-  .root {
   }
 }

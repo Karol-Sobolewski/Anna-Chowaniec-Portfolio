@@ -9,7 +9,7 @@
   position: relative;
   .contactRow {
     align-items: center;
-    background: $white;
+    background: $contactPage-bg;
     border-radius: $radius;
     border: 1px;
     box-shadow: $box-shadow-small;
@@ -145,17 +145,5 @@
   .root .contactRow .contactCol .contactLink {
     width: 100%;
     margin-left: 2rem;
-  }
-}
-
-/* Media pointer*/
-@media (hover: hover) and (pointer: fine) {
-  .root {
-  }
-}
-
-/* Media touchable */
-@media (pointer: coarse) {
-  .root {
   }
 }
