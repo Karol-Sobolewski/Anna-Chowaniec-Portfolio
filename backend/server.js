@@ -5,8 +5,6 @@ const mongoose = require(`mongoose`);
 const fileUpload = require(`express-fileupload`);
 const morgan = require(`morgan`);
 const helmet = require(`helmet`);
-const jwt = require(`express-jwt`);
-const jwksRsa = require(`jwks-rsa`);
 require("dotenv").config(); //eslint-disable-line
 
 const bodyParser = require(`body-parser`);
