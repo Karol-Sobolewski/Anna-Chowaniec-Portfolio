@@ -121,11 +121,11 @@ const Component = ({ className, children }) => {
     });
     gsap.set(aboutPhoto, {
       autoAlpha: 0,
-      x: `-100%`,
+      x: `-50%`,
     });
     gsap.set(aboutContent, {
       autoAlpha: 0,
-      x: `100%`,
+      x: `50%`,
     });
 
 
