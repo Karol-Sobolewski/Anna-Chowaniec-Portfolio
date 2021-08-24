@@ -36,7 +36,11 @@ const appOrigin = process.env.APP_ORIGIN || `http://localhost:${appPort}`;
 
 /* MIDDLEWARE */
 app.use(morgan(`dev`));
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use(cors({ origin: appOrigin }));
 app.use(
   fileUpload({
