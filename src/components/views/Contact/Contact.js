@@ -70,7 +70,7 @@ const Component = ({ className, children }) => {
     const contactLinks = contactColumns[1];
     gsap.set(contactLinks, {
       autoAlpha: 0,
-      x: `50%`,
+      y: `50%`,
     });
 
     const runOnComplete = () => {
@@ -81,8 +81,8 @@ const Component = ({ className, children }) => {
       });
       timelineContactLinks.fromTo(
         contactLinks,
-        { x: `50%` },
-        { autoAlpha: 1, x: 0 }
+        { y: `50%` },
+        { autoAlpha: 1, y: 0 }
       );
     };
 
@@ -111,41 +111,6 @@ const Component = ({ className, children }) => {
           { autoAlpha: 1, y: 0, stagger: 0.15 }
         );
     }
-    // for (const contactLink of contactLinks) {
-    //   gsap.set(contactLink, {
-    //     autoAlpha: 0,
-    //     y: `50%`,
-    //   });
-    //   const timelineContactLinks = gsap.timeline({
-    //     defaults: {
-    //       ease: `Power3.easeOut`,
-    //     },
-    //   });
-    //   timelineContactLinks.fromTo(
-    //     contactLinks,
-    //     { y: `50%` },
-    //     { autoAlpha: 1, y: 0, stagger: 0.2 }
-    //   );
-    // }
-
-    // for (const contactColumn of contactColumns) {
-    //   gsap.set(contactColumn, {
-    //     autoAlpha: 0,
-    //     y: `10%`,
-    //   });
-    //   const timelineContact = gsap.timeline({
-    //     duration: 0.1,
-    //     defaults: {
-    //       ease: `Power3.easeOut`,
-    //     },
-    //     onComplete: runOnComplete,
-    //   });
-    //   timelineContact.fromTo(
-    //     contactColumns,
-    //     { y: `50%` },
-    //     { autoAlpha: 1, y: 0, stagger: 0.1 }
-    //   );
-    // }
   }, []);
 
   return (

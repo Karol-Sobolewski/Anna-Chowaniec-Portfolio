@@ -121,15 +121,15 @@ const Component = ({ className, children }) => {
     });
     gsap.set(aboutPhoto, {
       autoAlpha: 0,
-      x: `-50%`,
+      x: `-5`,
     });
     gsap.set(aboutContent, {
       autoAlpha: 0,
-      x: `50%`,
+      x: `5`,
     });
 
 
-    const constAboutTimeline = gsap.timeline({
+    const aboutTimeline = gsap.timeline({
       defaults: {
         duration: 1,
         ease: `Power3.easeOut`,
@@ -140,15 +140,17 @@ const Component = ({ className, children }) => {
         start: `top bottom`,
       },
     });
-    constAboutTimeline
+    aboutTimeline
       .to(aboutHeader, {
         delay: 0.3,
         y: 0,
         autoAlpha: 1,
       })
       .to([aboutPhoto, aboutContent], {
+        delay: 0.2,
         x: 0,
         autoAlpha: 1,
+        stagger: 0.1,
       }, `<0.5`);
   },[]);
 

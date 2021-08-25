@@ -34,36 +34,28 @@ const Component = ({ className, children }) => {
   const footerRef = useRef(null);
   useEffect(() => {
     const footerElements = footerRef.current.childNodes;
-    for (const footerElement of footerElements) {
-      gsap.set(footerElement, { autoAlpha: 0 });
-      ScrollTrigger.batch(footerElements, {
+    gsap.set(footerElements, { autoAlpha: 0, y: `-10` });
+    const footerTimeline = gsap.timeline({
+      defaults: {
+        duration: 1,
+        ease: `Power3.easeOut`,
+      },
+      scrollTrigger: {
+        trigger: footerElements,
+        toggleActions: `play none play reverse`,
         start: `top bottom`,
-        onEnter: (batch) =>
-          gsap.to(batch, {
-            autoAlpha: 1,
-            delay: 0.1,
-            duration: 0.5,
-            stagger: 0.2,
-            y: 0,
-          }),
-        onEnterBack: (batch) =>
-          gsap.to(batch, {
-            autoAlpha: 1,
-            delay: 0.5,
-            stagger: 0.2,
-            y: 0,
-          }),
-        onLeaveBack: (batch) =>
-          gsap.to(batch, {
-            autoAlpha: 0,
-            delay: 0.5,
-            stagger: 0.2,
-          }),
-      });
-      ScrollTrigger.addEventListener(`refreshInit`, () =>
-        gsap.set(footerElement, { autoAlpha: 0 })
-      );
-    }
+      },
+    });
+    footerTimeline.to(
+      footerElements,
+      {
+        delay: 0.2,
+        y: 0,
+        autoAlpha: 1,
+        stagger: 0.2,
+      },
+      `<0.5`
+    );
   }, []);
 
   return (
