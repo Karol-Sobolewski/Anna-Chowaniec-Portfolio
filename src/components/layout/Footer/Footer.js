@@ -34,28 +34,14 @@ const Component = ({ className, children }) => {
   const footerRef = useRef(null);
   useEffect(() => {
     const footerElements = footerRef.current.childNodes;
-    console.log(`footerElements`, footerRef.current);
-    // for (const footerElement of footerElements) {
-    gsap.set(footerElements, { autoAlpha: 0, y: `-50` });
-
-    const timelineUsesLink = gsap.timeline({
-      defaults: {
-        duration: 1,
-        ease: `Power3.easeOut`,
-      },
-      scrollTrigger: {
-        trigger: footerRef.current,
-        toggleActions: `play none play reverse`,
-        start: `top bottom`,
-      },
-    });
-    timelineUsesLink.to(footerElements, {
-      delay: 1,
-      y: 0,
-      autoAlpha: 1,
-      stagger: 0.2,
-    });
-  }, []);
+    for (const footerElement of footerElements) {
+      gsap.set(footerElement, { autoAlpha: 0, y: `-50` });
+      ScrollTrigger.batch(footerElements, {
+        onEnter: (batch) =>
+          gsap.to(batch, { autoAlpha: 1, y: 0, stagger: 0.2 }),
+      });
+    }
+  });
 
   return (
     <footer className={clsx(className, styles.root)}>

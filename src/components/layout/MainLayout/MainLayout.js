@@ -64,7 +64,7 @@ const Component = ({ className, children }) => {
       <div className={margin ? styles.content__splash : styles.content}>
         {children}
       </div>
-      <Footer />
+      <Footer RWD={RWD} />
     </div>
   );
 };
