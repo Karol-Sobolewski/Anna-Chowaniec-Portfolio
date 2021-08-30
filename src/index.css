@@ -15,30 +15,24 @@ code {
 @font-face {
   font-family: "DancingScript";
   src: local("DancingScript"), url(./fonts/DancingScript.ttf) format("truetype");
-}
+  charset: utf-8;
+  unicode-range: U+0105-017b;
 
-@font-face {
-  font-family: "PetitFormalScript";
-  src: local("PetitFormalScript"),
-    url(./fonts/PetitFormalScript.ttf) format("truetype");
 }
 
 @font-face {
   font-family: "Lato";
   src: local("Lato"), url(./fonts/Lato.ttf) format("truetype");
+  charset: utf-8;
+  unicode-range: U+0105-017b;
+
 }
 
 @font-face {
   font-family: "Quicksand";
   src: local("Quicksand"), url(./fonts/Quicksand.ttf) format("truetype");
+  charset: utf-8;
+  unicode-range: U+0105-017b;
+
 }
 
-@font-face {
-  font-family: "KaushanScript";
-  src: local("KaushanScript"), url(./fonts/KaushanScript.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "Olympic";
-  src: local("Olympic"), url(./fonts/Olympic.ttf) format("truetype");
-}
