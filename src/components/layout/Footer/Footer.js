@@ -34,28 +34,27 @@ const Component = ({ className, children }) => {
   const footerRef = useRef(null);
   useEffect(() => {
     const footerElements = footerRef.current.childNodes;
-    gsap.set(footerElements, { autoAlpha: 0, y: `-10` });
-    const footerTimeline = gsap.timeline({
+    console.log(`footerElements`, footerRef.current);
+    // for (const footerElement of footerElements) {
+    gsap.set(footerElements, { autoAlpha: 0, y: `-50` });
+
+    const timelineUsesLink = gsap.timeline({
       defaults: {
         duration: 1,
         ease: `Power3.easeOut`,
       },
       scrollTrigger: {
-        trigger: footerElements,
+        trigger: footerRef.current,
         toggleActions: `play none play reverse`,
         start: `top bottom`,
       },
     });
-    footerTimeline.to(
-      footerElements,
-      {
-        delay: 0.2,
-        y: 0,
-        autoAlpha: 1,
-        stagger: 0.2,
-      },
-      `<0.5`
-    );
+    timelineUsesLink.to(footerElements, {
+      delay: 1,
+      y: 0,
+      autoAlpha: 1,
+      stagger: 0.2,
+    });
   }, []);
 
   return (
