@@ -1,9 +1,12 @@
 @import "../../../styles/settings.scss";
 
 .root {
+  align-items: center;
+  display: flex;
   font-family: $font-text;
-  height: 80vh;
+  justify-content: center;
   margin-top: 5vh;
+  min-height: 80vh;
   position: relative;
   h2 {
     font-size: 2.5rem;
@@ -13,6 +16,7 @@
     position: absolute;
     right: 10%;
     top: 25%;
+    z-index: 1;
   }
   .editAbout {
     align-items: center;

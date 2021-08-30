@@ -203,6 +203,16 @@ const Component = ({ className, children }) => {
                   >
                     {isAuthenticated && edit ? (
                       <div>
+                        <ImageUploader
+                          withIcon
+                          buttonText="Wybierz obraz"
+                          imgExtension={[`.jpg`, `.png`]}
+                          maxFileSize={5242880}
+                          withPreview
+                          onChange={handleSelectedImage}
+                          label="Maksymalny rozmiar: 5MB, Formaty: jpg, png"
+                          singleImage
+                        />
                         <input
                           name="heading"
                           type="text"
@@ -214,16 +224,6 @@ const Component = ({ className, children }) => {
                           rows="4"
                           cols="50"
                           defaultValue={aboutPage.description[0].text}
-                        />
-                        <ImageUploader
-                          withIcon
-                          buttonText="Wybierz obraz"
-                          imgExtension={[`.jpg`, `.png`]}
-                          maxFileSize={5242880}
-                          withPreview
-                          onChange={handleSelectedImage}
-                          label="Maksymalny rozmiar: 5MB, Formaty: jpg, png"
-                          singleImage
                         />
                         <Button type="submit" name="Wyślij" />
                       </div>
