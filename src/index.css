@@ -12,27 +12,24 @@ code {
     monospace;
 }
 
-@font-face {
+/* @font-face {
   font-family: "DancingScript";
   src: local("DancingScript"), url(./fonts/DancingScript.ttf) format("truetype");
-  charset: utf-8;
-  unicode-range: U+0105-017b;
+  unicode-range: 	U+0-10FFFF;
 
-}
+} */
 
 @font-face {
   font-family: "Lato";
   src: local("Lato"), url(./fonts/Lato.ttf) format("truetype");
-  charset: utf-8;
-  unicode-range: U+0105-017b;
+  unicode-range: 	U+0-10FFFF;
 
 }
 
 @font-face {
   font-family: "Quicksand";
   src: local("Quicksand"), url(./fonts/Quicksand.ttf) format("truetype");
-  charset: utf-8;
-  unicode-range: U+0105-017b;
+  unicode-range:	U+0-10FFFF;
 
 }
 
