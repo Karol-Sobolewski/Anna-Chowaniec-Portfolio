@@ -28,13 +28,14 @@ const Component = ({ className, children }) => {
   });
   function scrollFunction() {
     if (
-      (document.body.scrollTop > 1 || document.documentElement.scrollTop) > 1 &&
+      (document.body.scrollTop > 10 || document.documentElement.scrollTop) >
+        10 &&
       history.location.pathname === `/`
     ) {
       setSplash(false);
     } else if (
-      (document.body.scrollTop <= 1 || document.documentElement.scrollTop) <=
-        1 &&
+      (document.body.scrollTop <= 10 || document.documentElement.scrollTop) <=
+        10 &&
       history.location.pathname === `/`
     ) {
       setSplash(true);
