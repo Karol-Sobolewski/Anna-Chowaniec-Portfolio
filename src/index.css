@@ -15,21 +15,25 @@ code {
 /* @font-face {
   font-family: "DancingScript";
   src: local("DancingScript"), url(./fonts/DancingScript.ttf) format("truetype");
-  unicode-range: 	U+0-10FFFF;
-
 } */
+
+@font-face {
+  font-family: "DancingScript";
+  src: local("DancingScript"), url(./fonts/DancingScript.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Sacramento";
+  src: local("Sacramento"), url(./fonts/Sacramento.ttf) format("truetype");
+}
 
 @font-face {
   font-family: "Lato";
   src: local("Lato"), url(./fonts/Lato.ttf) format("truetype");
-  unicode-range: 	U+0-10FFFF;
-
 }
 
 @font-face {
   font-family: "Quicksand";
   src: local("Quicksand"), url(./fonts/Quicksand.ttf) format("truetype");
-  unicode-range:	U+0-10FFFF;
-
 }
 
