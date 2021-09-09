@@ -11,7 +11,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import autosize from 'autosize';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '../../common/Button/Button';
 import { Loader } from '../../common/Loader/Loader';
 import styles from './About.module.scss';

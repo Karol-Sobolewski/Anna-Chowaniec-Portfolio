@@ -92,7 +92,7 @@ const Component = ({ splash, RWD }) => {
           />
         </a>
         <div
-          className={RWD ? (active ? styles.links_RWD : styles.links_RWDHidden) : styles.links} //eslint-disable-line
+          className={!RWD ? styles.links : (!active ? styles.links_RWD : styles.links_RWDActive) } //eslint-disable-line
         >
           {MenuItems.map((item) => (
             <NavLink

@@ -63,7 +63,7 @@
       padding-bottom: 30%;
       padding-top: 10vh;
       position: absolute;
-      right: 0;
+      right: -120vw;
       top: 0;
       transition: $transition-long;
       width: 60vw;
@@ -75,9 +75,9 @@
         width: 80%;
       }
     }
-    .links_RWDHidden {
+    .links_RWDActive {
       @extend .links_RWD;
-      right: -60vw;
+      right: 0;
     }
   }
 
