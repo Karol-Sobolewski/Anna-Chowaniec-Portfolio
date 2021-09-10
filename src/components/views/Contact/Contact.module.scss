@@ -64,6 +64,8 @@
   }
   .socialIconsRow__edit {
     @extend .socialIconsRow;
+    flex-direction: column;
+    width: 100%;
   }
   textarea {
     width: 90%;
