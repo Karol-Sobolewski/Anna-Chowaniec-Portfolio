@@ -28,3 +28,17 @@
     color: $link-color-active;
   }
 }
+
+@media (prefers-color-scheme: light) {
+  .root {
+    a {
+      color: $link-color-darkTheme;
+    }
+    a:hover {
+      color: $link-color-active;
+    }
+    p:hover {
+      color: $link-color-darkTheme__hover;
+    }
+  }
+}

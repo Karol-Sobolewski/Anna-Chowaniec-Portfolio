@@ -207,3 +207,14 @@
     left: 45%;
   }
 }
+
+@media (prefers-color-scheme: light) {
+  .root .mainMenu .links {
+    .link {
+      color: $link__scroll-color-darkTheme;
+    }
+    .link__scroll{
+      color: $link-color-darkTheme;
+    }
+  }
+}

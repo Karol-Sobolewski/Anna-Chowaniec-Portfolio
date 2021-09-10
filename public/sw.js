@@ -1,5 +1,9 @@
-const cacheName = `app-name`;
-const filesToCache = [`/images/logo.svg`, `/index.html`];
+const cacheName = `anna-chowaniec-fotografia`;
+const filesToCache = [
+  `/images/logo.svg`,
+  `images/photos/about/me.WEBP`,
+  `/index.html`,
+];
 self.addEventListener(`install`, function (e) {  //eslint-disable-line
   console.log(`[ServiceWorker] Install`);
   e.waitUntil(

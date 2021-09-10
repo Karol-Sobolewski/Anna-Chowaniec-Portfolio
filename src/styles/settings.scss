@@ -3,7 +3,7 @@ $radius: 5px;
 $base-size: 1rem;
 $transition: all 0.3s;
 $transition-long: all 0.8s;
-$font-title: 'Dancing Script', cursive;
+$font-title: "Dancing Script", cursive;
 $font-text: "Quicksand", sans-serif;
 
 /* DO NOT USE THOSE VARIABLES IN THE OTHER SCSS FILES! */
@@ -44,6 +44,9 @@ $link-color: $gray;
 $link-color-splash: $white;
 $link-color-active: $lightGray;
 $link-shadow: none;
+$link__scroll-color-darkTheme: $white;
+$link-color-darkTheme: $lightGray;
+$link-color-darkTheme__hover: $darkPink;
 
 /*Button*/
 $button-main-bg-hover: $lightGray;
@@ -65,10 +68,10 @@ $loader-color: $gray;
 
 /*Header*/
 
-$logo-color: invert(24%) sepia(7%) saturate(680%) hue-rotate(152deg)
-  brightness(93%) contrast(87%) drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
-$logo-color-active: invert(54%) sepia(12%) saturate(331%) hue-rotate(154deg)
-  brightness(89%) contrast(87%) drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
+$logo-color: invert(24%) sepia(7%) saturate(680%) hue-rotate(152deg) brightness(93%) contrast(87%)
+  drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
+$logo-color-active: invert(54%) sepia(12%) saturate(331%) hue-rotate(154deg) brightness(89%) contrast(87%)
+  drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
 $header-bg: $lightGray;
 $header-links-RWD-bg: linear-gradient(-45deg, #cfd9df 0%, #abbdc7 100%);
 
@@ -121,18 +124,12 @@ $addOfferForm-bg: $white;
 $submitFeedback-color: $white;
 $submitFeedback-bg: $colorSuccess;
 
-
 /*Slider*/
 $slider-caption-bg: rgba(0, 0, 0, 0.3);
 $slider-caption-text: $white;
 
-
 /*Main Layout*/
-$mainLayout-content__splash-bg: linear-gradient(
-  180deg,
-  rgba(0, 0, 0, 1) 0%,
-  rgba(0, 0, 0, 0) 100%
-);
+$mainLayout-content__splash-bg: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
 
 /*Contact Page*/
 
