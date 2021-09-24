@@ -205,11 +205,11 @@ const Component = ({ className, children }) => {
                         <ImageUploader
                           withIcon
                           buttonText="Wybierz obraz"
-                          imgExtension={[`.jpg`, `.png`]}
+                          imgExtension={[`.jpg`, `.png`, `.jpeg`]}
                           maxFileSize={5242880}
                           withPreview
                           onChange={handleSelectedImage}
-                          label="Maksymalny rozmiar: 5MB, Formaty: jpg, png"
+                          label="Maksymalny rozmiar: 5MB, Formaty: jpg, jpeg, png"
                           singleImage
                         />
                         <input
