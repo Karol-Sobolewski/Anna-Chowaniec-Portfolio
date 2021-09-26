@@ -6,6 +6,7 @@ require("dotenv").config(); //eslint-disable-line
 const fs = require(`fs`);
 const jwt = require(`express-jwt`);
 const jwksRsa = require(`jwks-rsa`);
+const cloudinary = require(`cloudinary`).v2;
 
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
@@ -42,19 +43,22 @@ router.get(`/photos/:id`, async (req, res) => {
 
 router.post(`/photos`, checkJwt, async (req, res) => {
   const { file } = req.files;
-  if (!file) {
-    return res.status(400).json({ message: `no files uploaded` });
-  }
+  // console.log(`file`, req.body);
+  // if (!file) {
+  //   return res.status(400).json({ message: `no files uploaded` });
+  // }
 
-  file.mv(`./public/${req.body.src}`, (err) => {
-    if (err) {
-      console.err(err);
-      return res.status(500).send(err);
-    }
-  });
+  // file.mv(`./public/${req.body.src}`, (err) => {
+  //   if (err) {
+  //     console.err(err);
+  //     return res.status(500).send(err);
+  //   }
+  // });
   const newPhoto = new Photo({
     title: req.body.title,
+    cloudName: req.body.cloudName,
     category: req.body.category,
+    categoryName: req.body.categoryName,
     src: req.body.src,
     order: req.body.order,
     width:
@@ -95,14 +99,29 @@ router.put(`/photos/:id`, checkJwt, async (req, res) => {
 
 router.delete(`/photos/:id`, checkJwt, async (req, res) => {
   try {
-    const result = await Photo.findById(req.params.id);
-
-    if (result) {
-      await result.deleteOne();
-      fs.unlink(`./public/${result.src}`, (err) => {
-        if (err) throw err;
-      });
-      res.json(result);
+    const resultData = await Photo.findById(req.params.id);
+    cloudinary.config({
+      cloud_name: process.env.REACT_APP_CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.REACT_APP_CLOUDINARY_API_KEY,
+      api_secret: process.env.REACT_APP_CLOUDINARY_API_SECRET,
+      secure: true,
+    });
+    if (resultData) {
+      if (resultData.cloudName) {
+        console.log(`result`, resultData);
+        cloudinary.uploader.destroy(
+          `${resultData.categoryName}/${resultData.cloudName}`,
+          function (err, result) {
+            console.log(result);
+          }
+        );
+      } else {
+        fs.unlink(`./public/${resultData.src}`, (err) => {
+          if (err) throw err;
+        });
+      }
+      await resultData.deleteOne();
+      res.json(resultData);
     } else res.status(404).json({ message: `Not found...` });
   } catch (err) {
     res.status(500).json(err);

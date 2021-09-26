@@ -62,7 +62,17 @@ export const fetchSelectedPhotoRequest = (photo) => async (dispatch) => {
   }
 };
 
-export const addPhotoRequest = (data, token, category) => async (dispatch) => {
+export const addPhotoRequest = (data, imagedata, token, category) => async (
+  dispatch
+) => {
+  Axios.post(
+    `https://api.cloudinary.com/v1_1/hgbaa25ay/image/upload`,
+    imagedata
+  )
+    .then((response) => response.data.secure_url)
+    .then((response) => {
+      window.location.reload(false);
+    });
   dispatch(fetchStarted());
   try {
     const res = await Axios.post(`${API_URL}/photos`, data, {

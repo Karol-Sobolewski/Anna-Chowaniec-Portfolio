@@ -3,6 +3,8 @@ const mongoose = require(`mongoose`);
 const photoSchema = new mongoose.Schema({
   src: { type: String },
   title: { type: String, required: true },
+  cloudName: { type: String, required: true },
+  categoryName: { type: String, required: true },
   width: { type: Number },
   height: { type: Number },
   category: {

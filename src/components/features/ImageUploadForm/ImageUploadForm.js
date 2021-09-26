@@ -30,12 +30,14 @@ const Component = ({ className, children, category }) => {
     title: ``,
     category: category._id,
     categoryName: category.name,
+    cloudName: ``,
     width: ``,
     height: ``,
     format: ``,
-    order: 0,
+    order: -1,
   });
   const [photoError, setPhotoError] = useState(false);
+  const [photoCloudTitle, setPhotoCloudTitle] = useState(``);
   useEffect(() => {
     if (photo.file) setPhotoError(false);
   }, [photo.file]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -62,7 +64,9 @@ const Component = ({ className, children, category }) => {
 
   const handleImage = async (files) => {
     if (files[0]) {
+      console.log(`files`, files[0]);
       const image = await resizeFile(files[0]);
+      console.log(`image`, image);
       setPhoto({ ...photo, file: image });
     } else setPhoto({ ...photo, file: null });
   };
@@ -76,10 +80,11 @@ const Component = ({ className, children, category }) => {
 
   useEffect(() => {
     const photoTitle = `${category.name}_${uniqid()}`;
-
+    setPhotoCloudTitle(photoTitle);
     setPhoto({
       ...photo,
-      src: `images/photos/${category.name}/${photoTitle}.WEBP`,
+      cloudName: photoTitle,
+      src: `https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload/v1632648100/${photo.categoryName}/${photoTitle}.webp`,
     });
   }, [photo.title]); //eslint-disable-line
 
@@ -87,9 +92,12 @@ const Component = ({ className, children, category }) => {
     if (photo.file && photo.format) {
       const token = await getAccessTokenSilently();
       const formData = new FormData();
+      const imageFormData = new FormData();
+
       for (const key of [
         `category`,
         `title`,
+        `cloudName`,
         `categoryName`,
         `format`,
         `order`,
@@ -97,9 +105,12 @@ const Component = ({ className, children, category }) => {
       ]) {
         formData.append(key, photo[key]);
       }
+      imageFormData.append(`file`, photo.file);
+      imageFormData.append(`upload_preset`, `ehibbaam`);
+      imageFormData.append(`public_id`, photoCloudTitle);
+      imageFormData.append(`folder`, photo.categoryName);
       formData.append(`file`, photo.file);
-      await dispatch(addPhotoRequest(formData, token, category));
-      window.location.reload(false);
+      await dispatch(addPhotoRequest(formData, imageFormData, token, category));
     }
     if (!photo.file) setPhotoError(true);
     if (!photo.format) setFormatError(true);

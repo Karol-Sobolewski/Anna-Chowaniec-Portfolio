@@ -31,6 +31,8 @@ const Component = ({ className }) => {
   const filtered = allMenus.filter((item) => item.component === `GalleryPage`);
 
   const [photoError, setPhotoError] = useState(false);
+  const [photoCloudTitle, setPhotoCloudTitle] = useState(``);
+
   const [category, setCategory] = useState({
     _id: categoryID,
     name: ``,
@@ -48,6 +50,7 @@ const Component = ({ className }) => {
     file: null,
     title: ``,
     category: ``,
+    cloudName: ``,
     categoryName: ``,
     width: 4,
     height: 3,
@@ -69,12 +72,15 @@ const Component = ({ className }) => {
     });
 
     const photoTitle = `${category.name}_${uniqid()}`;
+    setPhotoCloudTitle(photoTitle);
+
     setPhoto({
       ...photo,
       title: `${category.name}_1`,
       categoryName: category.name,
       category: category._id,
-      src: `images/photos/${category.name}/${photoTitle}.WEBP`,
+      cloudName: photoTitle,
+      src: `https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload/v1632648100/${category.name}/${photoTitle}.webp`,
     });
   }, [category.name]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -120,23 +126,33 @@ const Component = ({ className }) => {
         categoryFormData.append(key, category[key]);
       }
       categoryFormData.append(`image`, JSON.stringify(category.image));
-      const photoFormData = new FormData();
+      const imageFormData = new FormData();
+      const imageCloudFormData = new FormData();
+
       for (const key of [
         `category`,
         `title`,
         `categoryName`,
+        `cloudName`,
         `format`,
         `order`,
         `photo`,
         `src`,
       ]) {
-        photoFormData.append(key, photo[key]);
+        imageFormData.append(key, photo[key]);
       }
-      photoFormData.append(`file`, photo.file);
+
+      imageCloudFormData.append(`file`, photo.file);
+      imageCloudFormData.append(`upload_preset`, `ehibbaam`);
+      imageCloudFormData.append(`public_id`, photoCloudTitle);
+      imageCloudFormData.append(`folder`, category.name);
+      imageFormData.append(`file`, photo.file);
+
       dispatch(addMenuRequest(category, token));
       dispatch(addCategoryRequest(categoryFormData, token));
-      dispatch(addPhotoRequest(photoFormData, token, category));
-      window.location.reload(false);
+      await dispatch(
+        addPhotoRequest(imageFormData, imageCloudFormData, token, category)
+      );
     } else {
       setPhotoError(true);
     }
@@ -183,11 +199,11 @@ const Component = ({ className }) => {
       <ImageUploader
         withIcon
         buttonText="Wybierz obraz"
-        imgExtension={[`.jpg`, `.png`]}
+        imgExtension={[`.jpg`, `.png`, `.jpeg`]}
         maxFileSize={5242880}
         withPreview
         onChange={handleImage}
-        label="Maksymalny rozmiar: 5MB, Formaty: jpg, png"
+        label="Maksymalny rozmiar: 5MB, Formaty: jpg, jpeg, png"
         singleImage
         require
       />
