@@ -21,6 +21,13 @@ const checkJwt = jwt({
   algorithms: [`RS256`],
 });
 
+cloudinary.config({
+  cloud_name: process.env.REACT_APP_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.REACT_APP_CLOUDINARY_API_KEY,
+  api_secret: process.env.REACT_APP_CLOUDINARY_API_SECRET,
+  secure: true,
+});
+
 router.get(`/photos`, async (req, res) => {
   try {
     const result = await Photo.find().populate(`category`).sort({ order: 1 });
@@ -42,8 +49,7 @@ router.get(`/photos/:id`, async (req, res) => {
 });
 
 router.post(`/photos`, checkJwt, async (req, res) => {
-  const { file } = req.files;
-  // console.log(`file`, req.body);
+  // const { file } = req.files;
   // if (!file) {
   //   return res.status(400).json({ message: `no files uploaded` });
   // }
@@ -100,12 +106,6 @@ router.put(`/photos/:id`, checkJwt, async (req, res) => {
 router.delete(`/photos/:id`, checkJwt, async (req, res) => {
   try {
     const resultData = await Photo.findById(req.params.id);
-    cloudinary.config({
-      cloud_name: process.env.REACT_APP_CLOUDINARY_CLOUD_NAME,
-      api_key: process.env.REACT_APP_CLOUDINARY_API_KEY,
-      api_secret: process.env.REACT_APP_CLOUDINARY_API_SECRET,
-      secure: true,
-    });
     if (resultData) {
       if (resultData.cloudName) {
         console.log(`result`, resultData);
@@ -130,10 +130,25 @@ router.delete(`/photos/:id`, checkJwt, async (req, res) => {
 
 router.delete(`/photos/categories/:id`, checkJwt, async (req, res) => {
   const categoryName = await Category.findById(req.params.id).exec();
+  console.log(`categoryName.name`, categoryName.name);
   try {
     const result = await Photo.findOne({ category: req.params.id });
     if (result) {
       await Photo.deleteMany({ category: req.params.id });
+
+      await cloudinary.api.delete_resources_by_prefix(
+        `${categoryName.name}/`,
+        function (error, resultCloud2) {
+          console.log(resultCloud2);
+        }
+      );
+      cloudinary.api.delete_folder(`${categoryName.name}`, function (
+        error,
+        resultCloud
+      ) {
+        console.log(resultCloud);
+      });
+
       fs.rmdirSync(
         `./public/images/photos/${categoryName.name}`,
         { recursive: true },
