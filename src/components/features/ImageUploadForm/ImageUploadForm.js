@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -11,6 +11,8 @@ import ImageUploader from 'react-images-upload';
 import Resizer from 'react-image-file-resizer';
 import { addPhotoRequest } from '../../../redux/photoRedux';
 import { Button } from '../../common/Button/Button';
+import { Loader } from '../../common/Loader/Loader';
+
 import styles from './ImageUploadForm.module.scss';
 
 const uniqid = require(`uniqid`);
@@ -24,6 +26,7 @@ const Component = ({ className, children, category }) => {
   } = useForm();
   const { getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
+  const loadingStatus = useSelector((state) => state.photos.loading);
 
   const [photo, setPhoto] = useState({
     file: null,
@@ -175,7 +178,18 @@ const Component = ({ className, children, category }) => {
             Proszę wybrać format zdjęcia
           </span>
         )}
-        <Button className={styles.addPhotoButton} type="submit" name="Wyślij" />
+        {loadingStatus === undefined ||
+        loadingStatus.active ||
+        loadingStatus.error ? (
+          /* eslint-disable */
+          <Loader />
+        ) : (
+            <Button
+              className={styles.addPhotoButton}
+            type="submit"
+            name="Wyślij"
+            />
+        )}
       </form>
       <main>{children}</main>
     </div>

@@ -86,6 +86,14 @@ const Component = ({ className, photos, category }) => {
     setItems(arrayMove(items, oldIndex, newIndex));
   };
 
+  useEffect(() => {
+    if (active) {
+      document.body.style.overflow = `hidden`;
+    } else {
+      document.body.style.overflow = `unset`;
+    }
+  }, [active]);
+
   return (
     <div className={clsx(className, styles.root)}>
       {isAuthenticated ? (
