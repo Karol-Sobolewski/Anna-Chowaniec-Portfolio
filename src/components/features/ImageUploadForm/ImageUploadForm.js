@@ -64,9 +64,7 @@ const Component = ({ className, children, category }) => {
 
   const handleImage = async (files) => {
     if (files[0]) {
-      console.log(`files`, files[0]);
       const image = await resizeFile(files[0]);
-      console.log(`image`, image);
       setPhoto({ ...photo, file: image });
     } else setPhoto({ ...photo, file: null });
   };
