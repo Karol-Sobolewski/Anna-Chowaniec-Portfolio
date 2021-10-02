@@ -88,11 +88,13 @@ router.post(`/photos`, checkJwt, async (req, res) => {
 router.put(`/photos/:id`, checkJwt, async (req, res) => {
   try {
     const result = await Photo.findById(req.body._id);
+    console.log(`result`, result);
     /* eslint-disable */
     if (result) {
       for (const prop in req.body) {
         result[prop] = req.body[prop];
       }
+      console.log(`result2`, result)
       await result.save();
       res.json(result);
     }

@@ -97,6 +97,7 @@ export const addPhotoRequest = (data, imagedata, token, category) => async (
 export const editPhotoRequest = (photo, token) => async (dispatch) => {
   dispatch(fetchStarted());
   try {
+    console.log(`photoredux`, photo);
     const res = await Axios.put(`${API_URL}/photos/${photo._id}`, photo, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -201,6 +202,7 @@ export default function reducer(statePart = [], action = {}) {
     }
 
     case UPDATE_PHOTO: {
+      console.log(`action`, action.payload);
       return {
         ...statePart,
         data: statePart.data.map((data) => {

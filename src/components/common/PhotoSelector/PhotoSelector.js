@@ -11,7 +11,7 @@ const Component = React.memo( //eslint-disable-line
       (item) => item.width > item.height
     );
 
-    const choosenPhoto = photos.filter((item) =>
+    const chosenPhoto = photos.filter((item) =>
       checkedPhoto ? item.src === checkedPhoto.src : null
     )[0];
 
@@ -22,7 +22,7 @@ const Component = React.memo( //eslint-disable-line
             <button
               type="button"
               className={
-                choosenPhoto && choosenPhoto.src === img.src
+                chosenPhoto && chosenPhoto.src === img.src
                   ? styles.photoSlide__checked
                   : styles.photoSlide
               }

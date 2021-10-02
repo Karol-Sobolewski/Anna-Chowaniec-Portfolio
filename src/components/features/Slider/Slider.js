@@ -40,6 +40,7 @@ const Component = ({ className }) => {
   const [edit, setEdit] = useState(false);
 
   const handleImageChooser = async (img) => {
+    console.log(`img`, img);
     const category = JSON.parse(JSON.stringify(img.category));
     await setImage({ ...img, slider: !img.slider, category });
   };
@@ -47,6 +48,7 @@ const Component = ({ className }) => {
   useEffect(() => {
     const handleSubmit = async () => {
       if (isAuthenticated) {
+        console.log(`image`, image);
         const token = await getAccessTokenSilently();
         await dispatch(editPhotoRequest(image, token));
         dispatch(fetchPhotos());
