@@ -121,7 +121,6 @@ const Component = ({ photo, photos, className }) => {
               views={photos.map((item) => ({
                 ...item,
                 srcset: item.srcSet,
-                caption: item.title,
               }))}
             />
           </Modal>
