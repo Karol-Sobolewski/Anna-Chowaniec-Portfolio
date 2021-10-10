@@ -88,13 +88,11 @@ router.post(`/photos`, checkJwt, async (req, res) => {
 router.put(`/photos/:id`, checkJwt, async (req, res) => {
   try {
     const result = await Photo.findById(req.body._id);
-    console.log(`result`, result);
     /* eslint-disable */
     if (result) {
       for (const prop in req.body) {
         result[prop] = req.body[prop];
       }
-      console.log(`result2`, result)
       await result.save();
       res.json(result);
     }
@@ -110,11 +108,10 @@ router.delete(`/photos/:id`, checkJwt, async (req, res) => {
     const resultData = await Photo.findById(req.params.id);
     if (resultData) {
       if (resultData.cloudName) {
-        console.log(`result`, resultData);
         cloudinary.uploader.destroy(
           `${resultData.categoryName}/${resultData.cloudName}`,
-          function (err, result) {
-            console.log(result);
+          function (err, resultCloud) {
+            console.log(resultCloud);
           }
         );
       } else {
@@ -132,7 +129,6 @@ router.delete(`/photos/:id`, checkJwt, async (req, res) => {
 
 router.delete(`/photos/categories/:id`, checkJwt, async (req, res) => {
   const categoryName = await Category.findById(req.params.id).exec();
-  console.log(`categoryName.name`, categoryName.name);
   try {
     const result = await Photo.findOne({ category: req.params.id });
     if (result) {
@@ -140,8 +136,8 @@ router.delete(`/photos/categories/:id`, checkJwt, async (req, res) => {
 
       await cloudinary.api.delete_resources_by_prefix(
         `${categoryName.name}/`,
-        function (error, resultCloud2) {
-          console.log(resultCloud2);
+        function (error, resultCloud) {
+          console.log(resultCloud);
         }
       );
       cloudinary.api.delete_folder(`${categoryName.name}`, function (
