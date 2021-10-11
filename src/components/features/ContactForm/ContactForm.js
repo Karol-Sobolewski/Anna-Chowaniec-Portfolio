@@ -48,7 +48,7 @@ const Component = ({ className, children }) => {
       reset();
       toastifySuccess();
     } catch (e) {
-      console.log(e);
+      console.log(`status:`, e);
     }
   };
   return (
