@@ -17,6 +17,7 @@ const Component = ({ className, children, offerCategory }) => {
   const offers = allOffers.filter(
     (offer) => offer.category?._id === offerCategory
   );
+
   const [active, setActive] = useState(false);
 
   const { isAuthenticated } = useAuth0();
@@ -46,6 +47,8 @@ const Component = ({ className, children, offerCategory }) => {
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  console.log(`offer.category`, offers[0].category.name);
+
   return (
     <div className={clsx(className, styles.root)}>
       <Row className={styles.offerRow} ref={offerRef}>
@@ -57,6 +60,16 @@ const Component = ({ className, children, offerCategory }) => {
             <Offer offer={item} key={item._id} />
           </Col>
         ))}
+        {offers[0].category.name === `śluby` ? (
+          <Col className={`${styles.offerAddon} col-12 mt-3`}>
+            <ul>
+              Do powyższych ofert można domówić fotoobrazy:
+              <li>30x45 80 zł</li>
+              <li>50x70 100 zł</li>
+              <li>70x100 165 zł</li>
+            </ul>
+          </Col>
+        ) : null}
         {isAuthenticated ? (
           <Col
             className={`col-12 col-md-5 mt-3 col-xl-4 ${styles.addOfferColumn}`}

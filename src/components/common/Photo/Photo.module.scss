@@ -9,6 +9,8 @@
     width: auto;
     img {
       object-fit: cover;
+      max-height: 300px !important;
+      max-width: 450px !important;
     }
     .editPhotoButton,
     .deletePhotoButton {

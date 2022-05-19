@@ -20,6 +20,19 @@
       display: flex;
       justify-content: center;
     }
+    .offerAddon {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      font-weight: 600;
+      text-align: center;
+      li {
+        font-weight: 400;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+      }
+    }
     .addOfferColumn {
       display: flex;
       align-items: center;

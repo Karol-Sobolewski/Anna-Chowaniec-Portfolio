@@ -86,8 +86,8 @@ const Component = ({ className, children }) => {
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
-        1024,
-        1024,
+        1920,
+        1920,
         `WEBP`,
         90,
         0,
